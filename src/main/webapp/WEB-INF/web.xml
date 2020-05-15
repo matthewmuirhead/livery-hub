@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<!-- <context-param>
+		<param-name>GlobalConfig</param-name>
+		<param-value>/AdvanceBooker/config/properties/global.properties</param-value>
+	</context-param>
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+		</jsp-property-group>
+	</jsp-config>-->
+	<servlet-mapping>
+		<servlet-name>*</servlet-name>
+		<url-pattern>*.jsp</url-pattern>
+	</servlet-mapping>
+	<display-name>Event Manager</display-name>
+	<filter>
+		<display-name>EventConcierge</display-name>
+		<filter-name>EventConcierge</filter-name>
+		<filter-class>com.codemaven.manager.filter.EventConcierge</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>EventConcierge</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+	<!-- <welcome-file-list>
+		<welcome-file>Dashboard</welcome-file>
+	</welcome-file-list>-->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors/404.html</location>
+	</error-page>
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+</web-app>
