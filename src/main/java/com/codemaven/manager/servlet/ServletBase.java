@@ -11,22 +11,27 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.codemaven.manager.enums.NavBarZone;
+import com.codemaven.manager.util.StringUtil;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @Slf4j
-public class ServletBase
+public abstract class ServletBase
 {
 	@GetMapping
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
+		req.setAttribute("navbarzone", getNavBarZone());
 		processRequest(req, resp);
 	}
 
 	@PostMapping
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
+		req.setAttribute("navbarzone", getNavBarZone());
 		processRequest(req, resp);
 	}
 
@@ -36,11 +41,13 @@ public class ServletBase
 	 * @param req HttpServletRequest
 	 * @param resp HttpServletResponse
 	 */
-	protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
+	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		// This should be overridden by the sub class.
 		log.error("ServletBase ProcessRequest(HttpServletRequest, HttpServletResponse) accessed directly!");
 	}
+	
+	protected abstract NavBarZone getNavBarZone();
 
 	/**
 	 * Display a page by using a JSP
@@ -117,6 +124,10 @@ public class ServletBase
 		if (o instanceof Integer)
 		{
 			value = (int) o;
+		}
+		else if (o instanceof String)
+		{
+			value = StringUtil.strToInt((String) o);
 		}
 		return value;
 	}
