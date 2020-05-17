@@ -1,3 +1,6 @@
+<%@ page import="com.codemaven.manager.enums.NavBarZone" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="zones" value="<%=NavBarZone.values()%>" />
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,7 +11,7 @@
  <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/styles.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css" crossorigin="anonymous">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
     <!-- Bootstrap core JavaScript -->
@@ -19,8 +22,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
 </head>
-<body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<body class="bg-light">
+	<nav class="main-header navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<a class="navbar-brand" href="/"> <img src="../img/cm-banner.png"
 			width="30" height="30" class="d-inline-block align-top" alt="">
 		</a>
@@ -31,12 +34,13 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/">Dashboard
+				<li class="nav-item ${zones[0].name() == navbarzone.name() ? 'active' : ''}"><a class="nav-link" href="/">Dashboard
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="/Calendar">Calendar</a></li>
-				<li class="nav-item"><a class="nav-link" href="/Drivers">Drivers</a>
+				<li class="nav-item ${zones[1].name() == navbarzone.name() ? 'active' : ''}"><a class="nav-link" href="/tracks">Tracks</a></li>
+				<li class="nav-item ${zones[2].name() == navbarzone.name() ? 'active' : ''}"><a class="nav-link" href="/cars">Cars</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
+	<main role="main" class="container">
