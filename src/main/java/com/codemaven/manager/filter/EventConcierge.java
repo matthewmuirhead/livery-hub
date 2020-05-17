@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.codemaven.manager.enums.NavBarZone;
 import com.codemaven.manager.servlet.ServletBase;
 import com.codemaven.manager.util.StringUtil;
 
@@ -30,9 +31,13 @@ public class EventConcierge extends ServletBase implements Filter
 	{
  		String url = ((HttpServletRequest) req).getRequestURI();
 		String servletName = getServletNameFromUrl(url);
-		if (checkIfServletIsSupported(servletName) || isImageAccess(url))
+		if (checkIfServletIsSupported(servletName))
 		{
-			log.info("Servlet Supported, continuing...");
+			log.info("Servlet " + servletName + " Supported, continuing...");
+			chain.doFilter(req, resp);
+		}
+		else if (isImageAccess(url))
+		{
 			chain.doFilter(req, resp);
 		}
 		else
@@ -49,18 +54,38 @@ public class EventConcierge extends ServletBase implements Filter
 	{
 		String[] supportedServletNames =
 		
-		{ "", "event", "404" };
+		{ "", "tracks", "cars", "404" };
 		return StringUtil.arrayContains(supportedServletNames, servletName);
 	}
 	
 	protected boolean isImageAccess(String url)
 	{
+		boolean supported = false;
 		String baseServletName = "";
 		String[] urlParts = StringUtil.split(url, "/");
 		if (urlParts.length > 1)
 		{
 			baseServletName = urlParts[1];
 		}
-		return StringUtil.isEqualLenient("img", baseServletName);
+		supported = StringUtil.isEqual("img", baseServletName);
+		if (supported)
+		{
+			log.info("Image Access for file: " + getServletNameFromUrl(url));
+		}
+		else
+		{
+			supported = StringUtil.isEqual("css", baseServletName);
+			if (supported)
+			{
+				log.info("CSS Access for file: " + getServletNameFromUrl(url));
+			}
+		}
+		return supported;
+	}
+
+	@Override
+	protected NavBarZone getNavBarZone()
+	{
+		return null;
 	}
 }
