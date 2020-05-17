@@ -2,4 +2,5 @@
 <jsp:include page="/includes/header.jsp"/>
 <h1>JSP Page!</h1>
 ${title}
+<jsp:include page="/includes/carousel.jsp"/>
 <jsp:include page="/includes/footer.jsp"/>
