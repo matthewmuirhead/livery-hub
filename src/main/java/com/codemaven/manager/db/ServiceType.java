@@ -2,5 +2,10 @@ package com.codemaven.manager.db;
 
 public enum ServiceType
 {
-	CAR;
+	CAR,
+	DRIVER,
+	EVENT,
+	HOST,
+	TEAM,
+	TRACK;
 }
