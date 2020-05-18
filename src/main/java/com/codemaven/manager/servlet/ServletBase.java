@@ -134,7 +134,12 @@ public abstract class ServletBase
 	
 	protected String getCmd(final HttpServletRequest req)
 	{
-		return getParameterString(req, "cmd");
+		String cmd = getParameterString(req, "cmd");
+		if (log.isDebugEnabled() && !StringUtil.isNullOrEmpty(cmd))
+		{
+			log.debug("Doing cmd: " + cmd);
+		}
+		return cmd;
 	}
 	
 	/**
