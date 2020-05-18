@@ -54,7 +54,7 @@ public class EventConcierge extends ServletBase implements Filter
 	{
 		String[] supportedServletNames =
 		
-		{ "", "tracks", "cars", "404" };
+		{ "", "events", "tracks", "cars", "404" };
 		return StringUtil.arrayContains(supportedServletNames, servletName);
 	}
 	
