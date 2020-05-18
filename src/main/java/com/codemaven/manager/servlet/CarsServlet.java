@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CarsServlet extends ServletBase
 {
+	private static final String JSP_PATH = "cars/";
 	private ServiceFactory serviceFactory;
 	
 	@Override
@@ -75,7 +76,7 @@ public class CarsServlet extends ServletBase
 		req.setAttribute("carousel", carousel);
 		
 		req.setAttribute("title", "Cars");
-		displayPage(req, resp, "cars/list.jsp");
+		displayPage(req, resp, JSP_PATH+"list.jsp");
 	}
 	
 	private void doView(HttpServletRequest req, HttpServletResponse resp)
@@ -90,7 +91,7 @@ public class CarsServlet extends ServletBase
 		{
 			req.setAttribute("car", car);
 			req.setAttribute("title", car.getFullNameAndYear());
-			displayPage(req, resp, "cars/view.jsp");
+			displayPage(req, resp, JSP_PATH+"view.jsp");
 		}
 		else
 		{
@@ -103,7 +104,7 @@ public class CarsServlet extends ServletBase
 		Cars car = new Cars();
 		req.setAttribute("car", car);
 		req.setAttribute("title", "New Car");
-		displayPage(req, resp, "cars/view.jsp");
+		displayPage(req, resp, JSP_PATH+"view.jsp");
 	}
 	
 	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
