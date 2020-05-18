@@ -30,11 +30,19 @@ public class TrackDao
 				.where(Tables.TRACKS.SET.eq(set))
 				.fetchInto(Tracks.class);
 	}
-	
+
 	public Map<Tracks, Locations> fetchTracksLocationsBySet(String set)
 	{
-		return dsl.selectFrom(Tables.TRACKS.join(Tables.LOCATIONS).on(Tables.TRACKS.LOCATION_ID.eq(Tables.LOCATIONS.ID)))
+		return dsl.selectFrom(Tables.TRACKS.join(Tables.LOCATIONS)
+				.on(Tables.TRACKS.LOCATION_ID.eq(Tables.LOCATIONS.ID)))
 				.where(Tables.TRACKS.SET.eq(set))
 				.fetchMap(Tracks.class, Locations.class);
+	}
+
+	public Tracks fetchTrackById(final int trackId)
+	{
+		return dsl.selectFrom(Tables.TRACKS)
+				.where(Tables.TRACKS.ID.eq(trackId))
+				.fetchOneInto(Tracks.class);
 	}
 }

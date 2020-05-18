@@ -57,6 +57,20 @@ public class TrackService implements Service
 		return tracks;
 	}
 	
+	public Tracks fetchTrackById(final int trackId)
+	{
+		Tracks track = null;
+		if (trackId > 0)
+		{
+			track = dao.fetchTrackById(trackId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried fetching tracks with id " + trackId);
+		}
+		return track;
+	}
+	
 	@Override
 	public ServiceType getType()
 	{
