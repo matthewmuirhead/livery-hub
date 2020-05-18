@@ -25,12 +25,16 @@ public class CarService implements Service
 		return dao.fetchAllCarsSorted();
 	}
 	
-	public CarsExtended fetchCarById(final int id)
+	public CarsExtended fetchCarById(final int carId)
 	{
 		CarsExtended car = null;
-		if (id > 0)
+		if (carId > 0)
 		{
-			car = dao.fetchCarById(id);
+			car = dao.fetchCarById(carId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried fetching car with id " + carId);
 		}
 		return car;
 	}
@@ -41,6 +45,10 @@ public class CarService implements Service
 		if (car != null)
 		{
 			saved = dao.saveCar(car);
+		}
+		else
+		{
+			log.debug("Tried saving null car");
 		}
 		return saved;
 	}
