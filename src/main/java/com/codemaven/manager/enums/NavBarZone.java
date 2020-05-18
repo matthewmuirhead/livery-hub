@@ -4,5 +4,7 @@ public enum NavBarZone
 {
 	DASHBOARD,
 	TRACKS,
-	CARS;
+	CARS,
+	EVENTS,
+	HOSTS;
 }
