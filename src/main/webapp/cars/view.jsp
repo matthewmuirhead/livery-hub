@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../includes/header.jsp" />
-<c:set var="headerImg" value="<img class='pt-3 w-100' src='../img/cars/models/${car.getImage()}' alt='${car.getFullNameAndYear()} Header Image'>"/>
+<c:set var="headerImg" value="<img class='mt-3 w-100 rounded' src='../img/cars/models/${car.getImage()}' alt='${car.getFullNameAndYear()} Header Image'>"/>
 ${not empty car.getImage() ? headerImg : ''}
 <div class="d-flex align-items-center p-3 my-3 text-white bg-red-fade rounded box-shadow">
 	<h3 class="mb-0">${not empty car.getManufacturer() ? car.getFullNameAndYear() : 'New Car'}</h3>
