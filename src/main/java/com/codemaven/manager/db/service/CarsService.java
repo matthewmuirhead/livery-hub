@@ -58,5 +58,4 @@ public class CarsService implements Service
 	{
 		return ServiceType.CAR;
 	}
-
 }
