@@ -13,6 +13,7 @@
 
 <section>
 	<div class="container">
+		<jsp:include page="../includes/alertmessages.jsp" />
 		<div class="row">
 			<c:forEach items="${cars}" var="car">
 				<div class="col-md-4 mt-4">
