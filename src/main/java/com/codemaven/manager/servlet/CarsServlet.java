@@ -151,6 +151,7 @@ public class CarsServlet extends ServletBase
 		{
 			if (saved)
 			{
+				req.setAttribute(AjaxSaveReplyJson.SUCCESS_KEY, "Car " + car.getFullName() + " saved successfully.");
 				doList(req, resp);
 			}
 			else
