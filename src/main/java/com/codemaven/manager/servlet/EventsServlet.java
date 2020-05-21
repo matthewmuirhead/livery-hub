@@ -216,6 +216,7 @@ public class EventsServlet extends ServletBase
 		{
 			if (saved)
 			{
+				req.setAttribute(AjaxSaveReplyJson.SUCCESS_KEY, "Event " + event.getName() + " saved successfully.");
 				doList(req, resp);
 			}
 			else
