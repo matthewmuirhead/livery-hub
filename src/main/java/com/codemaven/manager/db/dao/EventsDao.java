@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.codemaven.generated.Tables;
 import com.codemaven.generated.tables.pojos.Events;
 import com.codemaven.generated.tables.pojos.Sessions;
+import com.codemaven.generated.tables.records.EventsRecord;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Repository
-public class EventDao
+public class EventsDao
 {
 	private final DSLContext dsl;
 
@@ -45,5 +46,11 @@ public class EventDao
 		return dsl.selectFrom(Tables.SESSIONS)
 				.where(Tables.SESSIONS.EVENT_ID.eq(eventId))
 				.fetchInto(Sessions.class);
+	}
+	
+	public boolean saveEvent(final Events event)
+	{
+		EventsRecord record = dsl.newRecord(Tables.EVENTS, event);
+		return dsl.insertInto(Tables.EVENTS).set(record).onDuplicateKeyUpdate().set(record).execute() > 0;
 	}
 }

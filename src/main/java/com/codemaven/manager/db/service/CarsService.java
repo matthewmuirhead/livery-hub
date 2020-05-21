@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.codemaven.generated.tables.pojos.Cars;
 import com.codemaven.manager.db.Service;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.dao.CarDao;
+import com.codemaven.manager.db.dao.CarsDao;
 import com.codemaven.manager.model.CarsExtended;
 
 import lombok.AllArgsConstructor;
@@ -16,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class CarService implements Service
+public class CarsService implements Service
 {
-	private CarDao dao;
+	private CarsDao dao;
 	
 	public List<CarsExtended> fetchAllCarsSorted()
 	{

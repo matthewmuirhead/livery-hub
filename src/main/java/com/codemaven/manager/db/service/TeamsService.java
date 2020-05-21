@@ -10,7 +10,7 @@ import com.codemaven.generated.tables.pojos.TeamTires;
 import com.codemaven.generated.tables.pojos.Teams;
 import com.codemaven.manager.db.Service;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.dao.TeamDao;
+import com.codemaven.manager.db.dao.TeamsDao;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class TeamService implements Service
+public class TeamsService implements Service
 {
-	private TeamDao dao;
+	private TeamsDao dao;
 	
 	public List<Teams> fetchEventsTeams(final int eventId)
 	{

@@ -10,7 +10,7 @@ import com.codemaven.generated.tables.pojos.Events;
 import com.codemaven.generated.tables.pojos.Sessions;
 import com.codemaven.manager.db.Service;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.dao.EventDao;
+import com.codemaven.manager.db.dao.EventsDao;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class EventService implements Service
+public class EventsService implements Service
 {
-	private EventDao dao;
+	private EventsDao dao;
 	
 	public List<Events> fetchEventsAfterDate(final LocalDateTime after)
 	{
@@ -76,6 +76,20 @@ public class EventService implements Service
 			log.debug("Tried fetching sessions with event id " + eventId);
 		}
 		return sessions;
+	}
+	
+	public boolean saveEvent(final Events event)
+	{
+		boolean saved = false;
+		if (event != null)
+		{
+			saved = dao.saveEvent(event);
+		}
+		else
+		{
+			log.debug("Tried saving null event");
+		}
+		return saved;
 	}
 	
 	@Override

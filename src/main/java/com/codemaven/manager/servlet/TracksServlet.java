@@ -14,7 +14,7 @@ import com.codemaven.generated.tables.pojos.Locations;
 import com.codemaven.generated.tables.pojos.Tracks;
 import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.service.TrackService;
+import com.codemaven.manager.db.service.TracksService;
 import com.codemaven.manager.enums.NavBarZone;
 import com.codemaven.manager.model.CarouselDisplayItem;
 import com.codemaven.manager.util.StringUtil;
@@ -41,7 +41,7 @@ public class TracksServlet extends ServletBase
 	
 	private void doList(HttpServletRequest req, HttpServletResponse resp)
 	{
-		TrackService service = serviceFactory.getInstance(ServiceType.TRACK, TrackService.class);
+		TracksService service = serviceFactory.getInstance(ServiceType.TRACK, TracksService.class);
 
 		Map<Tracks, Locations> igtc = service.fetchTracksLocationsBySet("IGTC");
 		log.info(igtc.size() + " IGTC tracks loaded");

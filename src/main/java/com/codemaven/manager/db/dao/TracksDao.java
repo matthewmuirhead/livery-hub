@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Repository
-public class TrackDao
+public class TracksDao
 {
 	private final DSLContext dsl;
 

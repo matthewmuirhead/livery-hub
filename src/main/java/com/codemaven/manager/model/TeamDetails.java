@@ -5,26 +5,26 @@ import java.util.List;
 import com.codemaven.generated.tables.pojos.TeamFuel;
 import com.codemaven.generated.tables.pojos.TeamTires;
 import com.codemaven.generated.tables.pojos.Teams;
-import com.codemaven.manager.db.service.TeamService;
+import com.codemaven.manager.db.service.TeamsService;
 
 import lombok.Setter;
 
 @Setter
 public class TeamDetails
 {
-	private TeamService teamService;
+	private TeamsService teamService;
 	private int teamId;
 	private Teams team;
 	private List<TeamFuel> fuel;
 	private List<TeamTires> tires;
 	
-	public TeamDetails(TeamService teamService, int teamId)
+	public TeamDetails(TeamsService teamService, int teamId)
 	{
 		this.teamService = teamService;
 		this.teamId = teamId;
 	}
 	
-	public TeamDetails(TeamService teamService, Teams team)
+	public TeamDetails(TeamsService teamService, Teams team)
 	{
 		this.teamService = teamService;
 		this.team = team;

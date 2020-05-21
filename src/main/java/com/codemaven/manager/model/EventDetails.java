@@ -10,9 +10,9 @@ import com.codemaven.generated.tables.pojos.Teams;
 import com.codemaven.generated.tables.pojos.Tracks;
 import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.service.EventService;
-import com.codemaven.manager.db.service.TeamService;
-import com.codemaven.manager.db.service.TrackService;
+import com.codemaven.manager.db.service.EventsService;
+import com.codemaven.manager.db.service.TeamsService;
+import com.codemaven.manager.db.service.TracksService;
 
 public class EventDetails
 {
@@ -55,7 +55,7 @@ public class EventDetails
 	{
 		if (event == null)
 		{
-			event = serviceFactory.getInstance(ServiceType.EVENT, EventService.class).fetchEventById(eventId);
+			event = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventById(eventId);
 		}
 		return event;
 	}
@@ -65,7 +65,7 @@ public class EventDetails
 		if (teams == null || teams.size() == 0)
 		{
 			teams = new ArrayList<>();
-			TeamService teamService = serviceFactory.getInstance(ServiceType.TEAM, TeamService.class);
+			TeamsService teamService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
 			List<Teams> fetchedTeams = teamService.fetchEventsTeams(eventId);
 			for (Teams team : fetchedTeams)
 			{
@@ -88,7 +88,7 @@ public class EventDetails
 	{
 		if (sessions == null || sessions.size() == 0)
 		{
-			sessions = serviceFactory.getInstance(ServiceType.EVENT, EventService.class).fetchSessionsByEventId(eventId);
+			sessions = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchSessionsByEventId(eventId);
 		}
 		return sessions;
 	}
@@ -106,8 +106,16 @@ public class EventDetails
 	{
 		if (track == null)
 		{
-			track = serviceFactory.getInstance(ServiceType.TRACK, TrackService.class).fetchTrackById(getEvent().getTrackId());
+			track = serviceFactory.getInstance(ServiceType.TRACK, TracksService.class).fetchTrackById(getEvent().getTrackId());
 		}
 		return track;
+	}
+	
+	public boolean save()
+	{
+		boolean saved = false;
+		EventsService eventService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
+		eventService.saveEvent(getEvent());
+		return saved;
 	}
 }

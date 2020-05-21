@@ -12,7 +12,7 @@ import com.codemaven.generated.tables.pojos.Locations;
 import com.codemaven.generated.tables.pojos.Tracks;
 import com.codemaven.manager.db.Service;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.dao.TrackDao;
+import com.codemaven.manager.db.dao.TracksDao;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class TrackService implements Service
+public class TracksService implements Service
 {
-	private TrackDao dao;
+	private TracksDao dao;
 	
 	public List<Tracks> fetchAllTracks()
 	{

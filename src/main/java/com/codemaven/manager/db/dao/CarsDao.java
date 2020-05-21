@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Repository
-public class CarDao
+public class CarsDao
 {
 	private final DSLContext dsl;
 	

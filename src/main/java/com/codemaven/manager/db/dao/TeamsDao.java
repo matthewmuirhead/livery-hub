@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Repository
-public class TeamDao
+public class TeamsDao
 {
 	private final DSLContext dsl;
 
