@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codemaven.generated.tables.pojos.Cars;
 import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
-import com.codemaven.manager.db.service.CarService;
+import com.codemaven.manager.db.service.CarsService;
 import com.codemaven.manager.enums.NavBarZone;
 import com.codemaven.manager.model.AjaxSaveReplyJson;
 import com.codemaven.manager.model.CarouselDisplayItem;
@@ -33,7 +33,19 @@ public class CarsServlet extends ServletBase
 	private ServiceFactory serviceFactory;
 	
 	@Override
-	public void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException
+	public void processRequest(HttpServletRequest req, HttpServletResponse resp)
+	{
+		try {
+			doCmd(req, resp);
+		}
+		catch (Exception e)
+		{
+			log.error("Error processing cmd: " + e.getMessage(), e);
+			displayError(req, resp, "Uh-Oh, something went wrong!");
+		}
+	}
+	
+	public void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		String cmd = getCmd(req);
 		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list"))
@@ -60,7 +72,7 @@ public class CarsServlet extends ServletBase
 	
 	private void doList(HttpServletRequest req, HttpServletResponse resp)
 	{
-		List<CarsExtended> cars = serviceFactory.getInstance(ServiceType.CAR, CarService.class).fetchAllCarsSorted();
+		List<CarsExtended> cars = serviceFactory.getInstance(ServiceType.CAR, CarsService.class).fetchAllCarsSorted();
 		log.debug(cars.size() + " cars loaded");
 		req.setAttribute("cars", cars);
 		
@@ -86,7 +98,7 @@ public class CarsServlet extends ServletBase
 	
 	private void doView(HttpServletRequest req, HttpServletResponse resp, int carId)
 	{
-		CarsExtended car = serviceFactory.getInstance(ServiceType.CAR, CarService.class).fetchCarById(carId);
+		CarsExtended car = serviceFactory.getInstance(ServiceType.CAR, CarsService.class).fetchCarById(carId);
 		if (car != null)
 		{
 			req.setAttribute("car", car);
@@ -117,7 +129,7 @@ public class CarsServlet extends ServletBase
 		car.setYear(getParameterInt(req, "year"));
 		car.setLogo(getParameterString(req, "logo"));
 		car.setImage(getParameterString(req, "image"));
-		boolean saved = serviceFactory.getInstance(ServiceType.CAR, CarService.class).saveCar(car);
+		boolean saved = serviceFactory.getInstance(ServiceType.CAR, CarsService.class).saveCar(car);
 		if (isAjax)
 		{
 			if (saved)

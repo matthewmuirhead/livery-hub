@@ -1,5 +1,6 @@
 package com.codemaven.manager.servlet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,18 @@ public class TracksServlet extends ServletBase
 	
 	@Override
 	public void processRequest(HttpServletRequest req, HttpServletResponse resp)
+	{
+		try {
+			doCmd(req, resp);
+		}
+		catch (Exception e)
+		{
+			log.error("Error processing cmd: " + e.getMessage(), e);
+			displayError(req, resp, "Uh-Oh, something went wrong!");
+		}
+	}
+	
+	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		String cmd = getCmd(req);
 		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list")) {

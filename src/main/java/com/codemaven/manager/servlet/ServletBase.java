@@ -41,7 +41,7 @@ public abstract class ServletBase
 	 * @param req HttpServletRequest
 	 * @param resp HttpServletResponse
 	 */
-	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException
+	protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
 	{
 		// This should be overridden by the sub class.
 		log.error("ServletBase ProcessRequest(HttpServletRequest, HttpServletResponse) accessed directly!");
