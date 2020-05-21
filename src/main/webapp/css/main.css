@@ -144,3 +144,17 @@ a, a:hover { text-decoration: none; color: #fff; }
   -webkit-transform: translateY(-3px);
   transform: translateY(-3px);
 }
+
+.row-striped:nth-of-type(odd){
+  background-color: #efefef;
+  border-left: 4px #000000 solid;
+}
+
+.row-striped:nth-of-type(even){
+  background-color: #ffffff;
+  border-left: 4px #efefef solid;
+}
+
+.row-striped {
+    padding: 15px 0;
+}

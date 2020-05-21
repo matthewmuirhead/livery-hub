@@ -11,23 +11,28 @@
 </div>
 <jsp:include page="../includes/carousel.jsp" />
 
-<div class="my-3 p-3 bg-white rounded box-shadow">
-	<h6 class="border-bottom border-gray pb-2 mb-0">
-		${currentMonth.toString()}
-	</h6>
-	<c:forEach items="${eventDetails}" var="eventDetail">
-		<div class="media text-muted pt-3">
-			<img
-				data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1"
-				alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;"
-				src="../img/tracks/logos/${eventDetail.getTrack().getLogo()}"
-				data-holder-rendered="true">
-			<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<strong class="d-block text-gray-dark">${eventDetail.getEvent().getName()}</strong>
-				${eventDetail.getEvent().getDescription()}
-			</p>
+<section>
+	<div class="container">
+		<c:forEach items="${eventDetails}" var="eventDetail">
+			<c:set var="event" value="${eventDetail.getEvent()}" />
+			<c:set var="eventDate" value="${event.getEventDate()}" />
+			<div class="row row-striped">
+			<div class="col-2 text-right">
+				<h1 class="display-4"><span class="badge badge-secondary">${eventDate.getDayOfMonth()}</span></h1>
+				<h2>${eventDate.getMonth()}</h2>
+			</div>
+			<div class="col-10">
+				<h3 class="text-uppercase"><strong>${event.getName()}</strong></h3>
+				<ul class="list-inline">
+				    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> ${eventDate.getDayOfWeek()}</li>
+					<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> ${eventDate.getHour()}:${eventDate.getMinute()}</li>
+					<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> ${eventDetail.getTrack().getName()}</li>
+				</ul>
+				<p>${event.getDescription()}</p>
+			</div>
 		</div>
-	</c:forEach>
-</div>
+		</c:forEach>
+	</div>
+</section>
 
 <jsp:include page="../includes/footer.jsp" />
