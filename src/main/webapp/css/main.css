@@ -1,5 +1,5 @@
 html, body { overflow-x: hidden; /* Prevent scroll on narrow devices */ }
-body { padding-top: 56px; }
+body { padding-top: 72px; color: #282A2C; }
 main { margin-bottom: 5rem; }
 a, a:hover { text-decoration: none; color: #fff; }
 
@@ -7,6 +7,10 @@ a, a:hover { text-decoration: none; color: #fff; }
     background: url(../img/dia-lines-grey.svg) top center repeat;
     background-color: #0b0b0b;
     background-size: 7px 7px;
+}
+
+.nav-link {
+	font-size: 1.1rem;
 }
 
 .footer {
@@ -17,6 +21,25 @@ a, a:hover { text-decoration: none; color: #fff; }
 }
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 .bg-red-fade { background: linear-gradient(to right, #e0081d 0%, #940412 100%) }
+
+
+.masthead {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 30rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("/img/bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color:#f5f5f5;
+}
+
+.btn-xl {
+  padding: 1.25rem 2.5rem;
+}
 
 .profile-card{
     margin-top:20px;
@@ -48,10 +71,6 @@ a, a:hover { text-decoration: none; color: #fff; }
 	color:#fff;
     font-size:14px;
     font-weight:300;
-}
-.profile-card .btn-primary{
-    background-color:#4E5E30;
-    border-color:#4E5E30;
 }
 .profile-card:hover{
     border-bottom-color:#E0081D
@@ -157,4 +176,16 @@ a, a:hover { text-decoration: none; color: #fff; }
 
 .row-striped {
     padding: 15px 0;
+    color:#282A2C;
 }
+
+.nav-tabs a {
+	color:#282A2C;
+}
+
+.nav-link.active {
+	color:#fff!important;
+	background: linear-gradient(to right, #e0081d 0%, #940412 100%);
+}
+
+button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #940412 100%); }
