@@ -6,32 +6,41 @@
 		<small>List View</small>
 	</div>
 	<div class="d-flex align-items-center new-item">
-		<a href="/calendar?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
+		<a href="/events?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
 	</div>
 </div>
 <jsp:include page="../includes/carousel.jsp" />
 
 <section>
 	<div class="container">
-		<c:forEach items="${eventDetails}" var="eventDetail">
-			<c:set var="event" value="${eventDetail.getEvent()}" />
-			<c:set var="eventDate" value="${event.getEventDate()}" />
-			<div class="row row-striped">
-			<div class="col-2 text-right">
-				<h1 class="display-4"><span class="badge badge-secondary">${eventDate.getDayOfMonth()}</span></h1>
-				<h2>${eventDate.getMonth()}</h2>
+		<div class="row">
+			<div class="col-md-12 pb-3">
+				<a href="events?cmd=calendar" class="float-right"><button class="btn btn-danger bg-red-fade">Calendar View</button></a>
 			</div>
-			<div class="col-10">
-				<h3 class="text-uppercase"><strong>${event.getName()}</strong></h3>
-				<ul class="list-inline">
-				    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> ${eventDate.getDayOfWeek()}</li>
-					<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> ${eventDate.getHour()}:${eventDate.getMinute()}</li>
-					<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> ${eventDetail.getTrack().getName()}</li>
-				</ul>
-				<p>${event.getDescription()}</p>
+			<div class="col-md-12">
+				<c:forEach items="${eventDetails}" var="eventDetail">
+					<c:set var="event" value="${eventDetail.getEvent()}" />
+					<c:set var="eventDate" value="${event.getEventDate()}" />
+					<a href="/events?cmd=view&id=${eventDetail.getEvent().getId()}">
+						<div class="row row-striped">
+							<div class="col-2 text-right">
+								<h1 class="display-4"><span class="badge badge-secondary">${eventDate.getDayOfMonth()}</span></h1>
+								<h2>${eventDate.getMonth()}</h2>
+							</div>
+							<div class="col-10">
+								<h3 class="text-uppercase"><strong>${event.getName()}</strong></h3>
+								<ul class="list-inline">
+								    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> ${eventDate.getDayOfWeek()}</li>
+									<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> ${eventDate.getHour()}:${eventDate.getMinute()}</li>
+									<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> ${eventDetail.getTrack().getName()}</li>
+								</ul>
+								<p>${event.getDescription()}</p>
+							</div>
+						</div>
+					</a>
+				</c:forEach>				
 			</div>
 		</div>
-		</c:forEach>
 	</div>
 </section>
 
