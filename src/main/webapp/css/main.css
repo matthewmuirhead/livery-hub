@@ -189,3 +189,11 @@ a, a:hover { text-decoration: none; color: #fff; }
 }
 
 button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #940412 100%); }
+
+.page-link {
+	cursor:pointer;
+	color:#e0081d!important;
+}
+.page-link:hover {
+	color:#940412!important;
+}
