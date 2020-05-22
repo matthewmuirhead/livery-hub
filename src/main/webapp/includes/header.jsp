@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="isDashboard" value="${pageContext.request.requestURI eq '/dashboard.jsp'}"/>
 <!DOCTYPE html>
-<html>
+<html class="${isDashboard ? 'h-100': ''}">
 <head>
 <meta charset="ISO-8859-1">
 <title>${title}</title>
@@ -20,6 +22,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
 </head>
-<body class="bg-light">
+<body class="bg-light ${isDashboard ? 'h-100': ''}">
 	<jsp:include page="navbar.jsp" />
-	<main role="main" class="container">
+	<main role="main" class="${isDashboard ? 'h-100 mb-0': 'container'}">
