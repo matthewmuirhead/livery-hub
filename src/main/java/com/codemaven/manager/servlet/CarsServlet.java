@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CarsServlet extends ServletBase
 {
-	private static final String JSP_PATH = "cars/";
+	private static final String JSP_PATH = "cars";
 	private ServiceFactory serviceFactory;
 	
 	@Override
@@ -88,7 +88,7 @@ public class CarsServlet extends ServletBase
 		req.setAttribute("carousel", carousel);
 		
 		req.setAttribute("title", "Cars");
-		displayPage(req, resp, JSP_PATH+"list.jsp");
+		displayPage(req, resp, JSP_PATH+"/list.jsp");
 	}
 	
 	private void doView(HttpServletRequest req, HttpServletResponse resp)
@@ -103,7 +103,7 @@ public class CarsServlet extends ServletBase
 		{
 			req.setAttribute("car", car);
 			req.setAttribute("title", car.getFullNameAndYear());
-			displayPage(req, resp, JSP_PATH+"view.jsp");
+			displayPage(req, resp, JSP_PATH+"/view.jsp");
 		}
 		else
 		{
@@ -113,10 +113,10 @@ public class CarsServlet extends ServletBase
 	
 	private void doNew(HttpServletRequest req, HttpServletResponse resp)
 	{
-		Cars car = new Cars();
+		CarsExtended car = new CarsExtended();
 		req.setAttribute("car", car);
 		req.setAttribute("title", "New Car");
-		displayPage(req, resp, JSP_PATH+"view.jsp");
+		displayPage(req, resp, JSP_PATH+"/view.jsp");
 	}
 	
 	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
@@ -151,8 +151,7 @@ public class CarsServlet extends ServletBase
 		{
 			if (saved)
 			{
-				req.setAttribute(AjaxSaveReplyJson.SUCCESS_KEY, "Car " + car.getFullName() + " saved successfully.");
-				doList(req, resp);
+				displayPage(req, resp, JSP_PATH, true);
 			}
 			else
 			{
