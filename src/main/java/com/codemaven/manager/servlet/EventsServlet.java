@@ -23,6 +23,7 @@ import com.codemaven.manager.db.service.TracksService;
 import com.codemaven.manager.enums.NavBarZone;
 import com.codemaven.manager.lists.EventDetailsList;
 import com.codemaven.manager.model.AjaxSaveReplyJson;
+import com.codemaven.manager.model.CalendarUpdateReplyJson;
 import com.codemaven.manager.model.CarouselDisplayItem;
 import com.codemaven.manager.model.EventDetails;
 import com.codemaven.manager.util.StringUtil;
@@ -89,7 +90,7 @@ public class EventsServlet extends ServletBase
 		}
 	}
 	
-	private void doCalendar(HttpServletRequest req, HttpServletResponse resp)
+	private void doCalendar(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		List<CarouselDisplayItem> carousel = new ArrayList<>();
 		CarouselDisplayItem displayItem = new CarouselDisplayItem();
@@ -102,20 +103,99 @@ public class EventsServlet extends ServletBase
 		carousel.add(displayItem2);
 		req.setAttribute("carousel", carousel);
 		
-		LocalDateTime from = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).withHour(0).withMinute(0);
-		LocalDateTime to = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59);
-		List<Events> events = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventsBetweenDates(from, to);
-		EventDetailsList eventDetailsList = new EventDetailsList(events, serviceFactory);
-		
-		req.setAttribute("eventDetails", eventDetailsList);
-		req.setAttribute("currentMonth", from.getMonth());
+		LocalDateTime firstOfMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).withHour(0).withMinute(0).withSecond(0).withNano(0);
+		LocalDateTime lastOfMonth = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59).withNano(0);
+		fetchCalendarDetails(req, resp, firstOfMonth, lastOfMonth, false);
 		req.setAttribute("title", "Events Calendar");
 		displayPage(req, resp, JSP_PATH+"/calendar.jsp");
 	}
 	
-	private void doCalendarUpdate(HttpServletRequest req, HttpServletResponse resp)
+	private void doCalendarUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		// Ajax call to change month
+		int monthId = getParameterInt(req, "monthId");
+		int year = getParameterInt(req, "year");
+		LocalDateTime firstOfMonth = LocalDateTime.now().withMonth(monthId).withYear(year).with(TemporalAdjusters.firstDayOfMonth()).withHour(0).withMinute(0).withSecond(0).withNano(0);
+		LocalDateTime lastOfMonth = LocalDateTime.now().withMonth(monthId).withYear(year).with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59).withNano(0);
+		fetchCalendarDetails(req, resp, firstOfMonth, lastOfMonth, true);
+	}
+	
+	private void fetchCalendarDetails(HttpServletRequest req, HttpServletResponse resp, LocalDateTime firstOfMonth, LocalDateTime lastOfMonth, boolean isAjaxUpdate) throws IOException
+	{
+		CalendarUpdateReplyJson replyJson = new CalendarUpdateReplyJson();
+		List<Events> thisMonthEvents = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventsBetweenDates(firstOfMonth, lastOfMonth);
+		EventDetailsList thisMonthEventDetails = new EventDetailsList(thisMonthEvents, serviceFactory);
+		
+		int prevMonthDays = firstOfMonth.getDayOfWeek().getValue()-1;
+		if (prevMonthDays > 0)
+		{
+			LocalDateTime prevMonthStart = firstOfMonth.minusDays(prevMonthDays);
+			LocalDateTime prevMonthLastOf = prevMonthStart.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59);
+			if (isAjaxUpdate)
+			{
+				// Write to reply json
+				replyJson.setPrevMonthStart(prevMonthStart.getDayOfMonth());
+				replyJson.setPrevMonthEnd(prevMonthLastOf.getDayOfMonth());
+			}
+			else
+			{
+				// Set attributes as params
+				req.setAttribute("prevMonthStart", prevMonthStart.getDayOfMonth());
+				req.setAttribute("prevMonthEnd", prevMonthLastOf.getDayOfMonth());
+			}
+			
+		}
+		
+		int nextMonthDays = 7-lastOfMonth.getDayOfWeek().getValue();
+		if (nextMonthDays > 0)
+		{
+			LocalDateTime nextMonthLastOf = lastOfMonth.plusDays(nextMonthDays).withHour(23).withMinute(59).withSecond(59);
+			LocalDateTime nextMonthStart = nextMonthLastOf.with(TemporalAdjusters.firstDayOfMonth()).withHour(0).withMinute(0).withSecond(0);
+			if (isAjaxUpdate)
+			{
+				// Write to reply json
+				replyJson.setNextMonthStart(nextMonthStart.getDayOfMonth());
+				replyJson.setNextMonthEnd(nextMonthLastOf.getDayOfMonth());
+			}
+			else
+			{
+				// Set attributes as params
+				req.setAttribute("nextMonthStart", nextMonthStart.getDayOfMonth());
+				req.setAttribute("nextMonthEnd", nextMonthLastOf.getDayOfMonth());
+			}
+		}
+		
+		// Work out calendar start and end display dates
+		LocalDateTime calendarStart = firstOfMonth.minusDays(prevMonthDays);
+		thisMonthEventDetails.setCalendarStart(calendarStart);
+		
+		if (isAjaxUpdate)
+		{
+			// Write to reply json
+			replyJson.setCurrentMonthDays(lastOfMonth.getDayOfMonth());
+			replyJson.setPrevMonthDays(prevMonthDays);
+			replyJson.setNextMonthDays(nextMonthDays);
+			
+			replyJson.setEventDetails(thisMonthEventDetails);
+			
+			replyJson.setCurrentMonth(firstOfMonth.getMonth());
+			replyJson.setCurrentYear(firstOfMonth.getYear());
+			// Write json to resp
+			resp.setContentType("application/json");
+			resp.getWriter().write(replyJson.toJsonString());
+		}
+		else
+		{
+			// Set attributes as params
+			req.setAttribute("currentMonthDays", lastOfMonth.getDayOfMonth());
+			req.setAttribute("prevMonthDays", prevMonthDays);
+			req.setAttribute("nextMonthDays", nextMonthDays);
+			
+			req.setAttribute("thisMonthEventDetails", thisMonthEventDetails);
+			
+			req.setAttribute("currentMonth", firstOfMonth.getMonth());
+			req.setAttribute("currentYear", firstOfMonth.getYear());
+		}
 	}
 	
 	private void doList(HttpServletRequest req, HttpServletResponse resp)
