@@ -28,8 +28,8 @@
 				</p>
 			</div>
 		</c:forEach>
-		</div>
-		<div class="col-lg-12 pt-3">
+	</div>
+	<div class="col-lg-12 pt-3">
 		<jsp:include page="../includes/locationmap/opentag.jsp" />
 		<c:forEach items="${igtc}" var="track">
 			<div class="world__location" style="display: block; left: ${track.key.getMapLeft()}%; top: ${track.key.getMapTop()}%; opacity: 0.684062;">
