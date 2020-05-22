@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TracksServlet extends ServletBase
 {
+	private static final String JSP_PATH = "tracks";
 	private ServiceFactory serviceFactory;
 	
 	@Override
@@ -80,7 +81,7 @@ public class TracksServlet extends ServletBase
 		req.setAttribute("carousel", carousel);
 		
 		req.setAttribute("title", "Tracks");
-		displayPage(req, resp, "tracks/list.jsp");
+		displayPage(req, resp, JSP_PATH+"/list.jsp");
 	}
 
 	@Override
