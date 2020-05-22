@@ -10,7 +10,7 @@
 		<c:set var="firstItem" value="true"/>
 		<c:forEach items="${carousel}" var="displayItem">
 			<div class="carousel-item ${firstItem ? 'active' : ''}">
-				<img class="d-block img-fluid" src="../img/carousel/${displayItem.getUrl()}" alt="${displayItem.getAltText()}">
+				<img class="d-block img-fluid rounded" src="../img/carousel/${displayItem.getUrl()}" alt="${displayItem.getAltText()}">
 			</div>
 			<c:set var="firstItem" value="false"/>
 		</c:forEach>
