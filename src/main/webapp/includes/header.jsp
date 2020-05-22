@@ -12,6 +12,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/locationmap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/calendar.css" crossorigin="anonymous">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
     <!-- Bootstrap core JavaScript -->
