@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EventsServlet extends ServletBase
 {
-	private static final String JSP_PATH = "events/";
+	private static final String JSP_PATH = "events";
 	private ServiceFactory serviceFactory;
 	
 	@Override
@@ -110,7 +110,7 @@ public class EventsServlet extends ServletBase
 		req.setAttribute("eventDetails", eventDetailsList);
 		req.setAttribute("currentMonth", from.getMonth());
 		req.setAttribute("title", "Events Calendar");
-		displayPage(req, resp, JSP_PATH+"calendar.jsp");
+		displayPage(req, resp, JSP_PATH+"/calendar.jsp");
 	}
 	
 	private void doCalendarUpdate(HttpServletRequest req, HttpServletResponse resp)
@@ -141,7 +141,7 @@ public class EventsServlet extends ServletBase
 		req.setAttribute("eventDetails", eventDetailsList);
 		
 		req.setAttribute("title", "Events List");
-		displayPage(req, resp, JSP_PATH+"list.jsp");
+		displayPage(req, resp, JSP_PATH+"/list.jsp");
 	}
 	
 	private void doView(HttpServletRequest req, HttpServletResponse resp)
@@ -156,20 +156,26 @@ public class EventsServlet extends ServletBase
 		EventDetails eventDetails = new EventDetails(serviceFactory, eventId);
 		eventDetails.populate();
 		req.setAttribute("eventDetails", eventDetails);
+		req.setAttribute("isIGTC", StringUtil.isEqual("IGTC", eventDetails.getTrack().getSet()));
 		req.setAttribute("title", "View "+eventDetails.getEvent().getName());
-		displayPage(req, resp, JSP_PATH+"view.jsp");
+		displayPage(req, resp, JSP_PATH+"/view.jsp");
 	}
 	
 	private void doNew(HttpServletRequest req, HttpServletResponse resp)
 	{
-		req.setAttribute("title", "New Event");
-		displayPage(req, resp, JSP_PATH+"edit.jsp");
+		Events event = new Events();
+		event.setName("New Event");
+		event.setEventDate(LocalDateTime.now().withSecond(0).withNano(0));
+		req.setAttribute("event", event);
 		
 		List<Tracks> tracks = serviceFactory.getInstance(ServiceType.TRACK, TracksService.class).fetchAllTracks();
 		req.setAttribute("tracks", tracks);
 		
 		List<Hosts> hosts = serviceFactory.getInstance(ServiceType.HOST, HostsService.class).fetchAllHosts();
 		req.setAttribute("hosts", hosts);
+		
+		req.setAttribute("title", "New Event");
+		displayPage(req, resp, JSP_PATH+"/edit.jsp");
 	}
 	
 	private void doEdit(HttpServletRequest req, HttpServletResponse resp)
@@ -186,7 +192,7 @@ public class EventsServlet extends ServletBase
 		req.setAttribute("hosts", hosts);
 		
 		req.setAttribute("title", "Edit "+eventDetails.getEvent().getName());
-		displayPage(req, resp, JSP_PATH+"edit.jsp");
+		displayPage(req, resp, JSP_PATH+"/edit.jsp");
 	}
 	
 	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
@@ -216,8 +222,7 @@ public class EventsServlet extends ServletBase
 		{
 			if (saved)
 			{
-				req.setAttribute(AjaxSaveReplyJson.SUCCESS_KEY, "Event " + event.getName() + " saved successfully.");
-				doList(req, resp);
+				displayPage(req, resp, JSP_PATH, true);
 			}
 			else
 			{
@@ -230,13 +235,13 @@ public class EventsServlet extends ServletBase
 	private Events populateEventFromRequest(HttpServletRequest req)
 	{
 		Events event = new Events();
-		event.setId(getParameterInt(req, "id"));
+		event.setId(getParameterInt(req, "eventId"));
 		event.setName(getParameterString(req, "name"));
 		event.setDescription(getParameterString(req, "description"));
 		event.setRegulations(getParameterString(req, ""));
 		event.setHostId(getParameterInt(req, "hostId"));
 		event.setTrackId(getParameterInt(req, "trackId"));
-//		event.setEventDate();
+		event.setEventDate(LocalDateTime.parse(getParameterString(req, "eventDate")));
 		return event;
 	}
 	
