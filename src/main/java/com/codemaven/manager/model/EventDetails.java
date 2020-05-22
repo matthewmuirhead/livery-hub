@@ -1,6 +1,5 @@
 package com.codemaven.manager.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.codemaven.generated.tables.pojos.Events;
@@ -19,7 +18,7 @@ public class EventDetails
 	private ServiceFactory serviceFactory;
 	private int eventId;
 	private Events event;
-	private List<TeamDetails> teams;
+	private List<Teams> teams;
 	private List<Sessions> sessions;
 	private Hosts host;
 	private Tracks track;
@@ -40,7 +39,7 @@ public class EventDetails
 	public void populate()
 	{
 		getEvent();
-		populateTeams();
+		getTeams();
 		getSessions();
 		getHost();
 		getTrack();
@@ -60,28 +59,13 @@ public class EventDetails
 		return event;
 	}
 	
-	public List<TeamDetails> getTeams()
+	public List<Teams> getTeams()
 	{
 		if (teams == null || teams.size() == 0)
 		{
-			teams = new ArrayList<>();
-			TeamsService teamService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
-			List<Teams> fetchedTeams = teamService.fetchEventsTeams(eventId);
-			for (Teams team : fetchedTeams)
-			{
-				TeamDetails details = new TeamDetails(teamService, team);
-				teams.add(details);
-			}
+			teams = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchEventsTeams(eventId);
 		}
 		return teams;
-	}
-	
-	public void populateTeams()
-	{
-		for (TeamDetails team : getTeams())
-		{
-			team.populate();
-		}
 	}
 	
 	public List<Sessions> getSessions()
@@ -113,9 +97,9 @@ public class EventDetails
 	
 	public boolean save()
 	{
-		boolean saved = false;
+		boolean saved = true;
 		EventsService eventService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
-		eventService.saveEvent(getEvent());
+		saved = saved && eventService.saveEvent(getEvent());
 		return saved;
 	}
 }
