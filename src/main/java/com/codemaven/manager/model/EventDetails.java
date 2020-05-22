@@ -1,5 +1,7 @@
 package com.codemaven.manager.model;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import com.codemaven.generated.tables.pojos.Events;
@@ -13,6 +15,9 @@ import com.codemaven.manager.db.service.EventsService;
 import com.codemaven.manager.db.service.TeamsService;
 import com.codemaven.manager.db.service.TracksService;
 
+import lombok.Setter;
+
+@Setter
 public class EventDetails
 {
 	private ServiceFactory serviceFactory;
@@ -22,6 +27,7 @@ public class EventDetails
 	private List<Sessions> sessions;
 	private Hosts host;
 	private Tracks track;
+	private LocalDateTime calendarStart;
 	
 	public EventDetails(ServiceFactory serviceFactory, int eventId)
 	{
@@ -101,5 +107,20 @@ public class EventDetails
 		EventsService eventService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
 		saved = saved && eventService.saveEvent(getEvent());
 		return saved;
+	}
+	
+	public LocalDateTime getCalendarStart()
+	{
+		return calendarStart;
+	}
+	
+	public String getCalendarDisplay()
+	{
+		LocalDateTime eventDate = getEvent().getEventDate();
+		int slot = (int) ChronoUnit.DAYS.between(calendarStart, eventDate)+1;
+		int row = slot/5;
+		int column = slot%7;
+		String display = "style=\"grid-row:"+row+";grid-column:"+column+";\"";
+		return display;
 	}
 }

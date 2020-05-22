@@ -1,5 +1,6 @@
 package com.codemaven.manager.lists;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,14 @@ public class EventDetailsList extends ArrayList<EventDetails>
 		{
 			EventDetails details = new EventDetails(serviceFactory, event);
 			this.add(details);
+		}
+	}
+	
+	public void setCalendarStart(LocalDateTime calendarStart)
+	{
+		for (EventDetails event : this)
+		{
+			event.setCalendarStart(calendarStart);
 		}
 	}
 }
