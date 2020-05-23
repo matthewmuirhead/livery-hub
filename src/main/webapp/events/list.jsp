@@ -21,21 +21,19 @@
 				<c:forEach items="${eventDetails}" var="eventDetail">
 					<c:set var="event" value="${eventDetail.getEvent()}" />
 					<c:set var="eventDate" value="${event.getEventDate()}" />
-					<a href="/events?cmd=view&id=${eventDetail.getEvent().getId()}">
-						<div class="row row-striped">
-							<div class="col-2 text-right">
-								<h1 class="display-4"><span class="badge badge-secondary">${eventDate.getDayOfMonth()}</span></h1>
-								<h2>${eventDate.getMonth()}</h2>
-							</div>
-							<div class="col-10">
-								<h3 class="text-uppercase"><strong>${event.getName()}</strong></h3>
-								<ul class="list-inline">
-								    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> ${eventDate.getDayOfWeek()}</li>
-									<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> ${eventDate.getHour()}:${eventDate.getMinute()}</li>
-									<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> ${eventDetail.getTrack().getName()}</li>
-								</ul>
-								<p>${event.getDescription()}</p>
-							</div>
+					<a class="row row-striped" href="/events?cmd=view&id=${eventDetail.getEvent().getId()}">
+						<div class="col-2 text-right">
+							<h1 class="display-4"><span class="badge badge-secondary">${eventDate.getDayOfMonth()}</span></h1>
+							<h2>${eventDate.getMonth()}</h2>
+						</div>
+						<div class="col-10">
+							<h3 class="text-uppercase"><strong>${event.getName()}</strong></h3>
+							<ul class="list-inline">
+							    <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> ${eventDate.getDayOfWeek()}</li>
+								<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> ${eventDate.getHour()}:${eventDate.getMinute()}</li>
+								<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> ${eventDetail.getTrack().getName()}</li>
+							</ul>
+							<p>${event.getDescription()}</p>
 						</div>
 					</a>
 				</c:forEach>				
