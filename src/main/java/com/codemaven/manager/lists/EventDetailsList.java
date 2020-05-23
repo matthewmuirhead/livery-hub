@@ -34,4 +34,25 @@ public class EventDetailsList extends ArrayList<EventDetails>
 			event.setCalendarStart(calendarStart);
 		}
 	}
+	
+	public String toCalendarJson()
+	{
+		String delimiter = "";
+		String json = "\"events\":[";
+		for (EventDetails event : this)
+		{
+			String eventJson = delimiter+"{";
+			eventJson += "\"id\":\""+event.getEventId()+"\",";
+			eventJson += "\"name\":\""+event.getEvent().getName()+"\",";
+			eventJson += "\"display\":\""+event.getCalendarDisplay()+"\",";
+			LocalDateTime eventDate = event.getEvent().getEventDate();
+			eventJson += "\"time\":\""+eventDate.getHour()+":"+eventDate.getMinute()+"\",";
+			eventJson += "\"location\":\""+event.getTrack().getName()+"\"";
+			eventJson += "}";
+			json += eventJson;
+			delimiter = ", ";
+		}
+		json += "]";
+		return json;
+	}
 }

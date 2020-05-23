@@ -32,16 +32,17 @@ public class CalendarUpdateReplyJson
 	
 	public String toJsonString()
 	{
-		String returnString = "{\"currentMonthDays\":\""+currentMonthDays+"\",";
-		returnString += "\"prevMonthDays\":\""+prevMonthDays+"\",";
-		returnString += "\"nextMonthDays\":\""+nextMonthDays+"\",";
-		returnString += "\"prevMonthStart\":\""+prevMonthStart+"\",";
-		returnString += "\"prevMonthEnd\":\""+prevMonthEnd+"\",";
-		returnString += "\"nextMonthStart\":\""+nextMonthStart+"\",";
-		returnString += "\"nextMonthEnd\":\""+nextMonthEnd+"\",";
-		returnString += "\"currentMonth\":\""+currentMonth+"\",";
-		returnString += "\"currentMonthValue\":\""+currentMonth.getValue()+"\",";
-		returnString += "\"currentYear\":\""+currentYear+"\"}";
-		return returnString;
+		String json = "{\"currentMonthDays\":\""+currentMonthDays+"\",";
+		json += "\"prevMonthDays\":\""+prevMonthDays+"\",";
+		json += "\"nextMonthDays\":\""+nextMonthDays+"\",";
+		json += "\"prevMonthStart\":\""+prevMonthStart+"\",";
+		json += "\"prevMonthEnd\":\""+prevMonthEnd+"\",";
+		json += "\"nextMonthStart\":\""+nextMonthStart+"\",";
+		json += "\"nextMonthEnd\":\""+nextMonthEnd+"\",";
+		json += "\"currentMonth\":\""+currentMonth+"\",";
+		json += "\"currentMonthValue\":\""+currentMonth.getValue()+"\",";
+		json += "\"currentYear\":\""+currentYear+"\",";
+		json += eventDetails.toCalendarJson()+"}";
+		return json;
 	}
 }

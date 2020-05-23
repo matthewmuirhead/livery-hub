@@ -6,12 +6,14 @@ import java.util.List;
 
 import com.codemaven.generated.tables.pojos.Events;
 import com.codemaven.generated.tables.pojos.Hosts;
+import com.codemaven.generated.tables.pojos.Locations;
 import com.codemaven.generated.tables.pojos.Sessions;
 import com.codemaven.generated.tables.pojos.Teams;
 import com.codemaven.generated.tables.pojos.Tracks;
 import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
 import com.codemaven.manager.db.service.EventsService;
+import com.codemaven.manager.db.service.HostsService;
 import com.codemaven.manager.db.service.TeamsService;
 import com.codemaven.manager.db.service.TracksService;
 
@@ -27,6 +29,7 @@ public class EventDetails
 	private List<Sessions> sessions;
 	private Hosts host;
 	private Tracks track;
+	private Locations location;
 	private LocalDateTime calendarStart;
 	
 	public EventDetails(ServiceFactory serviceFactory, int eventId)
@@ -87,7 +90,7 @@ public class EventDetails
 	{
 		if (host == null)
 		{
-			host = new Hosts();
+			host = serviceFactory.getInstance(ServiceType.HOST, HostsService.class).fetchHostById(getEvent().getHostId());
 		}
 		return host;
 	}
@@ -99,6 +102,15 @@ public class EventDetails
 			track = serviceFactory.getInstance(ServiceType.TRACK, TracksService.class).fetchTrackById(getEvent().getTrackId());
 		}
 		return track;
+	}
+	
+	public Locations getLocation()
+	{
+		if (location == null)
+		{
+			location = serviceFactory.getInstance(ServiceType.TRACK, TracksService.class).fetchLocationById(getTrack().getLocationId());
+		}
+		return location;
 	}
 	
 	public boolean save()
@@ -118,9 +130,9 @@ public class EventDetails
 	{
 		LocalDateTime eventDate = getEvent().getEventDate();
 		int slot = (int) ChronoUnit.DAYS.between(calendarStart, eventDate)+1;
-		int row = slot/5;
+		int row = (slot/7)+2;
 		int column = slot%7;
-		String display = "style=\"grid-row:"+row+";grid-column:"+column+";\"";
+		String display = "style='grid-row:"+row+";grid-column:"+column+";'";
 		return display;
 	}
 }
