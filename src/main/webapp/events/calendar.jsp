@@ -117,12 +117,24 @@ function fetchNextMonth()
 // gets called when we get a reply from an ajax save
 function handleAjaxReply(data)
 {
+	// Remove Current Calendar
 	$('#calendar').children('.day').remove();
 	$('#calendar').children('.task').remove();
+	
+	// Update month displays
 	$('#title').text("Upcoming Events - "+data.currentMonth);
 	$('#currentMonthDisplay').text(data.currentMonth);
 	$('#currentYearDisplay').text(data.currentYear);
 	
+	// Set values for next and prev month buttons
+	var currMonth = parseInt(data.currentMonthValue);
+	var currYear = parseInt(data.currentYear);
+	$("#backMonthId").val(currMonth-1 > 0 ? currMonth-1 : 12);
+	$("#backYear").val(currMonth-1 > 0 ? currYear : currYear-1);
+	$("#forwardMonthId").val(currMonth+1 <= 12 ? currMonth+1 : 1);
+	$("#forwardYear").val(currMonth+1 <= 12 ? currYear : currYear+1);
+	
+	// Add in days for month
 	if (data.prevMonthDays > 0)
 	{
 		for (var i = data.prevMonthStart; i<=data.prevMonthEnd; i++)
@@ -144,16 +156,21 @@ function handleAjaxReply(data)
 		}
 	}
 	
-	var currMonth = parseInt(data.currentMonthValue);
-	var currYear = parseInt(data.currentYear);
-	console.log(currMonth);
-	$("#backMonthId").val(currMonth-1 > 0 ? currMonth-1 : 12)
-	console.log(data.currentMonthValue);
-	$("#backYear").val(currMonth-1 > 0 ? currYear : currYear-1)
-	console.log(data.currentMonthValue);
-	$("#forwardMonthId").val(currMonth+1 <= 12 ? currMonth+1 : 1)
-	console.log(data.currentMonthValue);
-	$("#forwardYear").val(currMonth+1 <= 12 ? currYear : currYear+1)
+	// Add Events
+	data.events.forEach(setEvent);
+}
+
+function setEvent(item, index)
+{
+	var link = "<a class='task task--danger' "+item.display+" href='/events?cmd=view&id="+item.id+"'>";
+	var title = item.name;
+	var detail = "<div class='task__detail'>";
+	var time = "<h2><i class='fa fa-clock-o' aria-hidden='true'></i> "+item.time+"</h2>";
+	var location = "<p><i class='fa fa-location-arrow' aria-hidden='true'></i> "+item.location+"</p>";
+	var detailClose = "</div>";
+	var linkClose = "</a>";
+	$('#calendar').append(link+title+detail+time+location+detailClose+linkClose);
 }
 
 </script>
+
