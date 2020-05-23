@@ -13,10 +13,10 @@
 			<page-encoding>UTF-8</page-encoding>
 		</jsp-property-group>
 	</jsp-config>-->
-	<servlet-mapping>
+	<!--<servlet-mapping>
 		<servlet-name>*</servlet-name>
 		<url-pattern>*.jsp</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>-->
 	<display-name>Event Manager</display-name>
 	<filter>
 		<display-name>EventConcierge</display-name>
