@@ -71,6 +71,20 @@ public class TracksService implements Service
 		return track;
 	}
 	
+	public Locations fetchLocationById(final int locationId)
+	{
+		Locations location = null;
+		if (locationId > 0)
+		{
+			location = dao.fetchLocationById(locationId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried fetching location with id " + locationId);
+		}
+		return location;
+	}
+	
 	@Override
 	public ServiceType getType()
 	{

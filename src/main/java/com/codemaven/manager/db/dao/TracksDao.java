@@ -45,4 +45,11 @@ public class TracksDao
 				.where(Tables.TRACKS.ID.eq(trackId))
 				.fetchOneInto(Tracks.class);
 	}
+	
+	public Locations fetchLocationById(final int locationId)
+	{
+		return dsl.selectFrom(Tables.LOCATIONS)
+				.where(Tables.LOCATIONS.ID.eq(locationId))
+				.fetchOneInto(Locations.class);
+	}
 }
