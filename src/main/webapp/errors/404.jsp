@@ -21,35 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
 </head>
 <body class="bg-light">
-	<nav class="main-header navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<a class="navbar-brand" href="/"> <img src="../img/cm-banner.png"
-			width="30" height="30" class="d-inline-block align-top" alt="">
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarText" aria-controls="navbarText"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarText">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="/">Dashboard</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/events">Events</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/hosts">Hosts</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/tracks">Tracks</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/cars">Cars</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
+	<jsp:include page="../includes/navbar.jsp" />
 <div class="error">
 
 <div class="wrap">
