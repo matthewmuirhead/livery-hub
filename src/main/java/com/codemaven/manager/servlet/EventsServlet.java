@@ -318,7 +318,7 @@ public class EventsServlet extends ServletBase
 		event.setId(getParameterInt(req, "eventId"));
 		event.setName(getParameterString(req, "name"));
 		event.setDescription(getParameterString(req, "description"));
-		event.setRegulations(getParameterString(req, ""));
+		event.setRegulations(getParameterString(req, "regulations"));
 		event.setHostId(getParameterInt(req, "hostId"));
 		event.setTrackId(getParameterInt(req, "trackId"));
 		event.setEventDate(LocalDateTime.parse(getParameterString(req, "eventDate")));
