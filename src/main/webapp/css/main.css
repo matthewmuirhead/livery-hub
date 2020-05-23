@@ -166,17 +166,20 @@ a, a:hover { text-decoration: none; color: #fff; }
 
 .row-striped:nth-of-type(odd){
   background-color: #efefef;
-  border-left: 4px #000000 solid;
 }
 
 .row-striped:nth-of-type(even){
   background-color: #ffffff;
-  border-left: 4px #efefef solid;
 }
 
 .row-striped {
     padding: 15px 0;
     color:#282A2C;
+    border-left: 4px #000000 solid;
+}
+
+.row-striped:hover {
+    background: linear-gradient(to right, #e0081d 0%, #940412 100%);
 }
 
 .nav-tabs a {
@@ -190,10 +193,10 @@ a, a:hover { text-decoration: none; color: #fff; }
 
 button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #940412 100%); }
 
-.page-link {
+.page-link, .link-dark {
 	cursor:pointer;
 	color:#e0081d!important;
 }
-.page-link:hover {
+.page-link:hover, .link-dark:hover {
 	color:#940412!important;
 }
