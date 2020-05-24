@@ -4,7 +4,7 @@
 <div class="btn-bar">
 	<a id="saveButton" class="btn btn-success disabled">Save</a>
 	<a id="saveCloseButton" class="btn btn-primary">Save and Close</a>
-	<a id="cancel" href="${param.servletUrl}${param.customCancel}" class="btn btn-danger">Cancel</a>
+	<a id="cancel" href="${not empty param.cancelServletUrl ? param.cancelServletUrl : param.servletUrl}${param.customCancel}" class="btn btn-danger">Cancel</a>
 </div>
 
 <c:set var="ajaxSaveCmd" value="${not empty param.customCmd ? param.customCmd : 'ajaxSave'}"/>
