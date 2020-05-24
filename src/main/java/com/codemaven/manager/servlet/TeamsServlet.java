@@ -18,6 +18,7 @@ import com.codemaven.manager.db.service.CarsService;
 import com.codemaven.manager.db.service.DriversService;
 import com.codemaven.manager.db.service.TeamsService;
 import com.codemaven.manager.enums.NavBarZone;
+import com.codemaven.manager.model.AjaxSaveReplyJson;
 import com.codemaven.manager.model.CarsExtended;
 import com.codemaven.manager.model.TeamDetails;
 import com.codemaven.manager.util.StringUtil;
@@ -53,6 +54,9 @@ public class TeamsServlet extends ServletBase
 		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list")) {
 			doList(req, resp);
 		}
+		else if (StringUtil.isEqual(cmd, "manager")) {
+			doManager(req, resp);
+		}
 		else if (StringUtil.isEqual(cmd, "new")) {
 			doNew(req, resp);
 		}
@@ -86,20 +90,33 @@ public class TeamsServlet extends ServletBase
 	
 	private void doNew(HttpServletRequest req, HttpServletResponse resp)
 	{
-		List<CarsExtended> cars = serviceFactory.getInstance(ServiceType.CAR, CarsService.class).fetchAllCarsSorted();
-		req.setAttribute("cars", cars);
-		List<Drivers> drivers = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class).fetchAllDrivers();
-		req.setAttribute("drivers", drivers);
-		req.setAttribute("title", "New Team");
-		displayPage(req, resp, JSP_PATH+"/edit.jsp");
+		int eventId = getParameterInt(req, "eventId");
+		if (eventId > 0)
+		{
+			List<CarsExtended> cars = serviceFactory.getInstance(ServiceType.CAR, CarsService.class).fetchAllCarsSorted();
+			req.setAttribute("cars", cars);
+			List<Drivers> drivers = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class).fetchAllDrivers();
+			req.setAttribute("drivers", drivers);
+			req.setAttribute("title", "New Team");
+			req.setAttribute("eventId", eventId);
+			displayPage(req, resp, JSP_PATH+"/edit.jsp");
+		}
+		else
+		{
+			displayPage(req, resp, JSP_PATH, true);
+		}
 	}
 	
 	private void doEdit(HttpServletRequest req, HttpServletResponse resp)
 	{
-		int teamId = getParameterInt(req, "id");
+		int teamId = getParameterInt(req, "teamId");
+		doEdit(req, resp, teamId);
+	}
+	
+	private void doEdit(HttpServletRequest req, HttpServletResponse resp, int teamId)
+	{
 		Teams team = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchTeamById(teamId);
-		TeamDetails teamDetails = new TeamDetails(serviceFactory, team);
-		req.setAttribute("teamDetails", teamDetails);
+		req.setAttribute("team", team);
 		List<CarsExtended> cars = serviceFactory.getInstance(ServiceType.CAR, CarsService.class).fetchAllCarsSorted();
 		req.setAttribute("cars", cars);
 		List<Drivers> drivers = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class).fetchAllDrivers();
@@ -108,9 +125,62 @@ public class TeamsServlet extends ServletBase
 		displayPage(req, resp, JSP_PATH+"/edit.jsp");
 	}
 	
-	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax)
+	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
 	{
-		
+		AjaxSaveReplyJson replyJson = new AjaxSaveReplyJson();
+		Teams team = populateTeamFromRequest(req);
+		boolean saved = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).saveTeam(team);
+		if (isAjax)
+		{
+			if (saved)
+			{
+				// Success Ajax Response
+				replyJson.addErrorMessage(AjaxSaveReplyJson.SUCCESS_KEY, "Event " + team.getName() + " saved successfully.");
+				resp.setContentType("application/json");
+				resp.getWriter().write(replyJson.toJsonString());
+			}
+			else
+			{
+				// Failed Ajax Response
+				replyJson.addErrorMessage(AjaxSaveReplyJson.GENERAL_ERROR, "Could not save event " + team.getName() + ".");
+				resp.setContentType("application/json");
+				resp.getWriter().write(replyJson.toJsonString());
+			}
+		}
+		else
+		{
+			if (saved)
+			{
+				displayPage(req, resp, JSP_PATH+"?cmd=manager&id="+team.getId(), true);
+			}
+			else
+			{
+				req.setAttribute(AjaxSaveReplyJson.GENERAL_ERROR, "Could not save event " + team.getName() + ".");
+				int eventId = team.getEventId();
+				if (eventId > 0)
+				{
+					doEdit(req, resp, eventId);
+				}
+				
+			}
+		}
+	}
+	
+	private Teams populateTeamFromRequest(HttpServletRequest req)
+	{
+		Teams team = new Teams();
+		team.setId(getParameterInt(req, "teamId"));
+		team.setEventId(getParameterInt(req, "eventId"));
+		team.setName(getParameterString(req, "name"));
+		team.setDriver_1(getParameterInt(req, "driver1"));
+		team.setDriver_2(getParameterInt(req, "driver2"));
+		team.setDriver_3(getParameterInt(req, "driver3"));
+		team.setDriver_4(getParameterInt(req, "driver4"));
+		team.setCarId(getParameterInt(req, "carId"));
+		team.setNumber(getParameterInt(req, "number"));
+		team.setCategory(getParameterString(req, "category"));
+		team.setStatus(getParameterString(req, "status"));
+		return team;
 	}
 	
 	private void doDelete(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
@@ -137,6 +207,11 @@ public class TeamsServlet extends ServletBase
 				resp.getWriter().write(replyJson);
 			}
 		}
+	}
+	
+	private void doManager(HttpServletRequest req, HttpServletResponse resp)
+	{
+		
 	}
 	
 	@Override
