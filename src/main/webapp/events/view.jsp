@@ -155,25 +155,29 @@
 				</div>
 			</div>
 			
-			<!-- Show Teams Widget -->
-			<div class="row">
-				<!-- Total Race Starts -->
-				<div class="col-xl-3 col-md-6 mb-4">
-					<div class="card border-left-primary shadow h-100 py-2">
-						<div class="card-body">
-							<div class="row no-gutters align-items-center">
-								<div class="col mr-2">
-									<div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Race Starts</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">{{data.totalStarts}}</div>
-								</div>
-								<div class="col-auto">
-									<i class="fas fa-traffic-light fa-2x text-gray-300"></i>
+			<!-- Teams Widget -->
+			<c:if test="${not empty eventDetails.getTeams()}">
+				<div class="row">
+					<c:forEach var="teamDetails" items="${eventDetails.getTeams()}">
+						<!-- Total Race Starts -->
+						<a class="col-xl-3 col-md-6 mb-4" href="/teams?cmd=view&teamId=${teamDetails.getTeamId()}">
+							<div class="card border-left-primary shadow h-100 py-2 border ${teamDetails.getStatusStyle()}">
+								<div class="card-body pt-3">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-danger text-uppercase mb-1">${teamDetails.getTeam().getName()}</div>
+											<c:forEach var="driver" items="${teamDetails.getDrivers()}">
+												<div class="h6 mb-0 font-weight-bold text-secondary">${driver.getName()}</div>
+											</c:forEach>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</a>
+					</c:forEach>
 				</div>
-			</div>
+			</c:if>
+			
 			
 			<c:if test="${not empty eventDetails.getEvent().getRegulations()}">
 				<div class="row">
