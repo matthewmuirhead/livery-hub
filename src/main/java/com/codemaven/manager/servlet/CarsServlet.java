@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codemaven.generated.tables.pojos.Cars;
 import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
 import com.codemaven.manager.db.service.CarsService;
