@@ -88,6 +88,10 @@ public class EventsServlet extends ServletBase
 		{
 			doSave(req, resp, true);
 		}
+		else if (StringUtil.isEqual(cmd, "ajaxDeleteSession"))
+		{
+			doDeleteSession(req, resp, true);
+		}
 	}
 	
 	private void doCalendar(HttpServletRequest req, HttpServletResponse resp) throws IOException
@@ -323,6 +327,28 @@ public class EventsServlet extends ServletBase
 		event.setTrackId(getParameterInt(req, "trackId"));
 		event.setEventDate(LocalDateTime.parse(getParameterString(req, "eventDate")));
 		return event;
+	}
+	
+	private void doDeleteSession(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
+	{
+		int sessionId = getParameterInt(req, "sessionId");
+		// Delete actual team
+		boolean success = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).deleteSessionById(sessionId);
+		if (isAjax)
+		{
+			if (success)
+			{
+				String replyJson = "{\"successMessage\":\"Session with ID "+sessionId+" successfully deleted\",\"removedId\":\""+sessionId+"\"}";
+				resp.setContentType("application/json");
+				resp.getWriter().write(replyJson);
+			}
+			else
+			{
+				String replyJson = "{\"errorMessage\":\"Could not delete session with ID "+sessionId+"\"}";
+				resp.setContentType("application/json");
+				resp.getWriter().write(replyJson);
+			}
+		}
 	}
 	
 	@Override
