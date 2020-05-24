@@ -78,6 +78,34 @@ public class EventsService implements Service
 		return sessions;
 	}
 	
+	public Sessions fetchSessionById(final int sessionId)
+	{
+		Sessions session = null;
+		if (sessionId > 0)
+		{
+			session = dao.fetchSessionById(sessionId);
+		}
+		else
+		{
+			log.debug("Tried fetching sessions with event id " + sessionId);
+		}
+		return session;
+	}
+	
+	public boolean saveSession(final Sessions session)
+	{
+		boolean saved = false;
+		if (session != null)
+		{
+			saved = dao.saveSession(session);
+		}
+		else
+		{
+			log.debug("Tried saving null session");
+		}
+		return saved;
+	}
+	
 	public boolean saveEvent(final Events event)
 	{
 		boolean saved = false;

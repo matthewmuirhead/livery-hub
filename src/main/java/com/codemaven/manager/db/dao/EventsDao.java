@@ -10,6 +10,7 @@ import com.codemaven.generated.Tables;
 import com.codemaven.generated.tables.pojos.Events;
 import com.codemaven.generated.tables.pojos.Sessions;
 import com.codemaven.generated.tables.records.EventsRecord;
+import com.codemaven.generated.tables.records.SessionsRecord;
 
 import lombok.AllArgsConstructor;
 
@@ -46,6 +47,19 @@ public class EventsDao
 		return dsl.selectFrom(Tables.SESSIONS)
 				.where(Tables.SESSIONS.EVENT_ID.eq(eventId))
 				.fetchInto(Sessions.class);
+	}
+	
+	public Sessions fetchSessionById(final int sessionId)
+	{
+		return dsl.selectFrom(Tables.SESSIONS)
+				.where(Tables.SESSIONS.ID.eq(sessionId))
+				.fetchOneInto(Sessions.class);
+	}
+	
+	public boolean saveSession(final Sessions session)
+	{
+		SessionsRecord record = dsl.newRecord(Tables.SESSIONS, session);
+		return dsl.insertInto(Tables.SESSIONS).set(record).onDuplicateKeyUpdate().set(record).execute() > 0;
 	}
 	
 	public boolean saveEvent(final Events event)
