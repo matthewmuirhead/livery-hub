@@ -249,12 +249,6 @@ public class EventsServlet extends ServletBase
 	private void doView(HttpServletRequest req, HttpServletResponse resp)
 	{
 		int eventId = getParameterInt(req, "id");
-		doView(req, resp, eventId);
-	}
-	
-	private void doView(HttpServletRequest req, HttpServletResponse resp, int id)
-	{
-		int eventId = getParameterInt(req, "id");
 		EventDetails eventDetails = new EventDetails(serviceFactory, eventId);
 		eventDetails.populate();
 		req.setAttribute("eventDetails", eventDetails);
@@ -282,6 +276,11 @@ public class EventsServlet extends ServletBase
 	private void doEdit(HttpServletRequest req, HttpServletResponse resp)
 	{
 		int eventId = getParameterInt(req, "id");
+		doEdit(req, resp, eventId);
+	}
+	
+	private void doEdit(HttpServletRequest req, HttpServletResponse resp, int eventId)
+	{
 		EventDetails eventDetails = new EventDetails(serviceFactory, eventId);
 		eventDetails.populate();
 		req.setAttribute("eventDetails", eventDetails);
@@ -327,7 +326,7 @@ public class EventsServlet extends ServletBase
 			else
 			{
 				req.setAttribute(AjaxSaveReplyJson.GENERAL_ERROR, "Could not save event " + event.getName() + ".");
-				doView(req, resp, event.getId());
+				doEdit(req, resp, event.getId());
 			}
 		}
 	}
