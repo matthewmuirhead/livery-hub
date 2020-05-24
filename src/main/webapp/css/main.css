@@ -200,3 +200,7 @@ button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #9
 .page-link:hover, .link-dark:hover {
 	color:#940412!important;
 }
+
+.table td, .table th {
+	vertical-align:middle!important;
+}
