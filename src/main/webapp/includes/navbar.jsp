@@ -19,6 +19,9 @@
 			<li class="mx-3 nav-item ${zones[3].name() == navbarzone.name() ? 'active' : ''}">
 				<a class="nav-link" href="/events">Events</a>
 			</li>
+			<li class="mx-3 nav-item ${zones[5].name() == navbarzone.name() ? 'active' : ''}">
+				<a class="nav-link" href="/teams">Teams</a>
+			</li>
 			<li class="mx-3 nav-item ${zones[4].name() == navbarzone.name() ? 'active' : ''}">
 				<a class="nav-link" href="/hosts">Hosts</a>
 			</li>
