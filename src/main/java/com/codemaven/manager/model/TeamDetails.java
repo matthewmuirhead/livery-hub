@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.codemaven.generated.tables.pojos.Drivers;
+import com.codemaven.generated.tables.pojos.Events;
 import com.codemaven.generated.tables.pojos.TeamFuel;
 import com.codemaven.generated.tables.pojos.TeamTires;
 import com.codemaven.generated.tables.pojos.Teams;
@@ -11,6 +12,7 @@ import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
 import com.codemaven.manager.db.service.CarsService;
 import com.codemaven.manager.db.service.DriversService;
+import com.codemaven.manager.db.service.EventsService;
 import com.codemaven.manager.db.service.TeamsService;
 
 import lombok.Setter;
@@ -21,18 +23,21 @@ public class TeamDetails
 	private TeamsService teamsService;
 	private DriversService driversService;
 	private CarsService carsService;
+	private EventsService eventsService;
 	private int teamId;
 	private Teams team;
 	private List<Drivers> drivers;
 	private List<TeamFuel> fuel;
 	private List<TeamTires> tires;
 	private CarsExtended car;
+	private Events event;
 	
 	public TeamDetails(ServiceFactory serviceFactory, int teamId)
 	{
 		this.teamsService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
 		this.driversService = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class);
 		this.carsService = serviceFactory.getInstance(ServiceType.CAR, CarsService.class);
+		this.eventsService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
 		this.teamId = teamId;
 	}
 	
@@ -41,6 +46,7 @@ public class TeamDetails
 		this.teamsService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
 		this.driversService = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class);
 		this.carsService = serviceFactory.getInstance(ServiceType.CAR, CarsService.class);
+		this.eventsService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
 		this.team = team;
 		this.teamId = team.getId();
 	}
@@ -93,6 +99,15 @@ public class TeamDetails
 			car = carsService.fetchCarById(getTeam().getCarId());
 		}
 		return car;
+	}
+	
+	public Events getEvent()
+	{
+		if (event == null)
+		{
+			event = eventsService.fetchEventById(getTeam().getEventId());
+		}
+		return event;
 	}
 	
 	public List<Drivers> getDrivers()
