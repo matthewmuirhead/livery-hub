@@ -166,8 +166,9 @@
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-danger text-uppercase mb-1">${teamDetails.getTeam().getName()}</div>
+											<div class="h6 mb-0 font-weight-bold text-secondary">${teamDetails.getCar().getFullNameAndYear()}</div>
 											<c:forEach var="driver" items="${teamDetails.getDrivers()}">
-												<div class="h6 mb-0 font-weight-bold text-secondary">${driver.getName()}</div>
+												<div class="h6 mb-0 text-secondary">${driver.getName()}</div>
 											</c:forEach>
 										</div>
 									</div>
