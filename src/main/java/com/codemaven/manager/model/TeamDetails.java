@@ -121,7 +121,7 @@ public class TeamDetails
 	{
 		switch (getTeam().getStatus())
 		{
-			case "Confirmed":
+			case "Registered":
 				return "border-success";
 			case "Provisional":
 				return "border-warning";
