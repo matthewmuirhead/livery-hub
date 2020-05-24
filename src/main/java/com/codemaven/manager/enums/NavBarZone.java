@@ -6,5 +6,6 @@ public enum NavBarZone
 	TRACKS,
 	CARS,
 	EVENTS,
-	HOSTS;
+	HOSTS,
+	TEAMS;
 }
