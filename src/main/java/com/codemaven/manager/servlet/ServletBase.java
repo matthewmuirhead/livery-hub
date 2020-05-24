@@ -132,6 +132,21 @@ public abstract class ServletBase
 		return value;
 	}
 	
+	protected boolean getParameterBoolean(final HttpServletRequest req, final String key)
+	{
+		boolean value = false;
+		Object o = req.getParameter(key);
+		if (o instanceof Boolean)
+		{
+			value = (boolean) o;
+		}
+		else if (o instanceof String)
+		{
+			value = StringUtil.strToBoolean((String) o);
+		}
+		return value;
+	}
+	
 	protected String getCmd(final HttpServletRequest req)
 	{
 		String cmd = getParameterString(req, "cmd");
