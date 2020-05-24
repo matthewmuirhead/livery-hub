@@ -92,6 +92,20 @@ public class EventsService implements Service
 		return saved;
 	}
 	
+	public boolean deleteSessionById(final int sessionId)
+	{
+		boolean deleted = true;
+		if (sessionId > 0)
+		{
+			deleted = dao.deleteSessionById(sessionId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried deleting team with id " + sessionId);
+		}
+		return deleted;
+	}
+	
 	@Override
 	public ServiceType getType()
 	{

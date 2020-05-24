@@ -53,4 +53,10 @@ public class EventsDao
 		EventsRecord record = dsl.newRecord(Tables.EVENTS, event);
 		return dsl.insertInto(Tables.EVENTS).set(record).onDuplicateKeyUpdate().set(record).execute() > 0;
 	}
+	
+	public boolean deleteSessionById(final int sessionId)
+	{
+		return dsl.deleteFrom(Tables.SESSIONS)
+				.where(Tables.SESSIONS.ID.eq(sessionId)).execute() > 0;
+	}
 }
