@@ -50,6 +50,11 @@ public class TeamsService implements Service
 		return team;
 	}
 	
+	public List<Teams> fetchAllTeams()
+	{
+		return dao.fetchAllTeams();
+	}
+	
 	public List<TeamTires> fetchTeamTiresByTeamId(final int teamId)
 	{
 		List<TeamTires> teamTires = new ArrayList<>();

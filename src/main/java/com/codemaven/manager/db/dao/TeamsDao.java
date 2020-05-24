@@ -32,6 +32,13 @@ public class TeamsDao
 				.fetchOneInto(Teams.class);
 	}
 	
+	public List<Teams> fetchAllTeams()
+	{
+		return dsl.selectFrom(Tables.TEAMS)
+				.orderBy(Tables.TEAMS.NAME)
+				.fetchInto(Teams.class);
+	}
+	
 	public List<TeamTires> fetchTeamTiresByTeamId(final int teamId)
 	{
 		return dsl.selectFrom(Tables.TEAM_TIRES)
