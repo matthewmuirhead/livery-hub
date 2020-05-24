@@ -83,6 +83,20 @@ public class TeamsService implements Service
 		return teamFuels;
 	}
 	
+	public boolean saveTeam(final Teams team)
+	{
+		boolean saved = false;
+		if (team != null)
+		{
+			saved = dao.saveTeam(team);
+		}
+		else
+		{
+			log.debug("Tried saving null team");
+		}
+		return saved;
+	}
+	
 	public boolean deleteTeamTiresByTeamId(final int teamId)
 	{
 		boolean deleted = true;

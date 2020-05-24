@@ -9,6 +9,7 @@ import com.codemaven.generated.Tables;
 import com.codemaven.generated.tables.pojos.TeamFuel;
 import com.codemaven.generated.tables.pojos.TeamTires;
 import com.codemaven.generated.tables.pojos.Teams;
+import com.codemaven.generated.tables.records.TeamsRecord;
 
 import lombok.AllArgsConstructor;
 
@@ -51,6 +52,12 @@ public class TeamsDao
 		return dsl.selectFrom(Tables.TEAM_FUEL)
 				.where(Tables.TEAM_FUEL.TEAM_ID.eq(teamId))
 				.fetchInto(TeamFuel.class);
+	}
+	
+	public boolean saveTeam(final Teams team)
+	{
+		TeamsRecord record = dsl.newRecord(Tables.TEAMS, team);
+		return dsl.insertInto(Tables.TEAMS).set(record).onDuplicateKeyUpdate().set(record).execute() > 0;
 	}
 	
 	public boolean deleteTeamTiresByTeamId(final int teamId)
