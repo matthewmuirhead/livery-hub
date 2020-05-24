@@ -2,6 +2,7 @@ package com.codemaven.manager.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.codemaven.generated.tables.pojos.Events;
@@ -25,7 +26,7 @@ public class EventDetails
 	private ServiceFactory serviceFactory;
 	private int eventId;
 	private Events event;
-	private List<Teams> teams;
+	private List<TeamDetails> teams;
 	private List<Sessions> sessions;
 	private Hosts host;
 	private Tracks track;
@@ -68,11 +69,18 @@ public class EventDetails
 		return event;
 	}
 	
-	public List<Teams> getTeams()
+	public List<TeamDetails> getTeams()
 	{
 		if (teams == null || teams.size() == 0)
 		{
-			teams = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchEventsTeams(eventId);
+			teams = new ArrayList<>();
+			TeamsService teamsService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
+			List<Teams> fetchedTeams = teamsService.fetchEventsTeams(eventId);
+			for (Teams team : fetchedTeams)
+			{
+				TeamDetails details = new TeamDetails(serviceFactory, team);
+				teams.add(details);
+			}
 		}
 		return teams;
 	}
