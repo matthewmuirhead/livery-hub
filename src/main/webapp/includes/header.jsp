@@ -1,13 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="isDashboard" value="${pageContext.request.requestURI eq '/dashboard.jsp'}"/>
 <!DOCTYPE html>
 <html class="${isDashboard ? 'h-100': ''}">
 <head>
-<meta charset="ISO-8859-1">
-<title>${title}</title>
- <!-- Bootstrap CSS -->
+	<meta charset="ISO-8859-1">
+	<title>${title}</title>
+ 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css" crossorigin="anonymous">
