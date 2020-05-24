@@ -6,7 +6,7 @@
 <div
 	class="d-flex align-items-center p-3 my-3 text-white bg-red-fade rounded box-shadow">
 	<div class="lh-100">
-		<h3 class="mb-0">${event.getName()}</h3>
+		<h3 class="mb-0">${not empty event.getName() ? event.getName() : 'New Event'}</h3>
 	</div>
 </div>
 
@@ -77,7 +77,7 @@
 			</div>
 			<div class="tab-pane fade" id="nav-sessions" role="tabpanel" aria-labelledby="nav-sessions-tab">
 				<div class="d-flex flex-column align-items-end">
-					<table class="table table-hover mt-3">
+					<table class="table table-hover mt-3 mb-0">
 						<tbody id="sessions-table">
 							<tr>
 								<th>Session Name</th>
@@ -104,19 +104,19 @@
 									<td>${session.getTireSets()}</td>
 									<td>${session.getQualyDriver()}</td>
 									<td class="pr-0 text-right">
-										<a href="/events?cmd=editSession&teamId=${session.getId()}" class="btn btn-secondary">Edit</a>
+										<a href="/events?cmd=editSession&sessionId=${session.getId()}" class="btn btn-secondary">Edit</a>
 										<button id="session_remove_${session.getId()}" class="btn btn-danger" onclick="removeSession(this)">Remove</button>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<button class="btn btn-info" style="width:100px;">Add New</button>
+					<a href="/events?cmd=newSession&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
 				</div>
 			</div>
 			<div class="tab-pane fade" id="nav-teams" role="tabpanel" aria-labelledby="nav-teams-tab">
 				<div class="d-flex flex-column align-items-end">
-					<table class="table table-hover mt-3">
+					<table class="table table-hover mt-3 mb-0">
 						<tbody id="teams-table">
 							<tr>
 								<th>Team Name</th>
@@ -141,12 +141,14 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<button class="btn btn-info" style="width:100px;">Add New</button>
+					<a href="/teams?cmd=new&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
 				</div>
 			</div>
 		</div>
+		<c:set var="customCancel" value="?cmd=view&id=${eventDetails.getEventId()}" />
 		<jsp:include page="../includes/savebuttons.jsp">
 			<jsp:param value="/events" name="servletUrl" />
+			<jsp:param value="${not empty eventDetails.getEventId() ? customCancel : ''}" name="customCancel"/>
 			<jsp:param value="eventForm" name="formId" />
 		</jsp:include>
 
