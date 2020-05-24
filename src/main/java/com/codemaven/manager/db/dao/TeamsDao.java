@@ -45,4 +45,25 @@ public class TeamsDao
 				.where(Tables.TEAM_FUEL.TEAM_ID.eq(teamId))
 				.fetchInto(TeamFuel.class);
 	}
+	
+	public boolean deleteTeamTiresByTeamId(final int teamId)
+	{
+		return dsl.deleteFrom(Tables.TEAM_TIRES)
+				.where(Tables.TEAM_TIRES.TEAM_ID.eq(teamId))
+				.execute() > 0;
+	}
+	
+	public boolean deleteTeamFuelByTeamId(final int teamId)
+	{
+		return dsl.deleteFrom(Tables.TEAM_FUEL)
+				.where(Tables.TEAM_FUEL.TEAM_ID.eq(teamId))
+				.execute() > 0;
+	}
+	
+	public boolean deleteTeamById(final int teamId)
+	{
+		return dsl.deleteFrom(Tables.TEAMS)
+				.where(Tables.TEAMS.ID.eq(teamId))
+				.execute() > 0;
+	}
 }

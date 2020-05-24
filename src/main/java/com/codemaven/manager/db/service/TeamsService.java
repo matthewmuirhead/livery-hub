@@ -78,6 +78,48 @@ public class TeamsService implements Service
 		return teamFuels;
 	}
 	
+	public boolean deleteTeamTiresByTeamId(final int teamId)
+	{
+		boolean deleted = true;
+		if (teamId > 0)
+		{
+			deleted = dao.deleteTeamTiresByTeamId(teamId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried deleting team tires with team id " + teamId);
+		}
+		return deleted;
+	}
+	
+	public boolean deleteTeamFuelByTeamId(final int teamId)
+	{
+		boolean deleted = true;
+		if (teamId > 0)
+		{
+			deleted = dao.deleteTeamFuelByTeamId(teamId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried deleting team fuel with team id " + teamId);
+		}
+		return deleted;
+	}
+	
+	public boolean deleteTeamById(final int teamId)
+	{
+		boolean deleted = true;
+		if (teamId > 0)
+		{
+			deleted = dao.deleteTeamById(teamId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried deleting team with id " + teamId);
+		}
+		return deleted;
+	}
+	
 	@Override
 	public ServiceType getType()
 	{
