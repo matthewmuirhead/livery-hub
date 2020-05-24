@@ -2,6 +2,7 @@ package com.codemaven.manager.servlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codemaven.generated.tables.pojos.Events;
 import com.codemaven.generated.tables.pojos.Hosts;
+import com.codemaven.generated.tables.pojos.Sessions;
 import com.codemaven.generated.tables.pojos.Tracks;
 import com.codemaven.manager.db.ServiceFactory;
 import com.codemaven.manager.db.ServiceType;
@@ -91,6 +93,22 @@ public class EventsServlet extends ServletBase
 		else if (StringUtil.isEqual(cmd, "ajaxDeleteSession"))
 		{
 			doDeleteSession(req, resp, true);
+		}
+		else if (StringUtil.isEqual(cmd, "newSession"))
+		{
+			doNewSession(req, resp);
+		}
+		else if (StringUtil.isEqual(cmd, "editSession"))
+		{
+			doEditSession(req, resp);
+		}
+		else if (StringUtil.isEqual(cmd, "saveSession"))
+		{
+			doSaveSession(req, resp, false);
+		}
+		else if (StringUtil.isEqual(cmd, "ajaxSaveSession"))
+		{
+			doSaveSession(req, resp, true);
 		}
 	}
 	
@@ -248,7 +266,6 @@ public class EventsServlet extends ServletBase
 	private void doNew(HttpServletRequest req, HttpServletResponse resp)
 	{
 		Events event = new Events();
-		event.setName("New Event");
 		event.setEventDate(LocalDateTime.now().withSecond(0).withNano(0));
 		req.setAttribute("event", event);
 		
@@ -275,7 +292,7 @@ public class EventsServlet extends ServletBase
 		List<Hosts> hosts = serviceFactory.getInstance(ServiceType.HOST, HostsService.class).fetchAllHosts();
 		req.setAttribute("hosts", hosts);
 		
-		req.setAttribute("title", "Edit "+eventDetails.getEvent().getName());
+		req.setAttribute("title", "Edit Event: "+eventDetails.getEvent().getName());
 		displayPage(req, resp, JSP_PATH+"/edit.jsp");
 	}
 	
@@ -283,8 +300,7 @@ public class EventsServlet extends ServletBase
 	{
 		AjaxSaveReplyJson replyJson = new AjaxSaveReplyJson();
 		Events event = populateEventFromRequest(req);
-		EventDetails eventDetails = new EventDetails(serviceFactory, event);
-		boolean saved = eventDetails.save();
+		boolean saved = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).saveEvent(event);
 		if (isAjax)
 		{
 			if (saved)
@@ -306,7 +322,7 @@ public class EventsServlet extends ServletBase
 		{
 			if (saved)
 			{
-				displayPage(req, resp, JSP_PATH, true);
+				displayPage(req, resp, JSP_PATH+"?cmd=view&id="+event.getId(), true);
 			}
 			else
 			{
@@ -327,6 +343,99 @@ public class EventsServlet extends ServletBase
 		event.setTrackId(getParameterInt(req, "trackId"));
 		event.setEventDate(LocalDateTime.parse(getParameterString(req, "eventDate")));
 		return event;
+	}
+	
+	private void doNewSession(HttpServletRequest req, HttpServletResponse resp)
+	{
+		int eventId = getParameterInt(req, "eventId");
+		if (eventId > 0)
+		{
+			Sessions session = new Sessions();
+			session.setActualStart(LocalTime.of(0, 0));
+			session.setInGameStart(LocalTime.of(0, 0));
+			session.setTireSets(50);
+			req.setAttribute("session", session);
+			req.setAttribute("eventId", eventId);
+			req.setAttribute("title", "New Session");
+			displayPage(req, resp, JSP_PATH+"/sessions/edit.jsp");
+		}
+		else
+		{
+			displayPage(req, resp, JSP_PATH, true);
+		}
+	}
+	
+	private void doEditSession(HttpServletRequest req, HttpServletResponse resp)
+	{
+		int sessionId = getParameterInt(req, "sessionId");
+		doEditSession(req, resp, sessionId);
+	}
+	
+	private void doEditSession(HttpServletRequest req, HttpServletResponse resp, int sessionId)
+	{
+		Sessions session = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchSessionById(sessionId);
+		if (session != null)
+		{
+			req.setAttribute("session", session);
+			req.setAttribute("title", "Edit Session: " + session.getName());
+			displayPage(req, resp, JSP_PATH+"/sessions/edit.jsp");
+		}
+		else
+		{
+			displayPage(req, resp, JSP_PATH, true);
+		}
+	}
+	
+	private void doSaveSession(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
+	{
+		AjaxSaveReplyJson replyJson = new AjaxSaveReplyJson();
+		Sessions session = populateSessionFromRequest(req);
+		boolean saved = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).saveSession(session);
+		if (isAjax)
+		{
+			if (saved)
+			{
+				// Success Ajax Response
+				replyJson.addErrorMessage(AjaxSaveReplyJson.SUCCESS_KEY, "Session " + session.getName() + " saved successfully.");
+				resp.setContentType("application/json");
+				resp.getWriter().write(replyJson.toJsonString());
+			}
+			else
+			{
+				// Failed Ajax Response
+				replyJson.addErrorMessage(AjaxSaveReplyJson.GENERAL_ERROR, "Could not save session " + session.getName() + ".");
+				resp.setContentType("application/json");
+				resp.getWriter().write(replyJson.toJsonString());
+			}
+		}
+		else
+		{
+			if (saved)
+			{
+				displayPage(req, resp, JSP_PATH+"?cmd=edit&id="+session.getEventId()+"#nav-sessions", true);
+			}
+			else
+			{
+				req.setAttribute(AjaxSaveReplyJson.GENERAL_ERROR, "Could not save event " + session.getName() + ".");
+				doEditSession(req, resp, session.getId());
+			}
+		}
+	}
+	
+	private Sessions populateSessionFromRequest(HttpServletRequest req)
+	{
+		Sessions session = new Sessions();
+		session.setId(getParameterInt(req, "sessionId"));
+		session.setEventId(getParameterInt(req, "eventId"));
+		session.setName(getParameterString(req, "name"));
+		session.setActualStart(LocalTime.parse(getParameterString(req, "actualStart")));
+		session.setInGameStart(LocalTime.parse(getParameterString(req, "inGameStart")));
+		session.setLengthHours(getParameterInt(req, "hours"));
+		session.setLengthMinutes(getParameterInt(req, "minutes"));
+		session.setTimeProgression(getParameterInt(req, "timeProgression"));
+		session.setTireSets(getParameterInt(req, "tireSets"));
+		session.setQualyDriver(getParameterBoolean(req, "qualyDriver"));
+		return session;
 	}
 	
 	private void doDeleteSession(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
