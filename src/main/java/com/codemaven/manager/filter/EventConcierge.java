@@ -40,6 +40,10 @@ public class EventConcierge extends ServletBase implements Filter
 		{
 			chain.doFilter(req, resp);
 		}
+		else if (StringUtil.isEqual("/favicon.ico", url))
+		{
+			chain.doFilter(req, resp);
+		}
 		else
 		{
 			if (log.isDebugEnabled())
