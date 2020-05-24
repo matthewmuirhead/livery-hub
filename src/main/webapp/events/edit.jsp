@@ -76,73 +76,10 @@
 				</form>
 			</div>
 			<div class="tab-pane fade" id="nav-sessions" role="tabpanel" aria-labelledby="nav-sessions-tab">
-				<div class="d-flex flex-column align-items-end">
-					<table class="table table-hover mt-3 mb-0">
-						<tbody id="sessions-table">
-							<tr>
-								<th>Session Name</th>
-								<th>Duration</th>
-								<th>Actual Start</th>
-								<th>In-game Start</th>
-								<th>Time Progression</th>
-								<th>Tire Sets</th>
-								<th>Qualy Driver Only</th>
-								<th></th>
-							</tr>
-							<c:forEach var="session" items="${eventDetails.getSessions()}">
-								<tr id="session_${session.getId()}">
-									<td>${session.getName()}</td>
-									<td>
-										${session.getLengthHours() < 10 ? '0' : ''}${session.getLengthHours()}:${session.getLengthMinutes() < 10 ? '0' : ''}${session.getLengthMinutes()}</td>
-									<td>
-										${session.getActualStart().getHour() < 10 ? '0' : ''}${session.getActualStart().getHour()}:${session.getActualStart().getMinute() < 10 ? '0' : ''}${session.getActualStart().getMinute()}
-									</td>
-									<td>
-										${session.getInGameStart().getHour() < 10 ? '0' : ''}${session.getInGameStart().getHour()}:${session.getInGameStart().getMinute() < 10 ? '0' : ''}${session.getInGameStart().getMinute()}
-									</td>
-									<td>${session.getTimeProgression()}</td>
-									<td>${session.getTireSets()}</td>
-									<td>${session.getQualyDriver()}</td>
-									<td class="pr-0 text-right">
-										<a href="/events?cmd=editSession&sessionId=${session.getId()}" class="btn btn-secondary">Edit</a>
-										<button id="session_remove_${session.getId()}" class="btn btn-danger" onclick="removeSession(this)">Remove</button>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<a href="/events?cmd=newSession&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
-				</div>
+				<jsp:include page="includes/sessions.jsp" />
 			</div>
 			<div class="tab-pane fade" id="nav-teams" role="tabpanel" aria-labelledby="nav-teams-tab">
-				<div class="d-flex flex-column align-items-end">
-					<table class="table table-hover mt-3 mb-0">
-						<tbody id="teams-table">
-							<tr>
-								<th>Team Name</th>
-								<th>Car</th>
-								<th>Number</th>
-								<th>Category</th>
-								<th>Status</th>
-								<th></th>
-							</tr>
-							<c:forEach var="teamDetails" items="${eventDetails.getTeams()}">
-								<tr id="team_${teamDetails.getTeamId()}">
-									<td>${teamDetails.getTeam().getName()}</td>
-									<td>${teamDetails.getCar().getFullNameAndYear()}</td>
-									<td>${teamDetails.getTeam().getNumber()}</td>
-									<td>${teamDetails.getTeam().getCategory()}</td>
-									<td>${teamDetails.getTeam().getStatus()}</td>
-									<td class="pr-0 text-right">
-										<a href="/teams?cmd=edit&teamId=${teamDetails.getTeamId()}" class="btn btn-secondary">Edit</a>
-										<button id="team_remove_${teamDetails.getTeamId()}" class="btn btn-danger" onclick="removeTeam(this)">Remove</button>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<a href="/teams?cmd=new&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
-				</div>
+				<jsp:include page="includes/teams.jsp" />
 			</div>
 		</div>
 		<c:set var="customCancel" value="?cmd=view&id=${eventDetails.getEventId()}" />
