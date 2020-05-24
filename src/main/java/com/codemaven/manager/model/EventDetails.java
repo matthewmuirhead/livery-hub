@@ -121,14 +121,6 @@ public class EventDetails
 		return location;
 	}
 	
-	public boolean save()
-	{
-		boolean saved = true;
-		EventsService eventService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
-		saved = saved && eventService.saveEvent(getEvent());
-		return saved;
-	}
-	
 	public LocalDateTime getCalendarStart()
 	{
 		return calendarStart;
