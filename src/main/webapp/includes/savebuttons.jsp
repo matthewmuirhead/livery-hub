@@ -1,10 +1,13 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Button -->
 <div class="btn-bar">
 	<a id="saveButton" class="btn btn-success disabled">Save</a>
 	<a id="saveCloseButton" class="btn btn-primary">Save and Close</a>
-	<a id="cancel" href="${param.servletUrl}" class="btn btn-danger">Cancel</a>
+	<a id="cancel" href="${param.servletUrl}${param.customCancel}" class="btn btn-danger">Cancel</a>
 </div>
+
+<c:set var="ajaxSaveCmd" value="${not empty param.customCmd ? param.customCmd : 'ajaxSave'}"/>
 
 <script>
 
@@ -65,7 +68,7 @@ function ajaxSave()
     
     $.ajax({
         type: "POST",
-        url: '${param.servletUrl}?cmd=ajaxSave',
+        url: '${param.servletUrl}?cmd=${ajaxSaveCmd}',
         data: $("#${param.formId}").serialize(),
         success: handleAjaxReply,
     	error: function()
