@@ -15,7 +15,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 pb-3">
-				<input class="w-100 form-control" id="search" type="text" placeholder="Search"/>
+				<input class="w-100 form-control" id="search" type="text" placeholder="Search" onkeyup="search(this)"/>
 			</div>
 			<div class="col-md-12 pb-3">
 				<div class="d-flex flex-column align-items-end">
@@ -56,14 +56,58 @@
 
 <script>
 
-$(document).ready(function(){
-	  $("#search").on("keyup", function() {
-	    var value = $(this).val().toLowerCase();
-	    $("#teams-table tr").filter(function() {
-	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-	    });
-	  });
+function search(element)
+{
+	var value = element.value.toLowerCase();
+	$("#teams-table tr").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 	});
+}
+	
+function removeTeam(target)
+{
+	var id = target.id.substring(12);
+	
+	$.ajax({
+        type: "POST",
+        url: '/teams?cmd=ajaxDelete',
+        data: "teamId="+id,
+        success: function(data)
+        {
+        	handleAjaxReply(data, '#team_'+data.removedId);
+        },
+    	error: function()
+    	{
+        	alert("An error occured deleting the team, please try again.");
+    	}
+	});
+}
 
+function handleAjaxReply(data, elementId)
+{
+	var success = false;
+	$.each(data, function(elementId, newValue) 
+	{
+		if (elementId === "successMessage")
+		{
+			$('#success_message_content').text(newValue);
+			success = true;
+		}
+		else if (elementId === "errorMessage")
+		{
+			$('#failure_message_content').text(newValue);
+		}
+	});
+			
+	if (success)
+	{
+		$(elementId).remove();
+		$('#success_message').show();
+	}
+	else
+	{
+		$('#failure_message').show();
+	}
+}
 
 </script>
