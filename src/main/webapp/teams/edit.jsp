@@ -16,7 +16,7 @@
 					<div class="form-row mt-4">
 						
 						<div class="col-sm-12 pb-3">
-                            <label for="name">Session Name</label>
+                            <label for="name">Team Name</label>
                             <input type="text" class="form-control" name="name" value="${team.getName()}" />
                         </div>
                         <div class="col-sm-8 pb-3">

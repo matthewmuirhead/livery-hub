@@ -2,11 +2,8 @@
 <jsp:include page="../includes/header.jsp" />
 <div class="d-flex align-items-center p-3 my-3 text-white bg-red-fade rounded box-shadow justify-content-between">
 	<div class="lh-100">
-		<h6 class="mb-0 text-white">Cars</h6>
-		<small>Available Car List</small>
-	</div>
-	<div class="d-flex align-items-center new-item">
-		<a href="/cars?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
+		<h6 class="mb-0 text-white">Teams</h6>
+		<small>All teams</small>
 	</div>
 </div>
 <jsp:include page="../includes/carousel.jsp" />
