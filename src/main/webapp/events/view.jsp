@@ -160,7 +160,7 @@
 				<div class="row">
 					<c:forEach var="teamDetails" items="${eventDetails.getTeams()}">
 						<!-- Total Race Starts -->
-						<a class="col-xl-3 col-md-6 mb-4" href="/teams?cmd=view&teamId=${teamDetails.getTeamId()}">
+						<a class="col-xl-3 col-md-6 mb-4" href="/teams?cmd=manager&teamId=${teamDetails.getTeamId()}">
 							<div class="card border-left-primary shadow h-100 py-2 border ${teamDetails.getStatusStyle()}">
 								<div class="card-body pt-3">
 									<div class="row no-gutters align-items-center">
