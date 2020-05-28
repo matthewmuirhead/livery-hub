@@ -194,9 +194,16 @@ a, a:hover { text-decoration: none; color: #fff; }
 	color:#282A2C;
 }
 
-.nav-link.active {
-	color:#fff!important;
-	background: linear-gradient(to right, #e0081d 0%, #940412 100%);
+.drop-link {
+	color: rgba(255,255,255,0.5)!important;
+}
+
+.drop-link:hover {
+	color: rgba(255,255,255,.75)!important;
+}
+
+.drop-link.active {
+	color: #fff!important;
 }
 
 button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #940412 100%); }
