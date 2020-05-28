@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
 </head>
 <body class="bg-light">
-	<jsp:include page="../includes/navbar.jsp" />
+	<jsp:include page="../template/navbar.jsp" />
 <div class="error">
 
 <div class="wrap">
