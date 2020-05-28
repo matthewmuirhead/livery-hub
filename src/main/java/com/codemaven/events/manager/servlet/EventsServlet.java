@@ -469,6 +469,6 @@ public class EventsServlet extends ServletBase
 	@Override
 	protected NavBarZone getNavBarZone()
 	{
-		return NavBarZone.EVENTS;
+		return NavBarZone.EXTERNAL_EVENTS;
 	}
 }

@@ -5,7 +5,8 @@ public enum NavBarZone
 	DASHBOARD,
 	TRACKS,
 	CARS,
-	EVENTS,
+	EXTERNAL_EVENTS,
 	HOSTS,
-	TEAMS;
+	TEAMS,
+	USERS;
 }
