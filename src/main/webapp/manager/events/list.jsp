@@ -6,7 +6,7 @@
 		<small>List View</small>
 	</div>
 	<div class="d-flex align-items-center new-item">
-		<a href="/events?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
+		<a href="/manager/events?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
 	</div>
 </div>
 <jsp:include page="../../includes/carousel.jsp" />
@@ -21,7 +21,7 @@
 				<c:forEach items="${eventDetails}" var="eventDetail">
 					<c:set var="event" value="${eventDetail.getEvent()}" />
 					<c:set var="eventDate" value="${event.getEventDate()}" />
-					<a class="row row-striped" href="/events?cmd=view&id=${eventDetail.getEvent().getId()}">
+					<a class="row row-striped" href="/manager/events?cmd=view&id=${eventDetail.getEvent().getId()}">
 						<div class="col-2 text-right">
 							<h1 class="display-4"><span class="badge badge-secondary">${eventDate.getDayOfMonth()}</span></h1>
 							<h2>${eventDate.getMonth()}</h2>

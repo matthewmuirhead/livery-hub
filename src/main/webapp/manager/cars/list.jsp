@@ -6,7 +6,7 @@
 		<small>Available Car List</small>
 	</div>
 	<div class="d-flex align-items-center new-item">
-		<a href="/cars?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
+		<a href="/manager/cars?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
 	</div>
 </div>
 <jsp:include page="../../includes/carousel.jsp" />
@@ -16,7 +16,7 @@
 		<div class="row">
 			<c:forEach items="${cars}" var="car">
 				<div class="col-md-4 mt-4">
-					<a href="/cars?cmd=view&id=${car.getId()}">
+					<a href="/manager/cars?cmd=view&id=${car.getId()}">
 						<div class="card profile-card">
 							<div class="card-img-block">
 								<img class="card-img-top"

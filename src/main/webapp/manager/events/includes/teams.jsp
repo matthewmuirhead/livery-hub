@@ -18,12 +18,12 @@
 					<td>${teamDetails.getTeam().getCategory()}</td>
 					<td>${teamDetails.getTeam().getStatus()}</td>
 					<td class="pr-0 text-right">
-						<a href="/teams?cmd=edit&teamId=${teamDetails.getTeamId()}" class="btn btn-secondary">Edit</a>
+						<a href="/manager/teams?cmd=edit&teamId=${teamDetails.getTeamId()}" class="btn btn-secondary">Edit</a>
 						<button id="team_remove_${teamDetails.getTeamId()}" class="btn btn-danger" onclick="removeTeam(this)">Remove</button>
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="/teams?cmd=new&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
+	<a href="/manager/teams?cmd=new&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
 </div>

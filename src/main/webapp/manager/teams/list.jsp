@@ -35,8 +35,8 @@
 									<td>${teamDetails.getCar().getFullNameAndYear()}</td>
 									<td>${teamDetails.getTeam().getNumber()}</td>
 									<td class="pr-0 text-right">
-										<a href="/teams?cmd=manager&teamId=${teamDetails.getTeamId()}" class="btn btn-primary">Manager</a>
-										<a href="/teams?cmd=edit&teamId=${teamDetails.getTeamId()}" class="btn btn-secondary">Edit</a>
+										<a href="/manager/teams?cmd=manager&teamId=${teamDetails.getTeamId()}" class="btn btn-primary">Manager</a>
+										<a href="/manager/teams?cmd=edit&teamId=${teamDetails.getTeamId()}" class="btn btn-secondary">Edit</a>
 										<button id="team_remove_${teamDetails.getTeamId()}" class="btn btn-danger" onclick="removeTeam(this)">Remove</button>
 									</td>
 								</tr>
@@ -67,7 +67,7 @@ function removeTeam(target)
 	
 	$.ajax({
         type: "POST",
-        url: '/teams?cmd=ajaxDelete',
+        url: '/manager/teams?cmd=ajaxDelete',
         data: "teamId="+id,
         success: function(data)
         {

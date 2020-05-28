@@ -5,7 +5,7 @@
 		<h3 class="mb-0">${eventDetails.getEvent().getName()}</h3>
 	</div>
 	<div class="d-flex align-items-center new-item">
-		<a href="/events?cmd=edit&id=${eventDetails.getEvent().getId()}" class="hvr-underline-from-left hvr-float">Edit</a>
+		<a href="/manager/events?cmd=edit&id=${eventDetails.getEvent().getId()}" class="hvr-underline-from-left hvr-float">Edit</a>
 	</div>
 </div>
 
@@ -160,7 +160,7 @@
 				<div class="row">
 					<c:forEach var="teamDetails" items="${eventDetails.getTeams()}">
 						<!-- Total Race Starts -->
-						<a class="col-xl-3 col-md-6 mb-4" href="/teams?cmd=manager&teamId=${teamDetails.getTeamId()}">
+						<a class="col-xl-3 col-md-6 mb-4" href="/manager/teams?cmd=manager&teamId=${teamDetails.getTeamId()}">
 							<div class="card border-left-primary shadow h-100 py-2 border ${teamDetails.getStatusStyle()}">
 								<div class="card-body pt-3">
 									<div class="row no-gutters align-items-center">

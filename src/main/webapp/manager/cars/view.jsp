@@ -8,7 +8,7 @@ ${not empty car.getImage() ? headerImg : ''}
 <section>
 	<div class="container">
 		<jsp:include page="../../includes/alertmessages.jsp" />
-		<form class="well form-horizontal" id="carForm" action="/cars?cmd=save" method="POST"
+		<form class="well form-horizontal" id="carForm" action="/manager/cars?cmd=save" method="POST"
 			id="contact_form">
 			<fieldset style="margin-top:-20px">
 				<input type="hidden" name="carId" value="${car.getId()}"/>
@@ -43,7 +43,7 @@ ${not empty car.getImage() ? headerImg : ''}
 				</div>
 
 				<jsp:include page="../../includes/savebuttons.jsp">
-					<jsp:param value="/cars" name="servletUrl"/>
+					<jsp:param value="/manager/cars" name="servletUrl"/>
 					<jsp:param value="carForm" name="formId"/>
 				</jsp:include>
 

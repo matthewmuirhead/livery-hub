@@ -6,7 +6,7 @@
 <section>
 	<div class="container">
 		<jsp:include page="../../../includes/alertmessages.jsp" />
-		<form class="well form-horizontal" id="sessionForm" action="/events?cmd=saveSession" method="POST"
+		<form class="well form-horizontal" id="sessionForm" action="/manager/events?cmd=saveSession" method="POST"
 			id="contact_form">
 			<fieldset style="margin-top:-20px">
 				<input type="hidden" name="sessionId" value="${session.getId()}"/>
@@ -63,7 +63,7 @@
 				</div>
 
 				<jsp:include page="../../../includes/savebuttons.jsp">
-					<jsp:param value="/events" name="servletUrl"/>
+					<jsp:param value="/manager/events" name="servletUrl"/>
 					<jsp:param value="ajaxSaveSession" name="customCmd"/>
 					<jsp:param value="?cmd=edit&id=${not empty session.getEventId() ? session.getEventId() : eventId}" name="customCancel"/>
 					<jsp:param value="sessionForm" name="formId"/>

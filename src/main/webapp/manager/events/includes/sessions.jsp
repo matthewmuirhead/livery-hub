@@ -28,12 +28,12 @@
 					<td>${session.getTireSets()}</td>
 					<td>${session.getQualyDriver()}</td>
 					<td class="pr-0 text-right">
-						<a href="/events?cmd=editSession&sessionId=${session.getId()}" class="btn btn-secondary">Edit</a>
+						<a href="/manager/events?cmd=editSession&sessionId=${session.getId()}" class="btn btn-secondary">Edit</a>
 						<button id="session_remove_${session.getId()}" class="btn btn-danger" onclick="removeSession(this)">Remove</button>
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="/events?cmd=newSession&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
+	<a href="/manager/events?cmd=newSession&eventId=${eventDetails.getEventId()}" class="btn btn-info mb-3" style="width:100px;">Add New</a>
 </div>

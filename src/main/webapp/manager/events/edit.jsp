@@ -29,7 +29,7 @@
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-				<form class="well form-horizontal" id="eventForm" action="/events?cmd=save" method="POST" id="contact_form">
+				<form class="well form-horizontal" id="eventForm" action="/manager/events?cmd=save" method="POST" id="contact_form">
 					<fieldset>
 						<input type="hidden" name="eventId" value="${event.getId()}" />
 						<div class="col-md-10 offset-md-1">
@@ -84,7 +84,7 @@
 		</div>
 		<c:set var="customCancel" value="?cmd=view&id=${eventDetails.getEventId()}" />
 		<jsp:include page="../../includes/savebuttons.jsp">
-			<jsp:param value="/events" name="servletUrl" />
+			<jsp:param value="/manager/events" name="servletUrl" />
 			<jsp:param value="${not empty eventDetails.getEventId() ? customCancel : ''}" name="customCancel"/>
 			<jsp:param value="eventForm" name="formId" />
 		</jsp:include>
@@ -101,7 +101,7 @@ function removeSession(target)
 	
 	$.ajax({
         type: "POST",
-        url: '/events?cmd=ajaxDeleteSession',
+        url: '/manager/events?cmd=ajaxDeleteSession',
         data: "sessionId="+id,
         success: function(data)
         {
@@ -120,7 +120,7 @@ function removeTeam(target)
 	
 	$.ajax({
         type: "POST",
-        url: '/teams?cmd=ajaxDelete',
+        url: '/manager/teams?cmd=ajaxDelete',
         data: "teamId="+id,
         success: function(data)
         {

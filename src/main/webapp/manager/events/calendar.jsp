@@ -6,7 +6,7 @@
 		<small>Calendar View</small>
 	</div>
 	<div class="d-flex align-items-center new-item">
-		<a href="/events?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
+		<a href="/manager/events?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
 	</div>
 </div>
 <jsp:include page="../../includes/carousel.jsp" />
@@ -28,7 +28,7 @@
 				<li class="page-item"><a class="page-link" id="forwardMonthLink">Next Month</a></li>
 				
 			</ul>
-			<a href="events?cmd=list" class="float-right"><button class="btn btn-danger bg-red-fade">List View</button></a>
+			<a href="/manager/events?cmd=list" class="float-right"><button class="btn btn-danger bg-red-fade">List View</button></a>
 		</div>
 		<div class="col-md-12 pb-3">
 			<div class="calendar-container">
@@ -62,7 +62,7 @@
 					
 					<c:forEach var="eventDetails" items="${thisMonthEventDetails}">
 						<c:set var="eventDate" value="${eventDetails.getEvent().getEventDate()}" />
-						<a class="task task--danger" ${eventDetails.getCalendarDisplay()} href="/events?cmd=view&id=${eventDetails.getEvent().getId()}">
+						<a class="task task--danger" ${eventDetails.getCalendarDisplay()} href="/manager/events?cmd=view&id=${eventDetails.getEvent().getId()}">
 							${eventDetails.getEvent().getName()}
 							<div class="task__detail">
 								<h2><i class="fa fa-clock-o" aria-hidden="true"></i> ${eventDate.getHour()}:${eventDate.getMinute()}</h2>
@@ -162,7 +162,7 @@ function handleAjaxReply(data)
 
 function setEvent(item, index)
 {
-	var link = "<a class='task task--danger' "+item.display+" href='/events?cmd=view&id="+item.id+"'>";
+	var link = "<a class='task task--danger' "+item.display+" href='/manager/events?cmd=view&id="+item.id+"'>";
 	var title = item.name;
 	var detail = "<div class='task__detail'>";
 	var time = "<h2><i class='fa fa-clock-o' aria-hidden='true'></i> "+item.time+"</h2>";

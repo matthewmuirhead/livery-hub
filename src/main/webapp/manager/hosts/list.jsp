@@ -6,7 +6,7 @@
 		<small>All Available Event Hosts</small>
 	</div>
 	<div class="d-flex align-items-center new-item">
-		<a href="/hosts?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
+		<a href="/manager/hosts?cmd=new" class="hvr-underline-from-left hvr-float">Add New</a>
 	</div>
 </div>
 <jsp:include page="../../includes/carousel.jsp" />
@@ -16,7 +16,7 @@
 		<div class="row">
 			<c:forEach items="${hosts}" var="host">
 				<div class="col-md-4 mt-4">
-					<a href="/cars?cmd=view&id=${host.getId()}">
+					<a href="/manager/hosts?cmd=view&id=${host.getId()}">
 						<div class="card profile-card">
 							<div class="card-img-block">
 								<img class="card-img-top"
