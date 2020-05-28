@@ -7,5 +7,6 @@ public enum ServiceType
 	EVENT,
 	HOST,
 	TEAM,
-	TRACK;
+	TRACK,
+	USER;
 }
