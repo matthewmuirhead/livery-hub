@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
-import org.testcontainers.shaded.io.netty.util.internal.StringUtil;
 
 import com.codemaven.events.db.Service;
 import com.codemaven.events.db.ServiceType;
 import com.codemaven.events.db.dao.TracksDao;
+import com.codemaven.events.util.StringUtil;
 import com.codemaven.generated.tables.pojos.Locations;
 import com.codemaven.generated.tables.pojos.Tracks;
 
