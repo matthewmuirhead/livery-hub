@@ -1,4 +1,4 @@
-package com.codemaven.events.model;
+package com.codemaven.events.manager.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,9 @@ import com.codemaven.events.db.service.CarsService;
 import com.codemaven.events.db.service.DriversService;
 import com.codemaven.events.db.service.EventsService;
 import com.codemaven.events.db.service.TeamsService;
+import com.codemaven.events.model.CarsExtended;
 import com.codemaven.generated.tables.pojos.Drivers;
-import com.codemaven.generated.tables.pojos.Events;
+import com.codemaven.generated.tables.pojos.ExternalEvents;
 import com.codemaven.generated.tables.pojos.TeamFuel;
 import com.codemaven.generated.tables.pojos.TeamTires;
 import com.codemaven.generated.tables.pojos.Teams;
@@ -30,7 +31,7 @@ public class TeamDetails
 	private List<TeamFuel> fuel;
 	private List<TeamTires> tires;
 	private CarsExtended car;
-	private Events event;
+	private ExternalEvents event;
 	
 	public TeamDetails(ServiceFactory serviceFactory, int teamId)
 	{
@@ -101,7 +102,7 @@ public class TeamDetails
 		return car;
 	}
 	
-	public Events getEvent()
+	public ExternalEvents getEvent()
 	{
 		if (event == null)
 		{

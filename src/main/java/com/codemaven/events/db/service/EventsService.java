@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.codemaven.events.db.Service;
 import com.codemaven.events.db.ServiceType;
 import com.codemaven.events.db.dao.EventsDao;
-import com.codemaven.generated.tables.pojos.Events;
+import com.codemaven.generated.tables.pojos.ExternalEvents;
 import com.codemaven.generated.tables.pojos.Sessions;
 
 import lombok.AllArgsConstructor;
@@ -22,9 +22,9 @@ public class EventsService implements Service
 {
 	private EventsDao dao;
 	
-	public List<Events> fetchEventsAfterDate(final LocalDateTime after)
+	public List<ExternalEvents> fetchEventsAfterDate(final LocalDateTime after)
 	{
-		List<Events> events = new ArrayList<>();
+		List<ExternalEvents> events = new ArrayList<>();
 		if (after != null)
 		{
 			events = dao.fetchEventsAfterDate(after);
@@ -36,9 +36,9 @@ public class EventsService implements Service
 		return events;
 	}
 
-	public List<Events> fetchEventsBetweenDates(final LocalDateTime before, final LocalDateTime after)
+	public List<ExternalEvents> fetchEventsBetweenDates(final LocalDateTime before, final LocalDateTime after)
 	{
-		List<Events> events = new ArrayList<>();
+		List<ExternalEvents> events = new ArrayList<>();
 		if (before != null && after != null)
 		{
 			events = dao.fetchEventsBetweenDates(before, after);
@@ -50,9 +50,9 @@ public class EventsService implements Service
 		return events;
 	}
 	
-	public Events fetchEventById(final int eventId)
+	public ExternalEvents fetchEventById(final int eventId)
 	{
-		Events events = null;
+		ExternalEvents events = null;
 		if (eventId > 0)
 		{
 			events = dao.fetchEventById(eventId);
@@ -106,7 +106,7 @@ public class EventsService implements Service
 		return saved;
 	}
 	
-	public boolean saveEvent(final Events event)
+	public boolean saveEvent(final ExternalEvents event)
 	{
 		boolean saved = false;
 		if (event != null)

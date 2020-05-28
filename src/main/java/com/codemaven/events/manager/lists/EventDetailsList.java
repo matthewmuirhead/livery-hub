@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.codemaven.events.db.ServiceFactory;
-import com.codemaven.events.model.EventDetails;
-import com.codemaven.generated.tables.pojos.Events;
+import com.codemaven.events.manager.model.ExternalEventDetails;
+import com.codemaven.generated.tables.pojos.ExternalEvents;
 
-public class EventDetailsList extends ArrayList<EventDetails>
+public class EventDetailsList extends ArrayList<ExternalEventDetails>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -17,19 +17,19 @@ public class EventDetailsList extends ArrayList<EventDetails>
 		super();
 	}
 	
-	public EventDetailsList(List<Events> events, ServiceFactory serviceFactory)
+	public EventDetailsList(List<ExternalEvents> events, ServiceFactory serviceFactory)
 	{
 		super();
-		for (Events event : events)
+		for (ExternalEvents event : events)
 		{
-			EventDetails details = new EventDetails(serviceFactory, event);
+			ExternalEventDetails details = new ExternalEventDetails(serviceFactory, event);
 			this.add(details);
 		}
 	}
 	
 	public void setCalendarStart(LocalDateTime calendarStart)
 	{
-		for (EventDetails event : this)
+		for (ExternalEventDetails event : this)
 		{
 			event.setCalendarStart(calendarStart);
 		}
@@ -39,7 +39,7 @@ public class EventDetailsList extends ArrayList<EventDetails>
 	{
 		String delimiter = "";
 		String json = "\"events\":[";
-		for (EventDetails event : this)
+		for (ExternalEventDetails event : this)
 		{
 			String eventJson = delimiter+"{";
 			eventJson += "\"id\":\""+event.getEventId()+"\",";

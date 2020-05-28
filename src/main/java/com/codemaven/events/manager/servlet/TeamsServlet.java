@@ -18,7 +18,7 @@ import com.codemaven.events.db.service.TeamsService;
 import com.codemaven.events.manager.enums.NavBarZone;
 import com.codemaven.events.model.AjaxSaveReplyJson;
 import com.codemaven.events.model.CarsExtended;
-import com.codemaven.events.model.TeamDetails;
+import com.codemaven.events.manager.model.TeamDetails;
 import com.codemaven.events.servlet.ServletBase;
 import com.codemaven.events.util.StringUtil;
 import com.codemaven.generated.tables.pojos.Drivers;

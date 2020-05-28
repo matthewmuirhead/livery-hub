@@ -1,4 +1,4 @@
-package com.codemaven.events.model;
+package com.codemaven.events.manager.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -11,7 +11,7 @@ import com.codemaven.events.db.service.EventsService;
 import com.codemaven.events.db.service.HostsService;
 import com.codemaven.events.db.service.TeamsService;
 import com.codemaven.events.db.service.TracksService;
-import com.codemaven.generated.tables.pojos.Events;
+import com.codemaven.generated.tables.pojos.ExternalEvents;
 import com.codemaven.generated.tables.pojos.Hosts;
 import com.codemaven.generated.tables.pojos.Locations;
 import com.codemaven.generated.tables.pojos.Sessions;
@@ -21,11 +21,11 @@ import com.codemaven.generated.tables.pojos.Tracks;
 import lombok.Setter;
 
 @Setter
-public class EventDetails
+public class ExternalEventDetails
 {
 	private ServiceFactory serviceFactory;
 	private int eventId;
-	private Events event;
+	private ExternalEvents event;
 	private List<TeamDetails> teams;
 	private List<Sessions> sessions;
 	private Hosts host;
@@ -33,13 +33,13 @@ public class EventDetails
 	private Locations location;
 	private LocalDateTime calendarStart;
 	
-	public EventDetails(ServiceFactory serviceFactory, int eventId)
+	public ExternalEventDetails(ServiceFactory serviceFactory, int eventId)
 	{
 		this.serviceFactory = serviceFactory;
 		this.eventId = eventId;
 	}
 	
-	public EventDetails(ServiceFactory serviceFactory, Events event)
+	public ExternalEventDetails(ServiceFactory serviceFactory, ExternalEvents event)
 	{
 		this.serviceFactory = serviceFactory;
 		this.event = event;
@@ -60,7 +60,7 @@ public class EventDetails
 		return eventId;
 	}
 	
-	public Events getEvent()
+	public ExternalEvents getEvent()
 	{
 		if (event == null)
 		{

@@ -23,10 +23,10 @@ import com.codemaven.events.manager.lists.EventDetailsList;
 import com.codemaven.events.model.AjaxSaveReplyJson;
 import com.codemaven.events.model.CalendarUpdateReplyJson;
 import com.codemaven.events.model.CarouselDisplayItem;
-import com.codemaven.events.model.EventDetails;
+import com.codemaven.events.manager.model.ExternalEventDetails;
 import com.codemaven.events.servlet.ServletBase;
 import com.codemaven.events.util.StringUtil;
-import com.codemaven.generated.tables.pojos.Events;
+import com.codemaven.generated.tables.pojos.ExternalEvents;
 import com.codemaven.generated.tables.pojos.Hosts;
 import com.codemaven.generated.tables.pojos.Sessions;
 import com.codemaven.generated.tables.pojos.Tracks;
@@ -146,7 +146,7 @@ public class EventsServlet extends ServletBase
 	private void fetchCalendarDetails(HttpServletRequest req, HttpServletResponse resp, LocalDateTime firstOfMonth, LocalDateTime lastOfMonth, boolean isAjaxUpdate) throws IOException
 	{
 		CalendarUpdateReplyJson replyJson = new CalendarUpdateReplyJson();
-		List<Events> thisMonthEvents = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventsBetweenDates(firstOfMonth, lastOfMonth);
+		List<ExternalEvents> thisMonthEvents = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventsBetweenDates(firstOfMonth, lastOfMonth);
 		EventDetailsList thisMonthEventDetails = new EventDetailsList(thisMonthEvents, serviceFactory);
 		
 		int prevMonthDays = firstOfMonth.getDayOfWeek().getValue()-1;
@@ -239,7 +239,7 @@ public class EventsServlet extends ServletBase
 				.withMinute(0)
 				.withSecond(0)
 				.withNano(0);
-		List<Events> events = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventsAfterDate(from);
+		List<ExternalEvents> events = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).fetchEventsAfterDate(from);
 		EventDetailsList eventDetailsList = new EventDetailsList(events, serviceFactory);
 		req.setAttribute("eventDetails", eventDetailsList);
 		
@@ -250,7 +250,7 @@ public class EventsServlet extends ServletBase
 	private void doView(HttpServletRequest req, HttpServletResponse resp)
 	{
 		int eventId = getParameterInt(req, "id");
-		EventDetails eventDetails = new EventDetails(serviceFactory, eventId);
+		ExternalEventDetails eventDetails = new ExternalEventDetails(serviceFactory, eventId);
 		eventDetails.populate();
 		req.setAttribute("eventDetails", eventDetails);
 		req.setAttribute("isIGTC", StringUtil.isEqual("IGTC", eventDetails.getTrack().getSet()));
@@ -260,7 +260,7 @@ public class EventsServlet extends ServletBase
 	
 	private void doNew(HttpServletRequest req, HttpServletResponse resp)
 	{
-		Events event = new Events();
+		ExternalEvents event = new ExternalEvents();
 		event.setEventDate(LocalDateTime.now().withSecond(0).withNano(0));
 		req.setAttribute("event", event);
 		
@@ -282,7 +282,7 @@ public class EventsServlet extends ServletBase
 	
 	private void doEdit(HttpServletRequest req, HttpServletResponse resp, int eventId)
 	{
-		EventDetails eventDetails = new EventDetails(serviceFactory, eventId);
+		ExternalEventDetails eventDetails = new ExternalEventDetails(serviceFactory, eventId);
 		eventDetails.populate();
 		req.setAttribute("eventDetails", eventDetails);
 		
@@ -299,7 +299,7 @@ public class EventsServlet extends ServletBase
 	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax) throws IOException
 	{
 		AjaxSaveReplyJson replyJson = new AjaxSaveReplyJson();
-		Events event = populateEventFromRequest(req);
+		ExternalEvents event = populateEventFromRequest(req);
 		boolean saved = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class).saveEvent(event);
 		if (isAjax)
 		{
@@ -332,9 +332,9 @@ public class EventsServlet extends ServletBase
 		}
 	}
 	
-	private Events populateEventFromRequest(HttpServletRequest req)
+	private ExternalEvents populateEventFromRequest(HttpServletRequest req)
 	{
-		Events event = new Events();
+		ExternalEvents event = new ExternalEvents();
 		event.setId(getParameterInt(req, "eventId"));
 		event.setName(getParameterString(req, "name"));
 		event.setDescription(getParameterString(req, "description"));
