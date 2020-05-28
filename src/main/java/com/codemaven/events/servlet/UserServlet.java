@@ -49,7 +49,14 @@ public class UserServlet extends ServletBase
 		Users user = getLoggedInUser(req);
 		if (user == null)
 		{
-			doLogin(req, resp);
+			if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "login"))
+			{
+				doLogin(req, resp);
+			}
+			else if (StringUtil.isEqual(cmd, "save"))
+			{
+				doSave(req, resp, false);
+			}
 		}
 		else
 		{
@@ -69,6 +76,10 @@ public class UserServlet extends ServletBase
 			{
 				doEdit(req, resp);
 			}
+			else if (StringUtil.isEqual(cmd, "save"))
+			{
+				doSave(req, resp, true);
+			}
 			else if (StringUtil.isEqual(cmd, "delete"))
 			{
 				doDelete(req, resp);
@@ -83,6 +94,7 @@ public class UserServlet extends ServletBase
 	
 	private void doView(HttpServletRequest req, HttpServletResponse resp)
 	{
+		req.setAttribute("title", "Driver Home");
 		displayPage(req, resp, JSP_PATH+"/view.jsp");
 	}
 	
@@ -108,11 +120,13 @@ public class UserServlet extends ServletBase
 			else
 			{
 				req.setAttribute("generalError", "Username/Password combination was invalid.");
+				req.setAttribute("title", "Login");
 				displayPage(req, resp, JSP_PATH+"/login.jsp");
 			}
 		}
 		else
 		{
+			req.setAttribute("title", "Login");
 			displayPage(req, resp, JSP_PATH+"/login.jsp");
 		}
 	}
@@ -120,20 +134,35 @@ public class UserServlet extends ServletBase
 	private void doLogout(HttpServletRequest req, HttpServletResponse resp)
 	{
 		setSessionValue(req, USER_SESSION_KEY, null);
+		displayPage(req, resp, JSP_PATH, true);
 	}
 	
 	private void doNew(HttpServletRequest req, HttpServletResponse resp)
+	{
+		
+	}
+	
+	private void doEdit(HttpServletRequest req, HttpServletResponse resp)
+	{
+		
+	}
+	
+	private void doSave(HttpServletRequest req, HttpServletResponse resp, boolean isAjax)
 	{
 		Users user = new Users();
 		user.setUsername(getParameterString(req, "username"));
 		String salt = BCrypt.gensalt(BCRYPT_SALT_ROUNDS);
 		String hashedPassword = BCrypt.hashpw(getParameterString(req, "password"), salt);
 		user.setPassword(hashedPassword);
-	}
-	
-	private void doEdit(HttpServletRequest req, HttpServletResponse resp)
-	{
 		
+		if (isAjax)
+		{
+			
+		}
+		else
+		{
+			displayPage(req, resp, JSP_PATH, true);
+		}
 	}
 	
 	private void doDelete(HttpServletRequest req, HttpServletResponse resp)
@@ -144,6 +173,6 @@ public class UserServlet extends ServletBase
 	@Override
 	protected NavBarZone getNavBarZone()
 	{
-		return null;
+		return NavBarZone.USERS;
 	}
 }
