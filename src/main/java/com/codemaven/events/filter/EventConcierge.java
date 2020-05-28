@@ -1,4 +1,4 @@
-package com.codemaven.manager.filter;
+package com.codemaven.events.filter;
 
 import java.io.IOException;
 
@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.codemaven.manager.enums.NavBarZone;
-import com.codemaven.manager.servlet.ServletBase;
-import com.codemaven.manager.util.StringUtil;
+import com.codemaven.events.manager.enums.NavBarZone;
+import com.codemaven.events.servlet.ServletBase;
+import com.codemaven.events.util.StringUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,34 +31,72 @@ public class EventConcierge extends ServletBase implements Filter
 	{
  		String url = ((HttpServletRequest) req).getRequestURI();
 		String servletName = getServletNameFromUrl(url);
-		if (checkIfServletIsSupported(servletName))
+		if (StringUtil.isEqual("manager", getBaseServletNameFromUrl(url)))
 		{
-			log.info("Servlet " + servletName + " Supported, continuing...");
-			chain.doFilter(req, resp);
-		}
-		else if (isImageAccess(url))
-		{
-			chain.doFilter(req, resp);
-		}
-		else if (StringUtil.isEqual("/favicon.ico", url))
-		{
-			chain.doFilter(req, resp);
+			if (checkIfManagerServletIsSupported(servletName))
+			{
+				log.info("Manager Servlet " + servletName + " Supported, continuing...");
+				chain.doFilter(req, resp);
+			}
+			else
+			{
+				if (log.isDebugEnabled())
+				{
+					log.debug("Tried to access invalid manager servlet: " + servletName);
+				}
+				displayPage((HttpServletRequest) req, (HttpServletResponse) resp, "/404", true);
+			}
 		}
 		else
 		{
-			if (log.isDebugEnabled())
+			if (checkIfServletIsSupported(servletName))
 			{
-				log.debug("Tried to access invalid servlet: " + servletName);
+				log.info("Servlet " + servletName + " Supported, continuing...");
+				chain.doFilter(req, resp);
 			}
-			displayPage((HttpServletRequest) req, (HttpServletResponse) resp, "/404", true);
+			else if (isImageAccess(url))
+			{
+				chain.doFilter(req, resp);
+			}
+			else if (StringUtil.isEqual("/favicon.ico", url))
+			{
+				chain.doFilter(req, resp);
+			}
+			else
+			{
+				if (log.isDebugEnabled())
+				{
+					log.debug("Tried to access invalid servlet: " + servletName);
+				}
+				displayPage((HttpServletRequest) req, (HttpServletResponse) resp, "/404", true);
+			}
 		}
+	}
+	
+	private String getBaseServletNameFromUrl(String url)
+	{
+		String serlvetName = "";
+		int slashPos = url.lastIndexOf('/');
+		if (slashPos > 0 && slashPos < url.length() - 1)
+		{
+			serlvetName = url.substring(1, slashPos);
+		}
+		return serlvetName;
+	}
+	
+	private boolean checkIfManagerServletIsSupported(String servletName)
+	{
+		String[] supportedServletNames =
+		
+		{ "", "events", "hosts", "tracks", "teams", "cars" };
+		return StringUtil.arrayContains(supportedServletNames, servletName);
 	}
 	
 	private boolean checkIfServletIsSupported(String servletName)
 	{
 		String[] supportedServletNames =
 		
-		{ "", "events", "hosts", "tracks", "teams", "cars", "404" };
+		{ "", "404" };
 		return StringUtil.arrayContains(supportedServletNames, servletName);
 	}
 	
