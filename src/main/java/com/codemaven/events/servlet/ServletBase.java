@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.codemaven.events.manager.enums.NavBarZone;
 import com.codemaven.events.util.StringUtil;
+import com.codemaven.generated.tables.pojos.Users;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class ServletBase
 {
+	protected static final String USER_SESSION_KEY = "Session_User";
+	
 	@GetMapping
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
@@ -45,6 +48,17 @@ public abstract class ServletBase
 	{
 		// This should be overridden by the sub class.
 		log.error("ServletBase ProcessRequest(HttpServletRequest, HttpServletResponse) accessed directly!");
+	}
+	
+	protected Users getLoggedInUser(HttpServletRequest req)
+	{
+		Users user = null;
+		Object sessionUser = getSessionValue(req, USER_SESSION_KEY);
+		if (sessionUser instanceof Users)
+		{
+			user = (Users) sessionUser;
+		}
+		return user;
 	}
 	
 	protected abstract NavBarZone getNavBarZone();
@@ -104,6 +118,12 @@ public abstract class ServletBase
 	{
 		HttpSession session = req.getSession();
 		session.setAttribute(key, object);
+	}
+	
+	protected Object getSessionValue(HttpServletRequest req, String key)
+	{
+		HttpSession session = req.getSession();
+		return session.getAttribute(key);
 	}
 
 	protected String getParameterString(final HttpServletRequest req, final String key)
