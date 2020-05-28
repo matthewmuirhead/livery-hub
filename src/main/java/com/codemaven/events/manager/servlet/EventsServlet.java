@@ -64,7 +64,7 @@ public class EventsServlet extends ServletBase
 		{
 			doCalendar(req, resp);
 		}
-		if (StringUtil.isEqual(cmd, "updateCalendar"))
+		else if (StringUtil.isEqual(cmd, "updateCalendar"))
 		{
 			doCalendarUpdate(req, resp);
 		}
@@ -111,6 +111,11 @@ public class EventsServlet extends ServletBase
 		else if (StringUtil.isEqual(cmd, "ajaxSaveSession"))
 		{
 			doSaveSession(req, resp, true);
+		}
+		else
+		{
+			log.debug("Tried accessing events with cmd: " + cmd);
+			displayError(req, resp, "The command used to access this page is invalid");
 		}
 	}
 	

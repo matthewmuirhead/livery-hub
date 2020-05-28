@@ -54,6 +54,11 @@ public class TracksServlet extends ServletBase
 		{
 			doList(req, resp);
 		}
+		else
+		{
+			log.debug("Tried accessing tracks with cmd: " + cmd);
+			displayError(req, resp, "The command used to access this page is invalid");
+		}
 	}
 	
 	private void doList(HttpServletRequest req, HttpServletResponse resp)

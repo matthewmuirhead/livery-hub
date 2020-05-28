@@ -69,6 +69,11 @@ public class CarsServlet extends ServletBase
 		{
 			doSave(req, resp, true);
 		}
+		else
+		{
+			log.debug("Tried accessing cars with cmd: " + cmd);
+			displayError(req, resp, "The command used to access this page is invalid");
+		}
 	}
 	
 	private void doList(HttpServletRequest req, HttpServletResponse resp)

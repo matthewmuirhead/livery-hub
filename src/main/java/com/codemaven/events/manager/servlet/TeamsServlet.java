@@ -81,6 +81,11 @@ public class TeamsServlet extends ServletBase
 		{
 			doDelete(req, resp, true);
 		}
+		else
+		{
+			log.debug("Tried accessing teams with cmd: " + cmd);
+			displayError(req, resp, "The command used to access this page is invalid");
+		}
 	}
 	
 	private void doList(HttpServletRequest req, HttpServletResponse resp)
