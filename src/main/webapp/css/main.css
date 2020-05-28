@@ -3,6 +3,14 @@ body { padding-top: 72px; color: #282A2C; }
 main { margin-bottom: 5rem; }
 a, a:hover { text-decoration: none; color: #fff; }
 
+/* Login */
+.bg-login-image { background:url("../img/IMG_7618.jpg"); background-position: center; background-size: cover; background-position-x: left; }
+/* Scroll to top */
+.scroll-to-top { position: fixed; right: 1rem; bottom: 1rem; display: none; width: 2.75rem; height: 2.75rem; text-align: center; color: #fff; background: rgba(90, 92, 105, 0.5); line-height: 46px; }
+.scroll-to-top:focus, .scroll-to-top:hover { color: white; }
+.scroll-to-top:hover { background: #5a5c69; }
+.scroll-to-top i { font-weight: 800; }
+
 .main-header {
     background: url(../img/dia-lines-grey.svg) top center repeat;
     background-color: #0b0b0b;
