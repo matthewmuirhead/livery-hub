@@ -14,23 +14,56 @@
 	<div class="collapse navbar-collapse" id="navbarText">
 		<ul class="navbar-nav mr-auto">
 			<li class="mx-3 nav-item ${zones[0].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/">Dashboard</a>
+				<a class="nav-link" href="/manager/">Dashboard</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[3].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/events">Events</a>
+			<li
+				class="mx-3 nav-item ${zones[3].name() == navbarzone.name() ? 'active' : ''}">
+				<a class="nav-link" href="/manager/events">Events</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[5].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/teams">Teams</a>
+			<li
+				class="mx-3 nav-item ${zones[5].name() == navbarzone.name() ? 'active' : ''}">
+				<a class="nav-link" href="/manager/teams">Teams</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[4].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/hosts">Hosts</a>
+			<li
+				class="mx-3 nav-item ${zones[4].name() == navbarzone.name() ? 'active' : ''}">
+				<a class="nav-link" href="/manager/hosts">Hosts</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[1].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/tracks">Tracks</a>
+			<li
+				class="mx-3 nav-item ${zones[1].name() == navbarzone.name() ? 'active' : ''}">
+				<a class="nav-link" href="/manager/tracks">Tracks</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[2].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/cars">Cars</a>
+			<li
+				class="mx-3 nav-item ${zones[2].name() == navbarzone.name() ? 'active' : ''}">
+				<a class="nav-link" href="/manager/cars">Cars</a>
 			</li>
 		</ul>
+		<span class="navbar-text pt-0 pb-0">
+			<c:set var="user" value="${sessionScope.Session_User}"></c:set>
+			<c:choose>
+				<c:when test="${not empty user}">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/user">
+								Driver Home
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/user?cmd=logout">
+								Log	Out
+							</a>
+						</li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/user">
+								Login
+							</a>
+						</li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
+		</span>
 	</div>
 </nav>
