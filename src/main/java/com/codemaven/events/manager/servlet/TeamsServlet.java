@@ -39,7 +39,8 @@ public class TeamsServlet extends ServletBase
 	@Override
 	public void processRequest(HttpServletRequest req, HttpServletResponse resp)
 	{
-		try {
+		try
+		{
 			doCmd(req, resp);
 		}
 		catch (Exception e)
@@ -52,25 +53,32 @@ public class TeamsServlet extends ServletBase
 	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		String cmd = getCmd(req);
-		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list")) {
+		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list"))
+		{
 			doList(req, resp);
 		}
-		else if (StringUtil.isEqual(cmd, "manager")) {
+		else if (StringUtil.isEqual(cmd, "manager"))
+		{
 			doManager(req, resp);
 		}
-		else if (StringUtil.isEqual(cmd, "new")) {
+		else if (StringUtil.isEqual(cmd, "new"))
+		{
 			doNew(req, resp);
 		}
-		else if (StringUtil.isEqual(cmd, "edit")) {
+		else if (StringUtil.isEqual(cmd, "edit"))
+		{
 			doEdit(req, resp);
 		}
-		else if (StringUtil.isEqual(cmd, "save")) {
+		else if (StringUtil.isEqual(cmd, "save"))
+		{
 			doSave(req, resp, false);
 		}
-		else if (StringUtil.isEqual(cmd, "ajaxSave")) {
+		else if (StringUtil.isEqual(cmd, "ajaxSave"))
+		{
 			doSave(req, resp, true);
 		}
-		else if (StringUtil.isEqual(cmd, "ajaxDelete")) {
+		else if (StringUtil.isEqual(cmd, "ajaxDelete"))
+		{
 			doDelete(req, resp, true);
 		}
 	}
@@ -152,7 +160,15 @@ public class TeamsServlet extends ServletBase
 		{
 			if (saved)
 			{
-				displayPage(req, resp, JSP_PATH+"?cmd=manager&id="+team.getId(), true);
+				int teamId = team.getId();
+				if (teamId > 0)
+				{
+					displayPage(req, resp, JSP_PATH+"?cmd=manager&id="+teamId, true);
+				}
+				else
+				{
+					displayPage(req, resp, JSP_PATH, true);
+				}
 			}
 			else
 			{

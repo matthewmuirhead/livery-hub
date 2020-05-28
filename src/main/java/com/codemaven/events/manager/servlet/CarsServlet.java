@@ -35,7 +35,8 @@ public class CarsServlet extends ServletBase
 	@Override
 	public void processRequest(HttpServletRequest req, HttpServletResponse resp)
 	{
-		try {
+		try
+		{
 			doCmd(req, resp);
 		}
 		catch (Exception e)

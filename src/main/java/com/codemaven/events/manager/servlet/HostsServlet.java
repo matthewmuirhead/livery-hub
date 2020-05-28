@@ -34,7 +34,8 @@ public class HostsServlet extends ServletBase
 	@Override
 	public void processRequest(HttpServletRequest req, HttpServletResponse resp)
 	{
-		try {
+		try
+		{
 			doCmd(req, resp);
 		}
 		catch (Exception e)
@@ -47,7 +48,8 @@ public class HostsServlet extends ServletBase
 	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		String cmd = getCmd(req);
-		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list")) {
+		if (StringUtil.isNullOrEmpty(cmd) || StringUtil.isEqual(cmd, "list"))
+		{
 			doList(req, resp);
 		}
 	}
