@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @RequestMapping(value = "/user")
 @Slf4j
-public class UserServlet extends ServletBase
+public class UsersServlet extends ServletBase
 {
 	private static final String JSP_PATH = "user";
 	private static final int BCRYPT_SALT_ROUNDS = 10;
