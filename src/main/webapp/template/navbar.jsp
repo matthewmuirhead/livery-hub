@@ -15,12 +15,12 @@
 	<div class="collapse navbar-collapse" id="navbarText">
 		<ul class="navbar-nav mr-auto">
 			<li class="mx-3 nav-item ${zones[0].name() == navbarzone.name() ? 'active' : ''}">
-				<a class="nav-link" href="/">Dashboard</a>
+				<a class="nav-link" href="/">Home</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[3].name() == navbarzone.name() ? 'active' : ''}">
+			<li class="mx-3 nav-item ${zones[7].name() == navbarzone.name() ? 'active' : ''}">
 				<a class="nav-link" href="/leagues">Leagues</a>
 			</li>
-			<li class="mx-3 nav-item ${zones[5].name() == navbarzone.name() ? 'active' : ''}">
+			<li class="mx-3 nav-item ${zones[8].name() == navbarzone.name() ? 'active' : ''}">
 				<a class="nav-link" href="/events">Individual Events</a>
 			</li>
 			
@@ -47,9 +47,9 @@
 						Admin
 					</a>
 					<div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-						<a class="nav-link drop-link ${zones[3].name() == navbarzone.name() ? 'active' : ''}" href="/admin/leagues">Leagues</a>
-						<a class="nav-link drop-link ${zones[3].name() == navbarzone.name() ? 'active' : ''}" href="/admin/events">Events</a>
-						<a class="nav-link drop-link ${zones[5].name() == navbarzone.name() ? 'active' : ''}" href="/admin/users">Teams</a>
+						<a class="nav-link drop-link ${zones[9].name() == navbarzone.name() ? 'active' : ''}" href="/admin/leagues">Leagues</a>
+						<a class="nav-link drop-link ${zones[10].name() == navbarzone.name() ? 'active' : ''}" href="/admin/events">Events</a>
+						<a class="nav-link drop-link ${zones[11].name() == navbarzone.name() ? 'active' : ''}" href="/admin/users">Users</a>
 					</div>
 				</li>
 			</c:if>
