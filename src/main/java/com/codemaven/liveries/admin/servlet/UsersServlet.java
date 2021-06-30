@@ -1,4 +1,4 @@
-package com.codemaven.events.admin.servlet;
+package com.codemaven.liveries.admin.servlet;
 
 import java.io.IOException;
 
@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codemaven.events.db.ServiceFactory;
-import com.codemaven.events.manager.enums.NavBarZone;
-import com.codemaven.events.servlet.ServletBase;
-import com.codemaven.events.util.StringUtil;
 import com.codemaven.generated.tables.pojos.Users;
+import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.servlet.ServletBase;
+import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

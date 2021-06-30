@@ -1,12 +1,12 @@
-package com.codemaven.events.manager.lists;
+package com.codemaven.liveries.manager.lists;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codemaven.events.db.ServiceFactory;
-import com.codemaven.events.manager.model.ExternalEventDetails;
 import com.codemaven.generated.tables.pojos.ExternalEvents;
+import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.manager.model.ExternalEventDetails;
 
 public class EventDetailsList extends ArrayList<ExternalEventDetails>
 {

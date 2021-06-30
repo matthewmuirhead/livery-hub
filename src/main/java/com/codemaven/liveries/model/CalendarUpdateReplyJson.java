@@ -1,8 +1,8 @@
-package com.codemaven.events.model;
+package com.codemaven.liveries.model;
 
 import java.time.Month;
 
-import com.codemaven.events.manager.lists.EventDetailsList;
+import com.codemaven.liveries.manager.lists.EventDetailsList;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.codemaven.events.db;
+package com.codemaven.liveries.db;
 
 public interface Service
 {

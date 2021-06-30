@@ -1,12 +1,12 @@
-package com.codemaven.events.db.service;
+package com.codemaven.liveries.db.service;
 
 import org.springframework.stereotype.Component;
 
-import com.codemaven.events.db.Service;
-import com.codemaven.events.db.ServiceType;
-import com.codemaven.events.db.dao.UsersDao;
-import com.codemaven.events.util.StringUtil;
 import com.codemaven.generated.tables.pojos.Users;
+import com.codemaven.liveries.db.Service;
+import com.codemaven.liveries.db.ServiceType;
+import com.codemaven.liveries.db.dao.UsersDao;
+import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,20 +1,20 @@
-package com.codemaven.events.manager.model;
+package com.codemaven.liveries.manager.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codemaven.events.db.ServiceFactory;
-import com.codemaven.events.db.ServiceType;
-import com.codemaven.events.db.service.CarsService;
-import com.codemaven.events.db.service.DriversService;
-import com.codemaven.events.db.service.EventsService;
-import com.codemaven.events.db.service.TeamsService;
-import com.codemaven.events.model.CarsExtended;
 import com.codemaven.generated.tables.pojos.Drivers;
 import com.codemaven.generated.tables.pojos.ExternalEvents;
 import com.codemaven.generated.tables.pojos.TeamFuel;
 import com.codemaven.generated.tables.pojos.TeamTires;
 import com.codemaven.generated.tables.pojos.Teams;
+import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.db.ServiceType;
+import com.codemaven.liveries.db.service.SeriesService;
+import com.codemaven.liveries.db.service.DriversService;
+import com.codemaven.liveries.db.service.EventsService;
+import com.codemaven.liveries.db.service.TeamsService;
+import com.codemaven.liveries.model.CarsExtended;
 
 import lombok.Setter;
 
@@ -23,7 +23,7 @@ public class TeamDetails
 {
 	private TeamsService teamsService;
 	private DriversService driversService;
-	private CarsService carsService;
+	private SeriesService carsService;
 	private EventsService eventsService;
 	private int teamId;
 	private Teams team;
@@ -37,7 +37,7 @@ public class TeamDetails
 	{
 		this.teamsService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
 		this.driversService = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class);
-		this.carsService = serviceFactory.getInstance(ServiceType.CAR, CarsService.class);
+		this.carsService = serviceFactory.getInstance(ServiceType.CAR, SeriesService.class);
 		this.eventsService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
 		this.teamId = teamId;
 	}
@@ -46,7 +46,7 @@ public class TeamDetails
 	{
 		this.teamsService = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class);
 		this.driversService = serviceFactory.getInstance(ServiceType.DRIVER, DriversService.class);
-		this.carsService = serviceFactory.getInstance(ServiceType.CAR, CarsService.class);
+		this.carsService = serviceFactory.getInstance(ServiceType.CAR, SeriesService.class);
 		this.eventsService = serviceFactory.getInstance(ServiceType.EVENT, EventsService.class);
 		this.team = team;
 		this.teamId = team.getId();

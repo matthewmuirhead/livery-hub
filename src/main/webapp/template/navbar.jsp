@@ -1,6 +1,4 @@
-<%@ page import="com.codemaven.events.manager.enums.NavBarZone" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="zones" value="<%=NavBarZone.values()%>" />
 <c:set var="user" value="${sessionScope.Session_User}"></c:set>
 
 <nav class="main-header navbar navbar-expand-lg navbar-dark bg-dark fixed-top">

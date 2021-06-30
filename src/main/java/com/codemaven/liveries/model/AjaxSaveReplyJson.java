@@ -1,4 +1,4 @@
-package com.codemaven.events.model;
+package com.codemaven.liveries.model;
 
 import java.util.HashMap;
 import java.util.Map;

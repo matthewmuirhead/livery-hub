@@ -1,4 +1,4 @@
-package com.codemaven.events;
+package com.codemaven.liveries;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

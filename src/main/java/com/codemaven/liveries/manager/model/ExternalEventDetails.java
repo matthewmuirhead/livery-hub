@@ -1,22 +1,22 @@
-package com.codemaven.events.manager.model;
+package com.codemaven.liveries.manager.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codemaven.events.db.ServiceFactory;
-import com.codemaven.events.db.ServiceType;
-import com.codemaven.events.db.service.EventsService;
-import com.codemaven.events.db.service.HostsService;
-import com.codemaven.events.db.service.TeamsService;
-import com.codemaven.events.db.service.TracksService;
 import com.codemaven.generated.tables.pojos.ExternalEvents;
 import com.codemaven.generated.tables.pojos.Hosts;
 import com.codemaven.generated.tables.pojos.Locations;
 import com.codemaven.generated.tables.pojos.Sessions;
 import com.codemaven.generated.tables.pojos.Teams;
 import com.codemaven.generated.tables.pojos.Tracks;
+import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.db.ServiceType;
+import com.codemaven.liveries.db.service.EventsService;
+import com.codemaven.liveries.db.service.HostsService;
+import com.codemaven.liveries.db.service.TeamsService;
+import com.codemaven.liveries.db.service.TracksService;
 
 import lombok.Setter;
 

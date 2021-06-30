@@ -1,4 +1,4 @@
-package com.codemaven.events.db.dao;
+package com.codemaven.liveries.db.dao;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;

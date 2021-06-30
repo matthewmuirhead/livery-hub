@@ -1,4 +1,4 @@
-package com.codemaven.events.model;
+package com.codemaven.liveries.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
