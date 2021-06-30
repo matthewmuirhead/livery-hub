@@ -1,8 +1,5 @@
 package com.codemaven.liveries.servlet;
 
-import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codemaven.liveries.manager.enums.NavBarZone;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @AllArgsConstructor
