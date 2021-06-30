@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codemaven.generated.tables.pojos.Teams;
 import com.codemaven.liveries.db.ServiceFactory;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.service.TeamsService;
 import com.codemaven.liveries.manager.enums.NavBarZone;
-import com.codemaven.liveries.model.AjaxSaveReplyJson;
 import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 
@@ -82,6 +82,7 @@ public class TeamsServlet extends ServletBase
 	private void doNewTeam(HttpServletRequest req, HttpServletResponse resp)
 	{
 		Teams team = new Teams();
+		req.setAttribute("team", team);
 		displayPage(req, resp, JSP_PATH + "edit.jsp");
 	}
 	
@@ -89,6 +90,7 @@ public class TeamsServlet extends ServletBase
 	{
 		int teamId = getParameterInt(req, "teamId");
 		Teams team = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchTeamById(teamId);
+		req.setAttribute("team", team);
 		displayPage(req, resp, JSP_PATH + "edit.jsp");
 	}
 
