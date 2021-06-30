@@ -1,6 +1,7 @@
 package com.codemaven.liveries.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codemaven.generated.tables.pojos.Series;
 import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.db.ServiceType;
+import com.codemaven.liveries.db.service.SeriesService;
 import com.codemaven.liveries.manager.enums.NavBarZone;
 import com.codemaven.liveries.util.StringUtil;
 
@@ -21,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DashboardServlet extends ServletBase
 {
-	private static final String JSP_PATH = "dashboard";
+	private static final String JSP_PATH = "manager/dashboard.jsp";
 	private ServiceFactory serviceFactory;
 
 	@Override
@@ -29,7 +33,8 @@ public class DashboardServlet extends ServletBase
 	{
 		try
 		{
-			doCmd(req, resp);
+			req.setAttribute("isDashboard", true);
+			displayPage(req, resp, JSP_PATH);
 		}
 		catch (Exception e)
 		{
@@ -38,13 +43,9 @@ public class DashboardServlet extends ServletBase
 		}
 	}
 
-	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
+	private void showSeries(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
-		String cmd = getCmd(req);
-		if (StringUtil.isNullOrEmpty(cmd))
-		{
-
-		}
+		
 	}
 
 	@Override
