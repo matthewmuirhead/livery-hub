@@ -1,12 +1,6 @@
-package com.codemaven.events.db;
+package com.codemaven.liveries.db;
 
 public enum ServiceType
 {
-	CAR,
-	DRIVER,
-	EVENT,
-	HOST,
-	TEAM,
-	TRACK,
-	USER;
+	SERIES, TEAM, USER;
 }
