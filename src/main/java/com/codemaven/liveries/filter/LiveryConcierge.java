@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Order(1)
 @Slf4j
-public class EventConcierge extends ServletBase implements Filter
+public class LiveryConcierge extends ServletBase implements Filter
 {
 	private static final String REDIRECT_404 = "/404";
 	
