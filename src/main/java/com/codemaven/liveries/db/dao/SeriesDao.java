@@ -5,7 +5,9 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
-import com.codemaven.generated.tables.pojos.Series
+import com.codemaven.generated.Tables;
+import com.codemaven.generated.tables.pojos.Series;
+import com.codemaven.generated.tables.records.SeriesRecord;
 
 import lombok.AllArgsConstructor;
 
@@ -25,7 +27,7 @@ public class SeriesDao
 	{
 		return dsl.selectFrom(Tables.SERIES)
 				.where(Tables.SERIES.ID.eq(seriesId))
-				.fetchOneInto();
+				.fetchOneInto(Series.class);
 	}
 	
 	public boolean saveSeries(final Series team)

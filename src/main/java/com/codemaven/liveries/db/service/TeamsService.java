@@ -23,15 +23,29 @@ public class TeamsService implements Service
 	public List<Teams> fetchSeriesTeams(final int seriesId)
 	{
 		List<Teams> teams = new ArrayList<>();
-		if (eventId > 0)
+		if (seriesId > 0)
 		{
 			teams = dao.fetchSeriesTeams(seriesId);
 		}
 		else if (log.isDebugEnabled())
 		{
-			log.debug("Tried fetching teams with series id " + eventId);
+			log.debug("Tried fetching teams with series id " + seriesId);
 		}
 		return teams;
+	}
+
+	public Teams fetchTeamById(final int teamId)
+	{
+		Teams team = null;
+		if (teamId > 0)
+		{
+			team = dao.fetchTeamById(teamId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried fetching teams with id " + teamId);
+		}
+		return team;
 	}
 
 	public boolean saveTeam(final Teams team)
@@ -48,18 +62,32 @@ public class TeamsService implements Service
 		return saved;
 	}
 
-	public boolean deleteTeamById(final int teamId)
+	public boolean deleteTeamByIdAndUser(final int teamId, final int userId)
 	{
 		boolean deleted = true;
-		if (teamId > 0)
+		if (teamId > 0 && userId > 0)
 		{
-			deleted = dao.deleteTeamById(teamId);
+			deleted = dao.deleteTeamByIdAndUser(teamId, userId);
 		}
 		else if (log.isDebugEnabled())
 		{
 			log.debug("Tried deleting team with id " + teamId);
 		}
 		return deleted;
+	}
+
+	public List<Teams> fetchTeamsByUserId(final int userId)
+	{
+		List<Teams> teams = new ArrayList<>();
+		if (userId > 0)
+		{
+			teams = dao.fetchTeamsByUserId(userId);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried fetching teams with user id " + userId);
+		}
+		return teams;
 	}
 
 	@Override

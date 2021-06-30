@@ -8,7 +8,6 @@ import com.codemaven.generated.tables.pojos.Series;
 import com.codemaven.liveries.db.Service;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.dao.SeriesDao;
-import com.codemaven.liveries.model.CarsExtended;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +41,9 @@ public class SeriesService implements Service
 	public boolean saveSeries(final Series series)
 	{
 		boolean saved = false;
-		if (car != null)
+		if (series != null)
 		{
-			saved = dao.saveCar(series);
+			saved = dao.saveSeries(series);
 		}
 		else
 		{
