@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.codemaven.generated.tables.pojos.Users;
 import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
@@ -52,13 +52,13 @@ public abstract class ServletBase
 		log.error("ServletBase ProcessRequest(HttpServletRequest, HttpServletResponse) accessed directly!");
 	}
 	
-	protected Users getLoggedInUser(HttpServletRequest req)
+	protected ExtendedUser getLoggedInUser(HttpServletRequest req)
 	{
-		Users user = null;
+		ExtendedUser user = null;
 		Object sessionUser = getSessionValue(req, USER_SESSION_KEY);
-		if (sessionUser instanceof Users)
+		if (sessionUser instanceof ExtendedUser)
 		{
-			user = (Users) sessionUser;
+			user = (ExtendedUser) sessionUser;
 		}
 		return user;
 	}
