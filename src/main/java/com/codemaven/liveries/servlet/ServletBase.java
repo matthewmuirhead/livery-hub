@@ -1,4 +1,4 @@
-package com.codemaven.events.servlet;
+package com.codemaven.liveries.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.codemaven.events.manager.enums.NavBarZone;
-import com.codemaven.events.util.StringUtil;
 import com.codemaven.generated.tables.pojos.Users;
+import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +28,7 @@ public abstract class ServletBase
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		req.setAttribute("navbarzone", getNavBarZone());
+		req.setAttribute("zones", NavBarZone.values());
 		processRequest(req, resp);
 	}
 
@@ -35,6 +36,7 @@ public abstract class ServletBase
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		req.setAttribute("navbarzone", getNavBarZone());
+		req.setAttribute("zones", NavBarZone.values());
 		processRequest(req, resp);
 	}
 
