@@ -1,14 +1,14 @@
-package com.codemaven.events.db.service;
+package com.codemaven.liveries.db.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.codemaven.events.db.Service;
-import com.codemaven.events.db.ServiceType;
-import com.codemaven.events.db.dao.CarsDao;
-import com.codemaven.events.model.CarsExtended;
-import com.codemaven.generated.tables.pojos.Cars;
+import com.codemaven.generated.tables.pojos.Series;
+import com.codemaven.liveries.db.Service;
+import com.codemaven.liveries.db.ServiceType;
+import com.codemaven.liveries.db.dao.SeriesDao;
+import com.codemaven.liveries.model.CarsExtended;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,46 +16,60 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class CarsService implements Service
+public class SeriesService implements Service
 {
-	private CarsDao dao;
-	
-	public List<CarsExtended> fetchAllCarsSorted()
+	private SeriesDao dao;
+
+	public List<Series> fetchAllSeries()
 	{
-		return dao.fetchAllCarsSorted();
+		return dao.fetchAllSeries();
+	}
+
+	public Series fetchSeriesById(final int seriesId)
+	{
+		Series series = null;
+		if (seriesId > 0)
+		{
+			series = dao.fetchSeriesById(seriesId);
+		}
+		else
+		{
+			log.debug("Tried fetching series with invalid Id");
+		}
+		return series;
 	}
 	
-	public CarsExtended fetchCarById(final int carId)
-	{
-		CarsExtended car = null;
-		if (carId > 0)
-		{
-			car = dao.fetchCarById(carId);
-		}
-		else if (log.isDebugEnabled())
-		{
-			log.debug("Tried fetching car with id " + carId);
-		}
-		return car;
-	}
-	
-	public boolean saveCar(final Cars car)
+	public boolean saveSeries(final Series series)
 	{
 		boolean saved = false;
 		if (car != null)
 		{
-			saved = dao.saveCar(car);
+			saved = dao.saveCar(series);
 		}
 		else
 		{
-			log.debug("Tried saving null car");
+			log.debug("Tried saving null series");
 		}
 		return saved;
 	}
-	
+
+	public boolean deleteSeriesById(final int seriesId)
+	{
+		boolean saved = false;
+		if (seriesId > 0)
+		{
+			saved = dao.deleteSeriesById(seriesId);
+		}
+		else
+		{
+			log.debug("Tried deleting series with invalid Id");
+		}
+		return saved;
+	}
+
 	@Override
 	public ServiceType getType()
 	{
-		return ServiceType.CAR;
+		return ServiceType.SERIES;
 	}
 }
