@@ -1,4 +1,4 @@
-package com.codemaven.events.filter;
+package com.codemaven.liveries.filter;
 
 import java.io.IOException;
 
@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.codemaven.events.manager.enums.NavBarZone;
-import com.codemaven.events.servlet.ServletBase;
-import com.codemaven.events.util.StringUtil;
+import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.servlet.ServletBase;
+import com.codemaven.liveries.util.StringUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,16 +24,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EventConcierge extends ServletBase implements Filter
 {
+	private static final String REDIRECT_404 = "/404";
+	
+	private static final String FILE_EXTENSION_IMG = "img";
+	private static final String FILE_EXTENSION_CSS = "css";
+	
+	private static final String[] SUPPORTED_SERVLETS = { "", "series", "404" };
+	private static final String[] SUPPORTED_SERVLETS_ADMIN = { "users", "series" };
+	
+	private static final String ADMIN_BASE_SERVLET = "admin";
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException
 	{
- 		String url = ((HttpServletRequest) req).getRequestURI();
+		String url = ((HttpServletRequest) req).getRequestURI();
 		String servletName = getServletNameFromUrl(url);
-		if (StringUtil.isEqual("manager", getBaseServletNameFromUrl(url)))
+		if (StringUtil.isEqual(ADMIN_BASE_SERVLET, getBaseServletNameFromUrl(url)))
 		{
-			if (checkIfManagerServletIsSupported(servletName))
+			if (checkIfAdminServletIsSupported(servletName))
 			{
 				log.info("Manager Servlet " + servletName + " Supported, continuing...");
 				chain.doFilter(req, resp);
@@ -44,7 +53,7 @@ public class EventConcierge extends ServletBase implements Filter
 				{
 					log.debug("Tried to access invalid manager servlet: " + servletName);
 				}
-				displayPage((HttpServletRequest) req, (HttpServletResponse) resp, "/404", true);
+				displayPage((HttpServletRequest) req, (HttpServletResponse) resp, REDIRECT_404, true);
 			}
 		}
 		else
@@ -54,11 +63,7 @@ public class EventConcierge extends ServletBase implements Filter
 				log.info("Servlet " + servletName + " Supported, continuing...");
 				chain.doFilter(req, resp);
 			}
-			else if (isImageAccess(url))
-			{
-				chain.doFilter(req, resp);
-			}
-			else if (StringUtil.isEqual("/favicon.ico", url))
+			else if (isImageAccess(url) || StringUtil.isEqual("/favicon.ico", url))
 			{
 				chain.doFilter(req, resp);
 			}
@@ -68,11 +73,11 @@ public class EventConcierge extends ServletBase implements Filter
 				{
 					log.debug("Tried to access invalid servlet: " + servletName);
 				}
-				displayPage((HttpServletRequest) req, (HttpServletResponse) resp, "/404", true);
+				displayPage((HttpServletRequest) req, (HttpServletResponse) resp, REDIRECT_404, true);
 			}
 		}
 	}
-	
+
 	private String getBaseServletNameFromUrl(String url)
 	{
 		String serlvetName = "";
@@ -83,23 +88,17 @@ public class EventConcierge extends ServletBase implements Filter
 		}
 		return serlvetName;
 	}
-	
-	private boolean checkIfManagerServletIsSupported(String servletName)
+
+	private boolean checkIfAdminServletIsSupported(String servletName)
 	{
-		String[] supportedServletNames =
-		
-		{ "", "events", "hosts", "tracks", "teams", "cars" };
-		return StringUtil.arrayContains(supportedServletNames, servletName);
+		return StringUtil.arrayContains(SUPPORTED_SERVLETS_ADMIN, servletName);
 	}
-	
+
 	private boolean checkIfServletIsSupported(String servletName)
 	{
-		String[] supportedServletNames =
-		
-		{ "", "user", "events", "leagues", "404" };
-		return StringUtil.arrayContains(supportedServletNames, servletName);
+		return StringUtil.arrayContains(SUPPORTED_SERVLETS, servletName);
 	}
-	
+
 	protected boolean isImageAccess(String url)
 	{
 		boolean supported = false;
@@ -109,14 +108,14 @@ public class EventConcierge extends ServletBase implements Filter
 		{
 			baseServletName = urlParts[1];
 		}
-		supported = StringUtil.isEqual("img", baseServletName);
+		supported = StringUtil.isEqual(FILE_EXTENSION_IMG, baseServletName);
 		if (supported)
 		{
 			log.info("Image Access for file: " + getServletNameFromUrl(url));
 		}
 		else
 		{
-			supported = StringUtil.isEqual("css", baseServletName);
+			supported = StringUtil.isEqual(FILE_EXTENSION_CSS, baseServletName);
 			if (supported)
 			{
 				log.info("CSS Access for file: " + getServletNameFromUrl(url));
