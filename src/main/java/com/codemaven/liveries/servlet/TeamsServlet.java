@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.db.ServiceType;
+import com.codemaven.liveries.db.service.TeamsService;
 import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.model.AjaxSaveReplyJson;
+import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TeamsServlet extends ServletBase
 {
-	private static final String JSP_PATH = "series/team";
+	private static final String JSP_PATH = "series/team/";
 	private ServiceFactory serviceFactory;
 
 	@Override
@@ -29,7 +33,16 @@ public class TeamsServlet extends ServletBase
 	{
 		try
 		{
-			doCmd(req, resp);
+			ExtendedUser user = getLoggedInUser(req);
+			int teamId = getParameterInt(req, "teamId");
+			if (!user.canAccessTeam(teamId))
+			{
+				
+			}
+			else
+			{
+				doCmd(req, resp);
+			}
 		}
 		catch (Exception e)
 		{
@@ -43,8 +56,59 @@ public class TeamsServlet extends ServletBase
 		String cmd = getCmd(req);
 		if (StringUtil.isNullOrEmpty(cmd))
 		{
-
+			if (StringUtil.isEqual("new", cmd))
+			{
+				doNewTeam(req, resp);
+			}
+			else if (StringUtil.isEqual("edit", cmd))
+			{
+				doEditTeam(req, resp);
+			}
+			else if (StringUtil.isEqual("save", cmd))
+			{
+				
+			}
+			else if (StringUtil.isEqual("ajaxSave", cmd))
+			{
+				
+			}
+			else if (StringUtil.isEqual("delete", cmd))
+			{
+				doDeleteTeam(req, resp);
+			}
 		}
+	}
+	
+	private void doNewTeam(HttpServletRequest req, HttpServletResponse resp)
+	{
+		Teams team = new Teams();
+		displayPage(req, resp, JSP_PATH + "edit.jsp");
+	}
+	
+	private void doEditTeam(HttpServletRequest req, HttpServletResponse resp)
+	{
+		int teamId = getParameterInt(req, "teamId");
+		Teams team = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchTeamById(teamId);
+		displayPage(req, resp, JSP_PATH + "edit.jsp");
+	}
+
+	private void doDeleteTeam(HttpServletRequest req, HttpServletResponse resp)
+	{
+		int teamId = getParameterInt(req, "teamId");
+		ExtendedUser user = getLoggedInUser(req);
+		
+		boolean success = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).deleteTeamByIdAndUser(teamId, user.getId());
+		req.setAttribute("success", success);
+		if (success)
+		{
+			req.setAttribute("successMessage", "The team was successfully removed.");
+		}
+		else
+		{
+			req.setAttribute("errorMessage", "There was an error deleting the team, please try again later.");
+		}
+		int seriesId = getParameterInt(req, "seriesId");
+		displayPage(req, resp, "series?id="+seriesId, true);
 	}
 
 	@Override
