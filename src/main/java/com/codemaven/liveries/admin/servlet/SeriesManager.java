@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @RequestMapping(value = "/admin/series")
 @Slf4j
-public class SeriesServlet extends ServletBase
+public class SeriesManager extends ServletBase
 {
 	private static final String JSP_PATH = "admin/series";
 	private ServiceFactory serviceFactory;

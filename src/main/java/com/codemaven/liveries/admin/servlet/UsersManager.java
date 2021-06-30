@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @RequestMapping(value = "/admin/users")
 @Slf4j
-public class UsersServlet extends ServletBase
+public class UsersManager extends ServletBase
 {
 	private static final String JSP_PATH = "admin/users";
 	private ServiceFactory serviceFactory;
