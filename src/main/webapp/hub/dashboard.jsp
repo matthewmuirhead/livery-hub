@@ -3,11 +3,11 @@
 
 <div class="masthead d-flex h-100">
 	<div class="container text-center my-auto">
-		<h1 class="mb-1">ACC Manager</h1>
+		<h1 class="mb-1">${languageFieldsList.getTranslation('ACC Livery Hub')}</h1>
 		<h3 class="mb-5">
-			<em>A Team Manager for Keeping Track of Upcoming Events</em>
+			<em>${languageFieldsList.getTranslation('All your series liveries in one place')}</em>
 		</h3>
-		<a class="btn btn-danger bg-red-fade btn-xl" href="/events">View Calendar</a>
+		<a class="btn btn-danger bg-red-fade btn-xl" href="/events">${languageFieldsList.getTranslation('View Series')}</a>
 	</div>
 	<div class="overlay"></div>
 </div>
