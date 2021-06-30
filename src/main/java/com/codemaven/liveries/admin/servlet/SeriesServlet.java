@@ -1,4 +1,4 @@
-package com.codemaven.events.admin.servlet;
+package com.codemaven.liveries.admin.servlet;
 
 import java.io.IOException;
 
@@ -8,24 +8,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codemaven.events.db.ServiceFactory;
-import com.codemaven.events.manager.enums.NavBarZone;
-import com.codemaven.events.servlet.ServletBase;
-import com.codemaven.events.util.StringUtil;
 import com.codemaven.generated.tables.pojos.Users;
+import com.codemaven.liveries.db.ServiceFactory;
+import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.servlet.ServletBase;
+import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/admin/leagues")
+@RequestMapping(value = "/admin/series")
 @Slf4j
-public class LeaguesServlet extends ServletBase
+public class SeriesServlet extends ServletBase
 {
-	private static final String JSP_PATH = "admin/leagues";
+	private static final String JSP_PATH = "admin/series";
 	private ServiceFactory serviceFactory;
-	
+
 	@Override
 	public void processRequest(HttpServletRequest req, HttpServletResponse resp)
 	{
@@ -48,19 +48,19 @@ public class LeaguesServlet extends ServletBase
 			displayError(req, resp, "Uh-Oh, something went wrong!");
 		}
 	}
-	
+
 	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		String cmd = getCmd(req);
 		if (StringUtil.isNullOrEmpty(cmd))
 		{
-			
+
 		}
 	}
-	
+
 	@Override
 	protected NavBarZone getNavBarZone()
 	{
-		return NavBarZone.ADMIN_LEAGUES;
+		return NavBarZone.ADMIN_SERIES;
 	}
 }
