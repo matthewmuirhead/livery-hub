@@ -1,4 +1,4 @@
-package com.codemaven.events.util;
+package com.codemaven.liveries.util;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
