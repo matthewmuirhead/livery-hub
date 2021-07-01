@@ -2,5 +2,5 @@ package com.codemaven.liveries.manager.enums;
 
 public enum NavBarZone
 {
-	DASHBOARD, SERIES, ADMIN_SERIES, ADMIN_USERS;
+	DASHBOARD, SERIES, ADMIN_SERIES, ADMIN_USERS, LOGIN, REGISTER;
 }
