@@ -30,7 +30,7 @@ public class LiveryConcierge extends ServletBase implements Filter
 	private static final String FILE_EXTENSION_IMG = "img";
 	private static final String FILE_EXTENSION_CSS = "css";
 	
-	private static final String[] SUPPORTED_SERVLETS = { "", "series", "404" };
+	private static final String[] SUPPORTED_SERVLETS = { "", "series", "login", "logout", "register", "404" };
 	private static final String[] SUPPORTED_SERVLETS_ADMIN = { "users", "series" };
 	
 	private static final String ADMIN_BASE_SERVLET = "admin";
