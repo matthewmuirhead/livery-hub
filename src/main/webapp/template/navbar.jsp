@@ -36,7 +36,12 @@
 				<c:when test="${not empty user}">
 					<ul class="navbar-nav mr-auto">
 						<li class="mx-3 nav-item">
-							<a class="nav-link" href="/user?cmd=logout">
+							<span class="nav-link nav-link-no-hover">
+								${languageFieldsList.getTranslation('Logged in as {user}', user.getUsername())}
+							</span>
+						</li>
+						<li class="mx-3 nav-item">
+							<a class="nav-link" href="/logout">
 								${languageFieldsList.getTranslation('Log Out')}
 							</a>
 						</li>
@@ -45,12 +50,12 @@
 				<c:otherwise>
 					<ul class="navbar-nav mr-auto">
 						<li class="mx-3 nav-item">
-							<a class="nav-link" href="/user?cmd=new">
+							<a class="nav-link ${zones[5].name() == navbarzone.name() ? 'active' : ''}" href="/register">
 								${languageFieldsList.getTranslation('Register')}
 							</a>
 						</li>
 						<li class="mx-3 nav-item">
-							<a class="nav-link" href="/user">
+							<a class="nav-link ${zones[4].name() == navbarzone.name() ? 'active' : ''}" href="/login">
 								${languageFieldsList.getTranslation('Login')}
 							</a>
 						</li>
