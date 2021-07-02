@@ -21,7 +21,7 @@
 			
 			<c:if test="${not empty user && user.getAdmin()}">
 				<li class="mx-3 nav-item dropdown">
-					<a class="mx-3 nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						${languageFieldsList.getTranslation('Admin')}
 					</a>
 					<div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
@@ -36,7 +36,12 @@
 				<c:when test="${not empty user}">
 					<ul class="navbar-nav mr-auto">
 						<li class="mx-3 nav-item">
-							<a class="nav-link" href="/user?cmd=logout">
+							<span class="nav-link nav-link-no-hover">
+								${languageFieldsList.getTranslation('Logged in as: {user}', user.getUsername())}
+							</span>
+						</li>
+						<li class="mx-3 nav-item">
+							<a class="nav-link" href="/logout">
 								${languageFieldsList.getTranslation('Log Out')}
 							</a>
 						</li>
@@ -45,12 +50,12 @@
 				<c:otherwise>
 					<ul class="navbar-nav mr-auto">
 						<li class="mx-3 nav-item">
-							<a class="nav-link" href="/user?cmd=new">
+							<a class="nav-link ${zones[5].name() == navbarzone.name() ? 'active' : ''}" href="/register">
 								${languageFieldsList.getTranslation('Register')}
 							</a>
 						</li>
 						<li class="mx-3 nav-item">
-							<a class="nav-link" href="/user">
+							<a class="nav-link ${zones[4].name() == navbarzone.name() ? 'active' : ''}" href="/login">
 								${languageFieldsList.getTranslation('Login')}
 							</a>
 						</li>
