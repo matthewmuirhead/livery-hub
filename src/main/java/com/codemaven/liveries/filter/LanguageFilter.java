@@ -38,7 +38,14 @@ public class LanguageFilter extends ServletBase implements Filter
 		if (currentLanguage != null && !StringUtil.isEqual(currentLanguage.getCode(), newLanguageCode))
 		{
 			currentLanguage = languageService.fetchLanguageByCode(newLanguageCode);
-			setSessionValue(req, LANGUAGE_SESSION_KEY, currentLanguage);
+			if (currentLanguage != null)
+			{
+				setSessionValue(req, LANGUAGE_SESSION_KEY, currentLanguage);
+			}
+			else
+			{
+				currentLanguage = getCurrentLanguage(req);
+			}
 		}
 		else if (currentLanguage == null)
 		{
