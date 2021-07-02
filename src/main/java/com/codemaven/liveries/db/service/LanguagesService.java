@@ -1,6 +1,7 @@
 package com.codemaven.liveries.db.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -73,16 +74,43 @@ public class LanguagesService implements Service
 		boolean success = false;
 		if (!StringUtil.isNullOrEmpty(key))
 		{
-			LanguageFields languageField = new LanguageFields();
-			languageField.setFieldKey(key);
-			success = dao.saveKey(languageField);
+			boolean languageFieldExisted = false;
+			LanguageFields languageField = dao.fetchLanguageFieldByKey(key);
+			if (languageField != null)
+			{
+				success = true;
+				languageFieldExisted = true;
+			}
+			else
+			{
+				languageField = new LanguageFields();
+				languageField.setFieldKey(key);
+				success = dao.saveKey(languageField);
+			}
+			
 			if (success)
 			{
-				LanguageTranslations languageTranslations = new LanguageTranslations();
-				languageTranslations.setLanguageId(DEFAULT_LANGUAGE);
-				languageTranslations.setFieldId(languageField.getId());
-				languageTranslations.setTranslation(key);
-				success = dao.saveTranslation(languageTranslations);
+				List<Languages> languages = dao.fetchAllLanguages();
+				int fieldId = languageField.getId();
+				for (Languages language : languages)
+				{
+					int languageId = language.getId();
+					if (!languageFieldExisted || !dao.translationExists(fieldId, languageId))
+					{
+						LanguageTranslations languageTranslations = new LanguageTranslations();
+						languageTranslations.setLanguageId(languageId);
+						languageTranslations.setFieldId(fieldId);
+						if (languageId == DEFAULT_LANGUAGE)
+						{
+							languageTranslations.setTranslation(key);
+						}
+						else
+						{
+							languageTranslations.setTranslation("");
+						}
+						success = dao.saveTranslation(languageTranslations) && success;
+					}
+				}
 			}
 			else
 			{

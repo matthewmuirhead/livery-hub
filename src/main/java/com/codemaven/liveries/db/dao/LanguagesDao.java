@@ -1,5 +1,6 @@
 package com.codemaven.liveries.db.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.DSLContext;
@@ -28,6 +29,12 @@ public class LanguagesDao
 				.fetchOneInto(Languages.class);
 	}
 
+	public List<Languages> fetchAllLanguages()
+	{
+		return dsl.selectFrom(Tables.LANGUAGES)
+				.fetchInto(Languages.class);
+	}
+
 	public Map<String, String> fetchTranslationsForLanguage(int languageId)
 	{
 		return dsl.select(Tables.LANGUAGE_FIELDS.FIELD_KEY, Tables.LANGUAGE_TRANSLATIONS.TRANSLATION)
@@ -36,7 +43,14 @@ public class LanguagesDao
 				.where(Tables.LANGUAGE_TRANSLATIONS.LANGUAGE_ID.eq(languageId))
 				.fetchMap(Tables.LANGUAGE_FIELDS.FIELD_KEY, Tables.LANGUAGE_TRANSLATIONS.TRANSLATION);
 	}
-	
+
+	public LanguageFields fetchLanguageFieldByKey(String key)
+	{
+		return dsl.selectFrom(Tables.LANGUAGE_FIELDS)
+				.where(Tables.LANGUAGE_FIELDS.FIELD_KEY.eq(key))
+				.fetchOneInto(LanguageFields.class);
+	}
+
 	public String fetchKeyTranslationForLanguage(String key, int languageId)
 	{
 		return dsl.select(Tables.LANGUAGE_TRANSLATIONS.TRANSLATION)
@@ -46,7 +60,7 @@ public class LanguagesDao
 				.and(Tables.LANGUAGE_FIELDS.FIELD_KEY.eq(key))
 				.fetchOneInto(String.class);
 	}
-	
+
 	public boolean saveKey(final LanguageFields languageField)
 	{
 		LanguageFieldsRecord record = dsl.newRecord(Tables.LANGUAGE_FIELDS, languageField);
@@ -54,11 +68,12 @@ public class LanguagesDao
 				.set(record)
 				.onDuplicateKeyUpdate()
 				.set(record)
-				.returningResult(Tables.LANGUAGE_FIELDS.ID).fetchOne();
+				.returningResult(Tables.LANGUAGE_FIELDS.ID)
+				.fetchOne();
 		languageField.setId(result.getValue(Tables.LANGUAGE_FIELDS.ID));
 		return result.getValue(Tables.LANGUAGE_FIELDS.ID) > 0;
 	}
-	
+
 	public boolean saveTranslation(final LanguageTranslations languageTranslation)
 	{
 		LanguageTranslationsRecord record = dsl.newRecord(Tables.LANGUAGE_TRANSLATIONS, languageTranslation);
@@ -67,5 +82,12 @@ public class LanguagesDao
 				.onDuplicateKeyUpdate()
 				.set(record)
 				.execute() > 0;
+	}
+
+	public boolean translationExists(int fieldId, int languageId)
+	{
+		return dsl.fetchExists(dsl.selectFrom(Tables.LANGUAGE_TRANSLATIONS)
+				.where(Tables.LANGUAGE_TRANSLATIONS.FIELD_ID.eq(fieldId))
+				.and(Tables.LANGUAGE_TRANSLATIONS.LANGUAGE_ID.eq(languageId)));
 	}
 }
