@@ -21,6 +21,10 @@ a, a:hover { text-decoration: none; color: #fff; }
 	font-size: 1.1rem;
 }
 
+.nav-link-no-hover {
+	pointer-events: none;
+}
+
 .footer {
     width: 100%;
     height: 4rem;
