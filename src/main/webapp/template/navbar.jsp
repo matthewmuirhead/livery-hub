@@ -21,7 +21,7 @@
 			
 			<c:if test="${not empty user && user.getAdmin()}">
 				<li class="mx-3 nav-item dropdown">
-					<a class="mx-3 nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						${languageFieldsList.getTranslation('Admin')}
 					</a>
 					<div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
@@ -37,7 +37,7 @@
 					<ul class="navbar-nav mr-auto">
 						<li class="mx-3 nav-item">
 							<span class="nav-link nav-link-no-hover">
-								${languageFieldsList.getTranslation('Logged in as {user}', user.getUsername())}
+								${languageFieldsList.getTranslation('Logged in as: {user}', user.getUsername())}
 							</span>
 						</li>
 						<li class="mx-3 nav-item">
