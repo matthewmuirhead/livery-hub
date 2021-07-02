@@ -44,3 +44,54 @@
 	</div>
 </section>
 <jsp:include page="../../template/footer.jsp" />
+
+<script>
+$(document).ready(function() {
+    $('form').submit(function(event) {
+    	validate(event);
+    });
+    
+	$('#username').on('keyup', function() {
+    	validateListener('#username', '#usernameError');
+    });
+	$('#password').on('keyup', function() {
+    	validateListener('#password', '#passwordError');
+    });
+	$('#confirmPassword').on('keyup', function() {
+    	validateListener('#confirmPassword', '#confirmPasswordError');
+    });
+});
+
+function validateListener(elementId, errorElementId) {
+	if ($(elementId).val() == "") {
+		valid = false;
+		$(errorElementId).show();
+	} else {
+		$(errorElementId).hide();
+	}
+}
+
+function validate(event) {
+	event.preventDefault();
+	var valid = true;
+	var username = $('#username').val();
+	if (username == "") {
+		valid = false;
+		$('#usernameError').show();
+	}
+	var password = $('#password').val();
+	if (password == "") {
+		valid = false;
+		$('#passwordError').show();
+	}
+	var confirmPassword = $('#confirmPassword').val();
+	if (confirmPassword == "") {
+		valid = false;
+		$('#confirmPasswordError').show();
+	}
+	
+	if (valid) {
+		$('#registerForm').submit();
+	}
+}
+</script>
