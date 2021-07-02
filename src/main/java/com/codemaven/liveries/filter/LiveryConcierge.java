@@ -14,7 +14,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.codemaven.liveries.manager.enums.NavBarZone;
-import com.codemaven.liveries.manager.lists.LanguageFieldsList;
 import com.codemaven.liveries.servlet.ServletBase;
 import com.codemaven.liveries.util.StringUtil;
 
@@ -46,7 +45,6 @@ public class LiveryConcierge extends ServletBase implements Filter
 			if (checkIfAdminServletIsSupported(servletName))
 			{
 				log.info("Manager Servlet " + servletName + " Supported, continuing...");
-				req.setAttribute("languageFieldsList", new LanguageFieldsList());
 				chain.doFilter(req, resp);
 			}
 			else
@@ -63,7 +61,6 @@ public class LiveryConcierge extends ServletBase implements Filter
 			if (checkIfServletIsSupported(servletName))
 			{
 				log.info("Servlet " + servletName + " Supported, continuing...");
-				req.setAttribute("languageFieldsList", new LanguageFieldsList());
 				chain.doFilter(req, resp);
 			}
 			else if (isImageAccess(url) || StringUtil.isEqual("/favicon.ico", url))
