@@ -57,7 +57,7 @@ public class StringUtil
 	 */
 	public static boolean isEqual(String str1, String str2)
 	{
-		if (str1 == null || str2 == null)
+		if (isNullOrEmpty(str1) || isNullOrEmpty(str2))
 		{
 			return false;
 		}
