@@ -210,6 +210,16 @@ a, a:hover { text-decoration: none; color: #fff; }
 	color: #fff!important;
 }
 
+.language-menu {
+	max-width: 8rem;
+}
+
+.language-menu a {
+	cursor:pointer;
+	display:flex;
+	align-items:center;
+}
+
 button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #940412 100%); }
 
 .page-link, .link-dark {
