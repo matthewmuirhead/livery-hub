@@ -1,6 +1,8 @@
 package com.codemaven.liveries.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.codemaven.generated.tables.pojos.Languages;
 import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.manager.lists.LanguageFieldsList;
 import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 
@@ -23,12 +27,14 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class ServletBase
 {
 	protected static final String USER_SESSION_KEY = "Session_User";
-	
+	protected static final String LANGUAGE_SESSION_KEY = "Current_Language";
+
 	@GetMapping
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		req.setAttribute("navbarzone", getNavBarZone());
 		req.setAttribute("zones", NavBarZone.values());
+		checkIfAdminArea(req);
 		processRequest(req, resp);
 	}
 
@@ -37,22 +43,33 @@ public abstract class ServletBase
 	{
 		req.setAttribute("navbarzone", getNavBarZone());
 		req.setAttribute("zones", NavBarZone.values());
+		checkIfAdminArea(req);
 		processRequest(req, resp);
+	}
+
+	private void checkIfAdminArea(HttpServletRequest req)
+	{
+		NavBarZone currentZone = getNavBarZone();
+		boolean isAdminArea = currentZone == NavBarZone.ADMIN_LANGUAGES || currentZone == NavBarZone.ADMIN_SERIES
+				|| currentZone == NavBarZone.ADMIN_USERS;
+		req.setAttribute("isAdminArea", isAdminArea);
 	}
 
 	/**
 	 * Entry point method. Override in sub-class
 	 * 
-	 * @param req HttpServletRequest
-	 * @param resp HttpServletResponse
+	 * @param req
+	 *            HttpServletRequest
+	 * @param resp
+	 *            HttpServletResponse
 	 */
 	protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
 	{
 		// This should be overridden by the sub class.
 		log.error("ServletBase ProcessRequest(HttpServletRequest, HttpServletResponse) accessed directly!");
 	}
-	
-	protected ExtendedUser getLoggedInUser(HttpServletRequest req)
+
+	protected ExtendedUser getLoggedInUser(HttpServletRequest req) throws IllegalStateException
 	{
 		ExtendedUser user = null;
 		Object sessionUser = getSessionValue(req, USER_SESSION_KEY);
@@ -62,7 +79,7 @@ public abstract class ServletBase
 		}
 		return user;
 	}
-	
+
 	protected abstract NavBarZone getNavBarZone();
 
 	/**
@@ -116,19 +133,19 @@ public abstract class ServletBase
 	 * @param strKey
 	 * @param objObject
 	 */
-	protected void setSessionValue(HttpServletRequest req, String key, Object object)
+	protected void setSessionValue(HttpServletRequest req, String key, Object object) throws IllegalStateException
 	{
 		HttpSession session = req.getSession();
 		session.setAttribute(key, object);
 	}
-	
-	protected Object getSessionValue(HttpServletRequest req, String key)
+
+	protected Object getSessionValue(HttpServletRequest req, String key) throws IllegalStateException
 	{
 		HttpSession session = req.getSession();
 		return session.getAttribute(key);
 	}
 
-	protected String getParameterString(final HttpServletRequest req, final String key)
+	protected String getParameterString(final ServletRequest req, final String key)
 	{
 		String value = null;
 		Object o = req.getParameter(key);
@@ -138,7 +155,7 @@ public abstract class ServletBase
 		}
 		return value;
 	}
-	
+
 	protected int getParameterInt(final HttpServletRequest req, final String key)
 	{
 		int value = 0;
@@ -153,7 +170,7 @@ public abstract class ServletBase
 		}
 		return value;
 	}
-	
+
 	protected boolean getParameterBoolean(final HttpServletRequest req, final String key)
 	{
 		boolean value = false;
@@ -168,7 +185,7 @@ public abstract class ServletBase
 		}
 		return value;
 	}
-	
+
 	protected String getCmd(final HttpServletRequest req)
 	{
 		String cmd = getParameterString(req, "cmd");
@@ -178,7 +195,7 @@ public abstract class ServletBase
 		}
 		return cmd;
 	}
-	
+
 	/**
 	 * Parse the Servlet name from the url String
 	 * 
@@ -209,11 +226,46 @@ public abstract class ServletBase
 		{
 			log.debug("Message: " + message);
 			req.setAttribute("message", message);
-			req.getRequestDispatcher("/errors/general-error").forward(req, resp);
+			req.getRequestDispatcher("/errors/general-error")
+					.forward(req, resp);
 		}
 		catch (Exception e)
 		{
 			log.error("An error occured when trying to display an error!", e);
 		}
+	}
+
+	/**
+	 * Fetch language fields list
+	 * 
+	 * @param req
+	 * @return LanguageFieldsList
+	 */
+	protected LanguageFieldsList getLanguageFieldsList(ServletRequest req)
+	{
+		return (LanguageFieldsList) req.getAttribute("languageFieldsList");
+	}
+
+	/**
+	 * Fetch languages list
+	 * 
+	 * @param req
+	 * @return Languages
+	 */
+	@SuppressWarnings("unchecked")
+	protected List<Languages> getLanguages(ServletRequest req)
+	{
+		return (List<Languages>) req.getAttribute("languages");
+	}
+
+	/**
+	 * Fetch current language from request
+	 * 
+	 * @param req
+	 * @return Languages
+	 */
+	protected Languages getCurrentLanguage(HttpServletRequest req)
+	{
+		return (Languages) getSessionValue(req, LANGUAGE_SESSION_KEY);
 	}
 }

@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.codemaven</groupId>
-	<artifactId>event_manager</artifactId>
+	<artifactId>livery_hub</artifactId>
 	<packaging>war</packaging>
 	<name>Event Manager</name>
-	<description>ACC Event Manager Web Application</description>
+	<description>ACC Livery Hub Web Application</description>
 	<version>1.0.0</version>
 
 	<properties>
@@ -105,6 +105,10 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
 		</dependency>
 		<!-- Test -->
 		<dependency>
@@ -279,7 +283,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<jdbc.user>remote</jdbc.user>
+				<jdbc.user></jdbc.user>
 				<jdbc.password></jdbc.password>
 				<jdbc.url>jdbc:mysql://localhost:3306/acc_liveries?serverTimezone=Europe/London</jdbc.url>
 				<jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
