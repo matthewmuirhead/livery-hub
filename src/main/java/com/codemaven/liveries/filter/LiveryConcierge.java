@@ -28,9 +28,10 @@ public class LiveryConcierge extends ServletBase implements Filter
 	
 	private static final String FILE_EXTENSION_IMG = "img";
 	private static final String FILE_EXTENSION_CSS = "css";
+	private static final String FILE_EXTENSION_JS = "js";
 	
 	private static final String[] SUPPORTED_SERVLETS = { "", "series", "login", "logout", "register", "404" };
-	private static final String[] SUPPORTED_SERVLETS_ADMIN = { "users", "series" };
+	private static final String[] SUPPORTED_SERVLETS_ADMIN = { "users", "series", "languages" };
 	
 	private static final String ADMIN_BASE_SERVLET = "admin";
 
@@ -119,6 +120,14 @@ public class LiveryConcierge extends ServletBase implements Filter
 			if (supported)
 			{
 				log.info("CSS Access for file: " + getServletNameFromUrl(url));
+			}
+			else
+			{
+				supported = StringUtil.isEqual(FILE_EXTENSION_JS, baseServletName);
+				if (supported)
+				{
+					log.info("JS Access for file: " + getServletNameFromUrl(url));
+				}
 			}
 		}
 		return supported;
