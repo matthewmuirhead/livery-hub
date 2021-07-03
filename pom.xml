@@ -284,7 +284,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<jdbc.user>remote</jdbc.user>
+				<jdbc.user></jdbc.user>
 				<jdbc.password></jdbc.password>
 				<jdbc.url>jdbc:mysql://localhost:3306/acc_liveries?serverTimezone=Europe/London</jdbc.url>
 				<jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
