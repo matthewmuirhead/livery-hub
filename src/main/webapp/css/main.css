@@ -34,6 +34,9 @@ a, a:hover { text-decoration: none; color: #fff; }
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 .bg-red-fade { background: linear-gradient(to right, #e0081d 0%, #940412 100%) }
 
+.bg-red-fade-active { background: linear-gradient(to right, #35DCCC 0%, #049486 100%); border-color: #35DCCC }
+.bg-red-fade-active:hover, .bg-red-fade-active:active { background: linear-gradient(to right, #35DCCC 0%, #049486 100%) !important; border-color: #35DCCC !important; cursor:default !important }
+.bg-red-fade-active:focus { box-shadow: 0 0 0 .2rem rgba(53,220,204,.5) !important; }
 
 .masthead {
   min-height: 30rem;
