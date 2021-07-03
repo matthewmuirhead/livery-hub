@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-md-12 pb-3">
 				<div class="float-right">
-					<a href="series?view=list" class="float-right"><button class="btn btn-danger bg-red-fade-active">${languageFieldsList.getTranslation('List View')}</button></a>
+					<a href="series?view=list" class="float-right"><button class="btn btn-danger bg-blue-fade active">${languageFieldsList.getTranslation('List View')}</button></a>
 					<a href="series" class="float-right pr-1"><button class="btn btn-danger bg-red-fade">${languageFieldsList.getTranslation('Grid View')}</button></a>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 				<c:forEach items="${seriesList}" var="series">
 					<a class="row row-striped" href="/series?cmd=view&id=${series.getId()}">
 						<div class="col-2 text-right">
-							<img src="/img/series/${series.getImageUrl()}" style="width:100%"/>
+							<img src="/img/series/${series.getId()}/logo.jpg" style="width:100%"/>
 						</div>
 						<div class="col-10">
 							<h3 class="text-uppercase"><strong>${series.getName()}</strong></h3>

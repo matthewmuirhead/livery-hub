@@ -14,7 +14,7 @@
 			<div class="col-md-12 pb-3">
 				<div class="float-right">
 					<a href="series?view=list" class="float-right"><button class="btn btn-danger bg-red-fade">${languageFieldsList.getTranslation('List View')}</button></a>
-					<a href="series" class="float-right pr-1"><button class="btn btn-danger bg-red-fade-active">${languageFieldsList.getTranslation('Grid View')}</button></a>
+					<a href="series" class="float-right pr-1"><button class="btn btn-danger bg-blue-fade active">${languageFieldsList.getTranslation('Grid View')}</button></a>
 				</div>
 			</div>
 			<c:forEach items="${seriesList}" var="series">
@@ -23,7 +23,7 @@
 						<div class="card profile-card">
 							<div class="card-img-block">
 								<img class="card-img-top"
-									src="/img/series/${series.getImageUrl()}"
+									src="/img/series/${series.getId()}/logo.jpg"
 									alt="${series.getName()} Logo">
 							</div>
 							<div class="card-body pt-0">
