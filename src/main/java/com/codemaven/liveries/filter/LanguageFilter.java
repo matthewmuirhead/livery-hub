@@ -1,6 +1,7 @@
 package com.codemaven.liveries.filter;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,15 +20,19 @@ import com.codemaven.liveries.manager.lists.LanguageFieldsList;
 import com.codemaven.liveries.servlet.ServletBase;
 import com.codemaven.liveries.util.StringUtil;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @Component
 @Order(2)
 public class LanguageFilter extends ServletBase implements Filter
 {
-	private LanguagesService languageService;
+	private final LanguagesService languageService;
+	private List<Languages> languages;
 
+	public LanguageFilter(LanguagesService languageService)
+	{
+		this.languageService = languageService;
+		this.languages = languageService.fetchAllLanguages();
+	}
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException
@@ -35,7 +40,8 @@ public class LanguageFilter extends ServletBase implements Filter
 		HttpServletRequest req = (HttpServletRequest) request;
 		String newLanguageCode = getParameterString(req, "lang");
 		Languages currentLanguage = getCurrentLanguage(req);
-		if (currentLanguage != null && !StringUtil.isEqual(currentLanguage.getCode(), newLanguageCode))
+		if (currentLanguage != null && !StringUtil.isEqual(currentLanguage.getCode(), newLanguageCode)
+				&& !StringUtil.isNullOrEmpty(newLanguageCode))
 		{
 			currentLanguage = languageService.fetchLanguageByCode(newLanguageCode);
 			if (currentLanguage != null)
@@ -61,9 +67,10 @@ public class LanguageFilter extends ServletBase implements Filter
 			}
 		}
 
-		LanguageFieldsList languageFieldsList = new LanguageFieldsList(languageService);
+		LanguageFieldsList languageFieldsList = new LanguageFieldsList(languageService, languages);
 		languageFieldsList.populateTranslations(currentLanguage.getId());
 		req.setAttribute("languageFieldsList", languageFieldsList);
+		req.setAttribute("languages", languages);
 		chain.doFilter(req, resp);
 	}
 

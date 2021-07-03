@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.codemaven.generated.tables.pojos.Languages;
 import com.codemaven.liveries.db.service.LanguagesService;
 import com.codemaven.liveries.util.StringUtil;
 
@@ -16,10 +17,12 @@ public class LanguageFieldsList
 	private int languageId;
 	private Pattern placeholderPattern = Pattern.compile("\\{(.*?)}");
 	private LanguagesService service;
+	private List<Languages> languages;
 
-	public LanguageFieldsList(LanguagesService service)
+	public LanguageFieldsList(LanguagesService service, List<Languages> languages)
 	{
 		this.service = service;
+		this.languages = languages;
 	}
 
 	public void populateTranslations(int languageId)
@@ -82,13 +85,13 @@ public class LanguageFieldsList
 			translation = service.fetchKeyTranslationForLanguage(key, languageId);
 			if (translation == null)
 			{
-				service.createTranslation(key);
+				service.createTranslation(key, languages);
 				translations.put(key, key);
 				translation = key;
 			}
 		}
 
-		if (StringUtil.isEqual(translation, ""))
+		if (StringUtil.isNullOrEmpty(translation))
 		{
 			translation = key;
 		}
