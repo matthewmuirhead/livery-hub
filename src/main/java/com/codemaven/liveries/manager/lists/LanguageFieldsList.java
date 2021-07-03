@@ -41,6 +41,11 @@ public class LanguageFieldsList
 		return getTranslation(key, new String[] { replacement });
 	}
 
+	public String getTranslation(String key, String replacement1, String replacement2)
+	{
+		return getTranslation(key, new String[] { replacement1, replacement2 });
+	}
+
 	public String getTranslation(String key, String[] replacements)
 	{
 		if (StringUtil.isNullOrEmpty(key))

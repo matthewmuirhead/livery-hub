@@ -11,6 +11,7 @@ import com.codemaven.generated.Tables;
 import com.codemaven.generated.tables.pojos.LanguageFields;
 import com.codemaven.generated.tables.pojos.LanguageTranslations;
 import com.codemaven.generated.tables.pojos.Languages;
+import com.codemaven.generated.tables.pojos.Localise;
 import com.codemaven.generated.tables.records.LanguageFieldsRecord;
 import com.codemaven.generated.tables.records.LanguageTranslationsRecord;
 
@@ -33,6 +34,12 @@ public class LanguagesDao
 	{
 		return dsl.selectFrom(Tables.LANGUAGES)
 				.fetchInto(Languages.class);
+	}
+
+	public List<Localise> fetchAllLocalise()
+	{
+		return dsl.selectFrom(Tables.LOCALISE)
+				.fetchInto(Localise.class);
 	}
 
 	public Map<String, String> fetchTranslationsForLanguage(int languageId)
@@ -70,8 +77,13 @@ public class LanguagesDao
 				.set(record)
 				.returningResult(Tables.LANGUAGE_FIELDS.ID)
 				.fetchOne();
-		languageField.setId(result.getValue(Tables.LANGUAGE_FIELDS.ID));
-		return result.getValue(Tables.LANGUAGE_FIELDS.ID) > 0;
+		int id = 0;
+		if (result != null)
+		{
+			id = result.getValue(Tables.LANGUAGE_FIELDS.ID);
+		}
+		languageField.setId(id);
+		return id > 0;
 	}
 
 	public boolean saveTranslation(final LanguageTranslations languageTranslation)

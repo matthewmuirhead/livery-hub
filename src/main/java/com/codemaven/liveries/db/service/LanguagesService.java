@@ -3,15 +3,18 @@ package com.codemaven.liveries.db.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
 import com.codemaven.generated.tables.pojos.LanguageFields;
 import com.codemaven.generated.tables.pojos.LanguageTranslations;
 import com.codemaven.generated.tables.pojos.Languages;
+import com.codemaven.generated.tables.pojos.Localise;
 import com.codemaven.liveries.db.Service;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.dao.LanguagesDao;
+import com.codemaven.liveries.model.ExtendedLocalise;
 import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;
@@ -111,10 +114,6 @@ public class LanguagesService implements Service
 					}
 				}
 			}
-			else
-			{
-				success = false;
-			}
 		}
 		else
 		{
@@ -144,6 +143,14 @@ public class LanguagesService implements Service
 	public List<Languages> fetchAllLanguages()
 	{
 		return dao.fetchAllLanguages();
+	}
+
+	public List<ExtendedLocalise> fetchAllLocalise()
+	{
+		List<Localise> localise = dao.fetchAllLocalise();
+		return localise.stream()
+				.map(l -> new ExtendedLocalise(l))
+				.collect(Collectors.toList());
 	}
 
 	@Override

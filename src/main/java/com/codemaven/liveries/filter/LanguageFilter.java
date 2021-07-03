@@ -14,9 +14,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.codemaven.generated.tables.pojos.Languages;
+import com.codemaven.generated.tables.pojos.Localise;
 import com.codemaven.liveries.db.service.LanguagesService;
 import com.codemaven.liveries.manager.enums.NavBarZone;
 import com.codemaven.liveries.manager.lists.LanguageFieldsList;
+import com.codemaven.liveries.model.ExtendedLocalise;
 import com.codemaven.liveries.servlet.ServletBase;
 import com.codemaven.liveries.util.StringUtil;
 
@@ -26,13 +28,19 @@ public class LanguageFilter extends ServletBase implements Filter
 {
 	private final LanguagesService languageService;
 	private List<Languages> languages;
+	private List<ExtendedLocalise> localise;
+	private ExtendedLocalise defaultLocalise;
 
 	public LanguageFilter(LanguagesService languageService)
 	{
 		this.languageService = languageService;
 		this.languages = languageService.fetchAllLanguages();
+		this.localise = languageService.fetchAllLocalise();
+		Localise defaultLocaliseBase = new Localise();
+		defaultLocaliseBase.setDateFormat("dd/MM/yyyy");
+		defaultLocalise = new ExtendedLocalise(defaultLocaliseBase);
 	}
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException
@@ -67,10 +75,16 @@ public class LanguageFilter extends ServletBase implements Filter
 			}
 		}
 
+		int currentLanguageId = currentLanguage.getId();
 		LanguageFieldsList languageFieldsList = new LanguageFieldsList(languageService, languages);
-		languageFieldsList.populateTranslations(currentLanguage.getId());
+		languageFieldsList.populateTranslations(currentLanguageId);
 		req.setAttribute("languageFieldsList", languageFieldsList);
 		req.setAttribute("languages", languages);
+		req.setAttribute("localise", localise.stream()
+				.filter(l -> l.getLanguageId()
+						.intValue() == currentLanguageId)
+				.findFirst()
+				.orElse(defaultLocalise));
 		chain.doFilter(req, resp);
 	}
 
