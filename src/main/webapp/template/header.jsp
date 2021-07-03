@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/locationmap.css" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/calendar.css" crossorigin="anonymous">
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.1/css/all.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css">
     <!-- Bootstrap core JavaScript -->
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
