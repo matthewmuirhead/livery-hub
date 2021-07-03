@@ -1,4 +1,4 @@
-package com.codemaven.liveries.manager.lists;
+package com.codemaven.liveries.lists;
 
 import java.util.ArrayList;
 import java.util.HashMap;

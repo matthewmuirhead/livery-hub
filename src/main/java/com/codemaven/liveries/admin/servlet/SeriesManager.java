@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codemaven.generated.tables.pojos.Users;
 import com.codemaven.liveries.db.ServiceFactory;
-import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.enums.NavBarZone;
 import com.codemaven.liveries.servlet.ServletBase;
 import com.codemaven.liveries.util.StringUtil;
 

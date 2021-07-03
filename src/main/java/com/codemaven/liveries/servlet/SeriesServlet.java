@@ -15,7 +15,7 @@ import com.codemaven.liveries.db.ServiceFactory;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.service.SeriesService;
 import com.codemaven.liveries.db.service.TeamsService;
-import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.enums.NavBarZone;
 import com.codemaven.liveries.util.StringUtil;
 
 import lombok.AllArgsConstructor;

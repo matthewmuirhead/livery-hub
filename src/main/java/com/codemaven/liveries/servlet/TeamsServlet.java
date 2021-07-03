@@ -12,7 +12,7 @@ import com.codemaven.generated.tables.pojos.Teams;
 import com.codemaven.liveries.db.ServiceFactory;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.service.TeamsService;
-import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.enums.NavBarZone;
 import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 

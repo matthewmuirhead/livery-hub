@@ -1,4 +1,4 @@
-package com.codemaven.liveries.manager.enums;
+package com.codemaven.liveries.enums;
 
 public enum NavBarZone
 {

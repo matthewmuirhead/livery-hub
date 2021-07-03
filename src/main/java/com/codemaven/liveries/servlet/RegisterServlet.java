@@ -10,8 +10,8 @@ import com.codemaven.generated.tables.pojos.Users;
 import com.codemaven.liveries.db.ServiceFactory;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.service.UsersService;
-import com.codemaven.liveries.manager.enums.NavBarZone;
-import com.codemaven.liveries.manager.lists.LanguageFieldsList;
+import com.codemaven.liveries.enums.NavBarZone;
+import com.codemaven.liveries.lists.LanguageFieldsList;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

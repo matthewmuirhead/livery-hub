@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.enums.NavBarZone;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

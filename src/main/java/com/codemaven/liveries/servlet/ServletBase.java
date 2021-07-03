@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.codemaven.generated.tables.pojos.Languages;
-import com.codemaven.liveries.manager.enums.NavBarZone;
-import com.codemaven.liveries.manager.lists.LanguageFieldsList;
+import com.codemaven.liveries.enums.NavBarZone;
+import com.codemaven.liveries.lists.LanguageFieldsList;
 import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 

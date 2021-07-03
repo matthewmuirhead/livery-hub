@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codemaven.liveries.db.ServiceFactory;
 import com.codemaven.liveries.db.ServiceType;
 import com.codemaven.liveries.db.service.UsersService;
-import com.codemaven.liveries.manager.enums.NavBarZone;
-import com.codemaven.liveries.manager.lists.LanguageFieldsList;
+import com.codemaven.liveries.enums.NavBarZone;
+import com.codemaven.liveries.lists.LanguageFieldsList;
 import com.codemaven.liveries.model.ExtendedUser;
 import com.codemaven.liveries.util.StringUtil;
 

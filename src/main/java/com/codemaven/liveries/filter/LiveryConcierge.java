@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.codemaven.liveries.manager.enums.NavBarZone;
+import com.codemaven.liveries.enums.NavBarZone;
 import com.codemaven.liveries.servlet.ServletBase;
 import com.codemaven.liveries.util.StringUtil;
 
