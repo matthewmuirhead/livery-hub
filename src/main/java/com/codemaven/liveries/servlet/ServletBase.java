@@ -1,6 +1,8 @@
 package com.codemaven.liveries.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -32,6 +34,7 @@ public abstract class ServletBase
 	{
 		req.setAttribute("navbarzone", getNavBarZone());
 		req.setAttribute("zones", NavBarZone.values());
+		checkIfAdminArea(req);
 		processRequest(req, resp);
 	}
 
@@ -40,7 +43,16 @@ public abstract class ServletBase
 	{
 		req.setAttribute("navbarzone", getNavBarZone());
 		req.setAttribute("zones", NavBarZone.values());
+		checkIfAdminArea(req);
 		processRequest(req, resp);
+	}
+
+	private void checkIfAdminArea(HttpServletRequest req)
+	{
+		NavBarZone currentZone = getNavBarZone();
+		boolean isAdminArea = currentZone == NavBarZone.ADMIN_LANGUAGES || currentZone == NavBarZone.ADMIN_SERIES
+				|| currentZone == NavBarZone.ADMIN_USERS;
+		req.setAttribute("isAdminArea", isAdminArea);
 	}
 
 	/**
@@ -232,6 +244,18 @@ public abstract class ServletBase
 	protected LanguageFieldsList getLanguageFieldsList(ServletRequest req)
 	{
 		return (LanguageFieldsList) req.getAttribute("languageFieldsList");
+	}
+
+	/**
+	 * Fetch languages list
+	 * 
+	 * @param req
+	 * @return Languages
+	 */
+	@SuppressWarnings("unchecked")
+	protected List<Languages> getLanguages(ServletRequest req)
+	{
+		return (List<Languages>) req.getAttribute("languages");
 	}
 
 	/**

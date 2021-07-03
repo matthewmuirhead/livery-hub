@@ -21,12 +21,13 @@
 			
 			<c:if test="${not empty user && user.getAdmin()}">
 				<li class="mx-3 nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="nav-link dropdown-toggle ${isAdminArea ? 'active' : ''}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						${languageFieldsList.getTranslation('Admin')}
 					</a>
 					<div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
 						<a class="nav-link drop-link ${zones[2].name() == navbarzone.name() ? 'active' : ''}" href="/admin/series">${languageFieldsList.getTranslation('Series')}</a>
 						<a class="nav-link drop-link ${zones[3].name() == navbarzone.name() ? 'active' : ''}" href="/admin/users">${languageFieldsList.getTranslation('Users')}</a>
+						<a class="nav-link drop-link ${zones[6].name() == navbarzone.name() ? 'active' : ''}" href="/admin/languages">${languageFieldsList.getTranslation('Languages')}</a>
 					</div>
 				</li>
 			</c:if>
@@ -45,6 +46,7 @@
 								${languageFieldsList.getTranslation('Log Out')}
 							</a>
 						</li>
+						<jsp:include page="languages.jsp"/>
 					</ul>
 				</c:when>
 				<c:otherwise>
@@ -59,6 +61,7 @@
 								${languageFieldsList.getTranslation('Login')}
 							</a>
 						</li>
+						<jsp:include page="languages.jsp"/>
 					</ul>
 				</c:otherwise>
 			</c:choose>
