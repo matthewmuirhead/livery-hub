@@ -90,4 +90,12 @@ public class LanguagesDao
 				.where(Tables.LANGUAGE_TRANSLATIONS.FIELD_ID.eq(fieldId))
 				.and(Tables.LANGUAGE_TRANSLATIONS.LANGUAGE_ID.eq(languageId)));
 	}
+
+	public int fetchFieldIdByKey(String key)
+	{
+		return dsl.select(Tables.LANGUAGE_FIELDS.ID)
+				.from(Tables.LANGUAGE_FIELDS)
+				.where(Tables.LANGUAGE_FIELDS.FIELD_KEY.eq(key))
+				.fetchOneInto(Integer.class);
+	}
 }

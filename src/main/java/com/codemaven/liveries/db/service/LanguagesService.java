@@ -23,10 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 public class LanguagesService implements Service
 {
 	private LanguagesDao dao;
-	
+
 	private static final int DEFAULT_LANGUAGE = 1;
 	public static final String DEFAULT_LANGUAGE_CODE = "en-gb";
-	
+
 	public Languages fetchLanguageByCode(String code)
 	{
 		Languages language = null;
@@ -40,7 +40,7 @@ public class LanguagesService implements Service
 		}
 		return language;
 	}
-	
+
 	public Map<String, String> fetchTranslationsForLanguage(int languageId)
 	{
 		Map<String, String> translations = new HashMap<>();
@@ -54,7 +54,7 @@ public class LanguagesService implements Service
 		}
 		return translations;
 	}
-	
+
 	public String fetchKeyTranslationForLanguage(String key, int languageId)
 	{
 		String translation = null;
@@ -68,8 +68,8 @@ public class LanguagesService implements Service
 		}
 		return translation;
 	}
-	
-	public boolean createTranslation(String key)
+
+	public boolean createTranslation(String key, List<Languages> languages)
 	{
 		boolean success = false;
 		if (!StringUtil.isNullOrEmpty(key))
@@ -87,10 +87,9 @@ public class LanguagesService implements Service
 				languageField.setFieldKey(key);
 				success = dao.saveKey(languageField);
 			}
-			
+
 			if (success)
 			{
-				List<Languages> languages = dao.fetchAllLanguages();
 				int fieldId = languageField.getId();
 				for (Languages language : languages)
 				{
@@ -123,7 +122,30 @@ public class LanguagesService implements Service
 		}
 		return success;
 	}
-	
+
+	public boolean insertTranslation(String key, String translation, int languageId)
+	{
+		boolean success = false;
+		if (!StringUtil.isNullOrEmpty(key) && !StringUtil.isNullOrEmpty(translation) && languageId > 0)
+		{
+			LanguageTranslations languageTranslations = new LanguageTranslations();
+			languageTranslations.setLanguageId(languageId);
+			languageTranslations.setFieldId(dao.fetchFieldIdByKey(key));
+			languageTranslations.setTranslation(translation);
+			success = dao.saveTranslation(languageTranslations);
+		}
+		else if (log.isDebugEnabled())
+		{
+			log.debug("Tried to insert translation with invalid paramenters: {}, {}, {}", key, translation, languageId);
+		}
+		return success;
+	}
+
+	public List<Languages> fetchAllLanguages()
+	{
+		return dao.fetchAllLanguages();
+	}
+
 	@Override
 	public ServiceType getType()
 	{
