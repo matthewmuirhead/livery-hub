@@ -46,13 +46,8 @@ public class SeriesServlet extends ServletBase
 	
 	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
-		String cmd = getCmd(req);
 		int seriesId = getParameterInt(req, "id");
-		if (StringUtil.isEqual(cmd, "edit"))
-		{
-			doEdit(req, resp, seriesId);
-		}
-		else if (seriesId > 0)
+		if (seriesId > 0)
 		{
 			doView(req, resp, seriesId);
 		}
@@ -64,8 +59,12 @@ public class SeriesServlet extends ServletBase
 
 	private void displaySeries(HttpServletRequest req, HttpServletResponse resp)
 	{
-		List<Series> series = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchAllSeries();
-		req.setAttribute("seriesList", series);
+		List<Series> activeSeries = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchActiveSeries();
+		req.setAttribute("activeSeries", activeSeries);
+		List<Series> upcomingSeries = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchUpcomingSeries();
+		req.setAttribute("upcomingSeries", upcomingSeries);
+		List<Series> finishedSeries = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchFinishedSeries();
+		req.setAttribute("finishedSeries", finishedSeries);
 		String view = getParameterString(req, "view");
 		if (StringUtil.isEqual(view, "list"))
 		{
@@ -84,13 +83,6 @@ public class SeriesServlet extends ServletBase
 		List<Teams> teams = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchSeriesTeams(seriesId);
 		req.setAttribute("teams", teams);
 		displayPage(req, resp, JSP_PATH + "view.jsp");
-	}
-	
-	private void doEdit(HttpServletRequest req, HttpServletResponse resp, int seriesId)
-	{
-		Series series = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchSeriesById(seriesId);
-		req.setAttribute("selectedSeries", series);
-		displayPage(req, resp, JSP_PATH + "edit.jsp");
 	}
 
 	@Override

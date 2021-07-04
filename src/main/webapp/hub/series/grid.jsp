@@ -10,36 +10,19 @@
 
 <section>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12 pb-3">
-				<div class="float-right">
-					<a href="series?view=list" class="float-right"><button class="btn btn-danger bg-red-fade">${languageFieldsList.getTranslation('List View')}</button></a>
-					<a href="series" class="float-right pr-1"><button class="btn btn-danger bg-blue-fade active">${languageFieldsList.getTranslation('Grid View')}</button></a>
-				</div>
-			</div>
-			<c:forEach items="${seriesList}" var="series">
-				<div class="col-md-4 mt-4">
-					<a href="/series?id=${series.getId()}">
-						<div class="card profile-card">
-							<div class="card-img-block">
-								<img class="card-img-top"
-									src="/img/series/${series.getId()}/logo.jpg"
-									alt="${series.getName()} Logo">
-							</div>
-							<div class="card-body pt-0">
-								<h5 class="card-title">
-									${series.getName()}
-								</h5>
-								<ul class="list-unstyled">
-								    <li><i class="far fa-calendar" aria-hidden="true"></i> ${languageFieldsList.getTranslation('Duration: {start} - {end}', localise.formatDate(series.getStart()), localise.formatDate(series.getEnd()))}</li>
-									<li><i class="far fa-user" aria-hidden="true"></i> ${languageFieldsList.getTranslation('Hosted by: {host}', series.getHost())}</li>
-								</ul>
-							</div>
-						</div>
-					</a>
-				</div>
-			</c:forEach>
-		</div>
+		<c:set var="seriesList" value="${activeSeries}" scope="request"/>
+		<jsp:include page="includes/gridItem.jsp">
+			<jsp:param value="Active Series" name="title"/>
+			<jsp:param value="true" name="firstItem"/>
+		</jsp:include>
+		<c:set var="seriesList" value="${upcomingSeries}" scope="request"/>
+		<jsp:include page="includes/gridItem.jsp">
+			<jsp:param value="Upcoming Series" name="title"/>
+		</jsp:include>
+		<c:set var="seriesList" value="${finishedSeries}" scope="request"/>
+		<jsp:include page="includes/gridItem.jsp">
+			<jsp:param value="Finished Series" name="title"/>
+		</jsp:include>
 	</div>
 </section>
 

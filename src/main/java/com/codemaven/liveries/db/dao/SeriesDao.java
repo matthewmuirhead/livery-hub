@@ -1,5 +1,6 @@
 package com.codemaven.liveries.db.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.jooq.DSLContext;
@@ -20,6 +21,28 @@ public class SeriesDao
 	public List<Series> fetchAllSeries()
 	{
 		return dsl.selectFrom(Tables.SERIES)
+				.fetchInto(Series.class);
+	}
+	
+	public List<Series> fetchActiveSeries()
+	{
+		return dsl.selectFrom(Tables.SERIES)
+				.where(Tables.SERIES.START.lt(LocalDate.now()))
+				.and(Tables.SERIES.END.gt(LocalDate.now()))
+				.fetchInto(Series.class);
+	}
+	
+	public List<Series> fetchUpcomingSeries()
+	{
+		return dsl.selectFrom(Tables.SERIES)
+				.where(Tables.SERIES.START.gt(LocalDate.now()))
+				.fetchInto(Series.class);
+	}
+	
+	public List<Series> fetchFinishedSeries()
+	{
+		return dsl.selectFrom(Tables.SERIES)
+				.where(Tables.SERIES.END.lt(LocalDate.now()))
 				.fetchInto(Series.class);
 	}
 	

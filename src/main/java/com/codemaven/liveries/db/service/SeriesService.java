@@ -23,6 +23,21 @@ public class SeriesService implements Service
 	{
 		return dao.fetchAllSeries();
 	}
+	
+	public List<Series> fetchActiveSeries()
+	{
+		return dao.fetchActiveSeries();
+	}
+	
+	public List<Series> fetchUpcomingSeries()
+	{
+		return dao.fetchUpcomingSeries();
+	}
+	
+	public List<Series> fetchFinishedSeries()
+	{
+		return dao.fetchFinishedSeries();
+	}
 
 	public Series fetchSeriesById(final int seriesId)
 	{

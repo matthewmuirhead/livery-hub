@@ -23,6 +23,21 @@ a, a:hover { text-decoration: none; color: #fff; }
 	height: 200px;
 }
 
+.card-profile-img {
+	width: 100%;
+	object-fit: cover;
+	height: 250px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.63);
+	background-color: #fff;
+}
+
+.livery-img {
+	width: 100%!important;
+	object-fit: cover;
+	height: 180px;
+}
+
 .nav-link {
 	font-size: 1.1rem;
 }
@@ -202,6 +217,16 @@ a, a:hover { text-decoration: none; color: #fff; }
 
 .row-striped:hover {
     background: linear-gradient(to right, #e0081d 0%, #940412 100%);
+}
+
+.row-striped-disabled:hover {
+    background: #efefef !important;
+}
+
+.row-profile-img {
+	width: 100%;
+	object-fit: cover;
+	height: 155px;
 }
 
 .nav-tabs a {
