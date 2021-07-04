@@ -47,9 +47,14 @@ public class SeriesServlet extends ServletBase
 	private void doCmd(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		String cmd = getCmd(req);
-		if (StringUtil.isEqual(cmd, "view"))
+		int seriesId = getParameterInt(req, "id");
+		if (StringUtil.isEqual(cmd, "edit"))
 		{
-			doView(req, resp);
+			doEdit(req, resp, seriesId);
+		}
+		else if (seriesId > 0)
+		{
+			doView(req, resp, seriesId);
 		}
 		else
 		{
@@ -72,14 +77,20 @@ public class SeriesServlet extends ServletBase
 		}
 	}
 
-	private void doView(HttpServletRequest req, HttpServletResponse resp)
+	private void doView(HttpServletRequest req, HttpServletResponse resp, int seriesId)
 	{
-		int seriesId = getParameterInt(req, "id");
 		Series series = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchSeriesById(seriesId);
 		req.setAttribute("selectedSeries", series);
 		List<Teams> teams = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchSeriesTeams(seriesId);
 		req.setAttribute("teams", teams);
 		displayPage(req, resp, JSP_PATH + "view.jsp");
+	}
+	
+	private void doEdit(HttpServletRequest req, HttpServletResponse resp, int seriesId)
+	{
+		Series series = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchSeriesById(seriesId);
+		req.setAttribute("selectedSeries", series);
+		displayPage(req, resp, JSP_PATH + "edit.jsp");
 	}
 
 	@Override
