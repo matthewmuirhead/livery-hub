@@ -26,7 +26,8 @@ public class ExtendedUser extends Users
 	{
 		if (series.isEmpty())
 		{
-			series = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class).fetchAllSeries();
+			series = serviceFactory.getInstance(ServiceType.SERIES, SeriesService.class)
+					.fetchAllSeries();
 		}
 		return series;
 	}
@@ -35,7 +36,8 @@ public class ExtendedUser extends Users
 	{
 		if (teams.isEmpty())
 		{
-			teams = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class).fetchSeriesTeams(0);
+			teams = serviceFactory.getInstance(ServiceType.TEAM, TeamsService.class)
+					.fetchTeamsByUserId(getId());
 		}
 		return teams;
 	}
