@@ -19,7 +19,7 @@
 			</div>
 			<c:forEach items="${seriesList}" var="series">
 				<div class="col-md-4 mt-4">
-					<a href="/series?cmd=view&id=${series.getId()}">
+					<a href="/series?id=${series.getId()}">
 						<div class="card profile-card">
 							<div class="card-img-block">
 								<img class="card-img-top"

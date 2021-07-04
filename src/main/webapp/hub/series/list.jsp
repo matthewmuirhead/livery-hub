@@ -19,9 +19,9 @@
 			</div>
 			<div class="col-md-12">
 				<c:forEach items="${seriesList}" var="series">
-					<a class="row row-striped" href="/series?cmd=view&id=${series.getId()}">
+					<a class="row row-striped" href="/series?id=${series.getId()}">
 						<div class="col-2 text-right">
-							<img src="/img/series/${series.getId()}/logo.jpg" style="width:100%"/>
+							<img src="/img/series/${series.getId()}/logo.jpg" class="w-100"/>
 						</div>
 						<div class="col-10">
 							<h3 class="text-uppercase"><strong>${series.getName()}</strong></h3>
