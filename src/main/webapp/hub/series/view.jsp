@@ -8,7 +8,7 @@
 		<div class="d-flex align-items-center new-item">
 			<a href="/series/team" class="hvr-underline-from-left hvr-float">New Team</a>
 			<c:if test="${sessionScope.Session_User.getAdmin()}">
-				<a href="/series?cmd=edit&id=${selectedSeries.getId()}" class="hvr-underline-from-left hvr-float ml-3">Edit Series</a>
+				<a href="/admin/series?cmd=edit&id=${selectedSeries.getId()}" class="hvr-underline-from-left hvr-float ml-3">Edit Series</a>
 			</c:if>
 		</div>
 	</c:if>
@@ -66,7 +66,14 @@
 									<div class="col mr-2">
 										<div class="text-xs font-weight-bold text-danger text-uppercase mb-1">${team.getName()}</div>
 										<div class="h6 mb-1 font-weight-bold text-secondary">#${team.getCarNumber()} ${team.getCar()}</div>
-										<img class="w-100 py-2" src="/img/series/${selectedSeries.getId()}/teams/${team.getName()}.jpg">
+										<c:choose>
+											<c:when test="${team.getHasImage()}">
+												<img class="livery-img py-2" src="/img/series/${selectedSeries.getId()}/teams/${team.getName()}.jpg">
+											</c:when>
+											<c:otherwise>
+												<div class="livery-img py-2"></div>
+											</c:otherwise>
+										</c:choose>
 										<div class="col-lg-12 d-flex flex-column px-0">
 											<div class="col-lg-12 px-0 my-1 d-flex flex-row justify-content-between">
 												<button class="col-lg-${sessionScope.Session_User.canAccessTeam(selectedSeries.getId()) ? '7' : '12'} btn btn-danger bg-red-fade">Download Livery</button>
