@@ -64,6 +64,7 @@ public class LoginServlet extends ServletBase
 			{
 				if (StringUtil.isEqual(user.getPassword(), getParameterString(req, "password")))
 				{
+					user.setServiceFactory(serviceFactory);
 					setSessionValue(req, USER_SESSION_KEY, user);
 					displayPage(req, resp, "/", true);
 					return;
