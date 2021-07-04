@@ -3,6 +3,10 @@ body { padding-top: 72px; color: #282A2C; }
 main { margin-bottom: 5rem; }
 a, a:hover { text-decoration: none; color: #fff; }
 
+.w-15 { width: 15%; }
+.w-20 { width: 20%; }
+.w-30 { width: 30%; }
+
 /* Login */
 .bg-login-image { background:url("../img/IMG_7618.jpg"); background-position: center; background-size: cover; background-position-x: left; }
 /* Scroll to top */
@@ -115,7 +119,6 @@ a, a:hover { text-decoration: none; color: #fff; }
 
 .btn-bar {
 	margin-top: 10px;
-    margin-bottom: 25px;
     margin-left: 0!important;
     float: right;
     color: #fff;
@@ -267,4 +270,44 @@ button .bg-red-fade:hover { background: linear-gradient(to right, #940412 0%, #9
 
 .table td, .table th {
 	vertical-align:middle!important;
+}
+
+/*
+*
+* ==========================================
+* IMAGE UPLOAD
+* ==========================================
+*
+*/
+
+.upload {
+    opacity: 0;
+}
+
+.upload-label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+.image-area {
+    border: 2px dashed;
+    border-color: #940412;
+    padding: 1rem;
+    position: relative;
+}
+
+.image-area::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.image-area img {
+    z-index: 2;
+    position: relative;
 }
