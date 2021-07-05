@@ -36,7 +36,7 @@
 							<label for="header">Header Image</label>
 							<!-- Upload image input-->
 							<div class="input-group mb-3 px-2 py-2 rounded bg-white shadow-sm">
-								<input id="header" type="file" name="header" onchange="readURL(this);" class="upload form-control border-0">
+								<input id="header" type="file" name="header" class="upload form-control border-0">
 								<label id="header-label" for="header" class="upload-label text-muted">Choose file</label>
 								<div class="input-group-append">
 									<label for="header" class="btn btn-light m-0 rounded px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
@@ -68,36 +68,36 @@
 /*  ==========================================
     SHOW UPLOADED IMAGE
 * ========================================== */
-function readURL(input) {
+
+$('#header').on('change', function () {
+	readURL(this, '#headerResultPlaceholder', '#headerResult');
+});
+
+function readURL(element, resultPlaceholderId, resultId) {
+	var input = $(element)[0];
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
 
 		reader.onload = function (e) {
-			$('#headerResultPlaceholder').hide();
-			$('#headerResult').addClass('header-img');
-			$('#headerResult').attr('src', e.target.result);
+			$(resultPlaceholderId).hide();
+			$(resultId).addClass('header-img');
+			$(resultId).attr('src', e.target.result);
 		};
 		reader.readAsDataURL(input.files[0]);
 	}
 }
 
-$(function () {
-	$('#header').on('change', function () {
-		readURL(input);
-    });
-});
-
 /*  ==========================================
     SHOW UPLOADED IMAGE NAME
 * ========================================== */
-var input = document.getElementById( 'header' );
-var infoArea = document.getElementById( 'header-label' );
 
-input.addEventListener( 'change', showFileName );
-function showFileName( event ) {
-	var input = event.srcElement;
-	var fileName = input.files[0].name;
-	infoArea.textContent = 'File name: ' + fileName;
+$('#header').on('change', function () {
+	showFileName(this, '#header-label');
+});
+
+function showFileName(element, labelId) {
+	var fileName = $(element)[0].files[0].name;
+	$(labelId).html('File name: ' + fileName);
 }
 
 </script>
